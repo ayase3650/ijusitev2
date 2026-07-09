@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIMONOSEKI LIFE | 下関市 移住・定住ポータル</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ＝＝＝ まん丸で可愛いフォント（Zen Maru Gothic） ＝＝＝ */
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+        
+        :root {
+            --fugu-blue: #00B4D8;     
+            --fugu-light: #CAF0F8;    
+            --fugu-belly: #FFFFFF;    
+            --fugu-fin: #FF9F1C;      
+            --fugu-text: #03045E;     
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            color: var(--fugu-text);
+            line-height: 1.7;
+            letter-spacing: 0.05em;
+            padding-top: 140px; 
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 2; }
+
+        /* ＝＝＝ 🐡 せきまるアイコン共通設定 ＝＝＝ */
+        .seki-icon {
+            height: 1.8em;
+            width: auto;
+            vertical-align: middle;
+            margin-right: 8px;
+            object-fit: contain;
+        }
+        .seki-icon-lg { height: 2.2em; margin-right: 12px; margin-bottom: -5px; }
+
+        /* ＝＝＝ 🐡 背景のぷくぷく泡アニメーション ＝＝＝ */
+        .ocean-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, #E0FAFF 0%, #90E0EF 100%);
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .bubble {
+            position: absolute; bottom: -50px; background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%; animation: rise infinite ease-in;
+        }
+        .bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
+        .bubble:nth-child(2) { width: 20px; height: 20px; left: 20%; animation-duration: 5s; animation-delay: 1s; }
+        .bubble:nth-child(3) { width: 50px; height: 50px; left: 35%; animation-duration: 10s; animation-delay: 2s; }
+        .bubble:nth-child(4) { width: 30px; height: 30px; left: 50%; animation-duration: 7s; }
+        .bubble:nth-child(5) { width: 60px; height: 60px; left: 70%; animation-duration: 11s; animation-delay: 3s; }
+        .bubble:nth-child(6) { width: 25px; height: 25px; left: 85%; animation-duration: 6s; animation-delay: 2s; }
+        
+        @keyframes rise {
+            0% { bottom: -50px; transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { bottom: 110vh; transform: translateX(-20px); }
+        }
+
+        /* ＝＝＝ 🐡 ぷくっと膨らむ共通アクション ＝＝＝ */
+        .puku-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .puku-hover:hover {
+            transform: scale(1.08);
+            border-radius: 50px !important;
+            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.3);
+            z-index: 10; position: relative;
+        }
+
+        /* ＝＝＝ 追従バナー ＝＝＝ */
+        .top-alert-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: var(--fugu-fin); color: var(--fugu-belly);
+            z-index: 1005; display: flex; justify-content: center; align-items: center;
+            padding: 10px 15px; font-size: 0.95rem; font-weight: 900;
+            box-shadow: 0 4px 15px rgba(255, 159, 28, 0.4); gap: 15px;
+        }
+        .top-alert-bar span { display: flex; align-items: center; }
+        .btn-banner {
+            background-color: var(--fugu-belly); color: var(--fugu-fin);
+            padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 900;
+        }
+
+        /* ＝＝＝ 丸っこいヘッダー ＝＝＝ */
+        header {
+            position: fixed; top: 56px; left: 5%; width: 90%;
+            background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px);
+            z-index: 1000; padding: 12px 30px; border-radius: 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.1);
+        }
+        .site-title { font-size: 1.6rem; color: var(--fugu-blue); font-weight: 900; margin: 0; }
+        header nav ul { display: flex; gap: 20px; align-items: center; margin: 0; padding: 0; }
+        header nav a { font-size: 1.05rem; font-weight: 700; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; }
+        header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue); }
+
+        /* ＝＝＝ ヒーローセクション ＝＝＝ */
+        .hero {
+            max-width: 1000px; margin: 0 auto 100px auto; height: 50vh;
+            background-image: url('shimonoseki_top.jpg'); 
+            background-size: cover; background-position: center;
+            border-radius: 60px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; box-shadow: 0 15px 40px rgba(0, 180, 216, 0.2);
+            border: 8px solid var(--fugu-belly); position: relative; z-index: 2;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 180, 216, 0.3);
+        }
+        .hero-copy { position: relative; z-index: 1; text-align: center; color: var(--fugu-belly); }
+        .hero-copy h2 { font-size: 3rem; font-weight: 900; line-height: 1.3; text-shadow: 0 4px 15px rgba(3, 4, 94, 0.5); }
+
+        /* ＝＝＝ せきまるステップ見出し ＝＝＝ */
+        .step-title-wrap { text-align: center; margin-bottom: 50px; }
+        .step-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--fugu-blue); color: var(--fugu-belly);
+            font-size: 1.3rem; font-weight: 900; padding: 10px 30px; border-radius: 40px; margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.3);
+        }
+        .step-badge.orange { background-color: var(--fugu-fin); box-shadow: 0 8px 20px rgba(255, 159, 28, 0.3); }
+        .section-title { font-size: 2rem; font-weight: 900; }
+
+        /* ＝＝＝ 支援制度タブ切り替え ＝＝＝ */
+        .tab-list { display: flex; gap: 15px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .tab-item {
+            flex: 1; text-align: center; padding: 12px 0; font-size: 0.95rem; font-weight: 900;
+            border: 3px solid var(--fugu-blue); border-radius: 30px; color: var(--fugu-blue);
+            background-color: var(--fugu-belly); cursor: pointer; transition: 0.3s;
+        }
+        .tab-item:hover { background-color: var(--fugu-light); }
+        .tab-item.active { background-color: var(--fugu-blue); color: var(--fugu-belly); }
+        
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ＝＝＝ ぷくぷくカード（STEP 1） ＝＝＝ */
+        .support-section { margin-bottom: 120px; }
+        .card-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .card {
+            width: calc(33.3% - 20px);
+            background-color: var(--fugu-belly);
+            border-radius: 25px; padding: 35px 25px; text-align: center;
+            border: 4px solid var(--fugu-belly);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.05);
+            display: flex; flex-direction: column;
+        }
+        .card-icon {
+            width: 80px; height: 80px; margin: 0 auto 20px auto;
+            background-color: var(--fugu-light); color: var(--fugu-blue);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem;
+        }
+        .card h4 { font-size: 1.1rem; margin-bottom: 15px; color: var(--fugu-blue); height: 45px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
+       .price-highlight {
+            color: var(--fugu-fin); 
+            font-weight: 900; 
+            font-size: 1.15rem; /* 1.3remから少しだけ小さく調整 */
+            margin-bottom: 20px; 
+            background: #FFF3E0; 
+            padding: 8px 5px; /* 左右の余白を少し削って広く使う */
+            border-radius: 20px;
+            letter-spacing: 0; /* 文字の隙間を詰めてギュッと収める */
+            word-break: keep-all; /* 変な位置での改行を防ぐ魔法のコード */
+            line-height: 1.3;
+        }
+        .card p { font-size: 0.95rem; margin-bottom: 25px; text-align: left; flex-grow: 1; }
+        .btn-detail {
+            display: block; background-color: var(--fugu-light); color: var(--fugu-blue);
+            padding: 12px; border-radius: 30px; font-weight: 900; font-size: 1rem;
+        }
+
+        /* ＝＝＝ 角丸アコーディオン（STEP 2） ＝＝＝ */
+        .top-faq-section { margin-bottom: 120px; }
+        .faq-item {
+            background-color: var(--fugu-belly); border-radius: 20px;
+            margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0, 180, 216, 0.05);
+            position: relative;
+        }
+        .faq-question {
+            padding: 25px 60px 25px 25px; font-weight: 900; font-size: 1.1rem; color: var(--fugu-blue);
+            cursor: pointer; list-style: none; position: relative;
+        }
+        .faq-question::-webkit-details-marker { display: none; }
+        
+        /* アコーディオンの開閉アイコン「せきまる(4.png)」 */
+        .faq-question::after {
+            content: ''; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            width: 35px; height: 35px;
+            background-image: url('4.png'); background-size: contain; background-repeat: no-repeat;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: grayscale(100%) opacity(0.5);
+        }
+        .faq-item[open] .faq-question::after {
+            transform: translateY(-50%) scale(1.3);
+            filter: grayscale(0%) opacity(1);
+        }
+        .faq-answer { padding: 0 25px 25px 25px; font-size: 1rem; }
+
+        /* さらに表示ボタン */
+        .btn-more-wrapper { text-align: center; margin-top: 40px; }
+        .btn-more {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-weight: 900; color: var(--fugu-blue);
+            background-color: var(--fugu-belly); border: 3px solid var(--fugu-blue);
+            padding: 15px 40px; border-radius: 40px; font-size: 1.1rem;
+        }
+
+        /* ＝＝＝ ボット強制エリア（STEP 3） ＝＝＝ */
+        .bot-first-section {
+            background-color: var(--fugu-belly); border-radius: 50px;
+            padding: 60px 4%; margin-bottom: 100px; text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.1);
+            border: 5px solid rgba(255, 255, 255, 0.5);
+        }
+        .primary-bot-wrapper {
+            max-width: 450px; margin: 0 auto 40px auto; height: 600px;
+            border-radius: 30px; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
+            border: 6px solid var(--fugu-light);
+        }
+        .primary-bot-iframe { width: 100%; height: 100%; border: none; background: #fff; }
+
+        /* 隠し扉（メール） */
+        .last-resort-contact { text-align: center; background: var(--fugu-light); border-radius: 20px; }
+        .last-resort-contact summary { padding: 20px; font-weight: 900; cursor: pointer; list-style: none; color: var(--fugu-blue); }
+        .last-resort-contact summary::-webkit-details-marker { display: none; }
+        .last-resort-content { padding: 20px; border-top: 3px dashed var(--fugu-belly); }
+        .warning-text { color: var(--fugu-fin); font-weight: 900; margin-bottom: 15px; }
+        .btn-last-resort {
+            display: inline-flex; align-items: center; gap: 8px; background-color: var(--fugu-text);
+            color: var(--fugu-belly); padding: 15px 30px; border-radius: 40px; font-weight: 900; margin-top: 10px;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            .card { width: calc(50% - 15px); }
+            header { top: 80px; padding: 10px 15px; border-radius: 20px; }
+            .top-alert-bar { flex-direction: column; padding: 10px; text-align: center; }
+            body { padding-top: 160px; }
+            .hero-copy h2 { font-size: 2.2rem; }
+        }
+        @media (max-width: 500px) {
+            .card { width: 100%; }
+            .seki-icon-lg { height: 1.8em; margin-right: 8px; }
+            .tab-list { flex-wrap: wrap; gap: 10px; }
+            .tab-item { flex: 0 0 calc(50% - 5px); padding: 10px 0; font-size: 0.85rem; }
+        }
+        /* ＝＝＝ 🌟 ロード画面のスタイル ＝＝＝ */
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, var(--fugu-blue) 0%, #0077B6 100%);
+            z-index: 9999; /* 画面の誰よりも一番手前に表示 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        /* ロード完了後にこのクラスがついてフワッと消える */
+        #loading-screen.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--fugu-belly);
+            animation: float-dive 2s infinite ease-in-out;
+        }
+
+        .loading-seki {
+            width: 130px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ぷかぷか浮くアニメーション */
+        @keyframes float-dive {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+<body>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <img src="7.png" alt="せきまる" class="loading-seki">
+            <p class="loading-text">移住ダイブ準備中<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>
+        </div>
+    </div>
+    <!-- 背景のぷくぷく泡 -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <!-- 🌟 追従バナー -->
+    <div class="top-alert-bar">
+        <span><img src="2.png" alt="せきまる" class="seki-icon"> ご相談の前に「移住相談ナビ」での自己診断にご協力をお願いします</span>
+        <a href="#consult" class="btn-banner puku-hover">診断ナビを開く</a>
+    </div>
+
+    <!-- 🌟 ヘッダー -->
+    <header>
+        <h1 class="site-title">SHIMONOSEKI LIFE</h1>
+        <nav>
+            <ul>
+                <li><a href="#support" class="puku-hover">SUPPORT</a></li>
+                <li><a href="#faq" class="puku-hover">FAQ</a></li>
+                <li><a href="#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon">診断ナビ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🌟 ヒーローセクション -->
+    <div class="hero container">
+        <div class="hero-copy">
+            <h2>しものせきに<br>移住ダイブ！</h2>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <!-- 🌟 STEP 1 -->
+        <section class="support-section" id="support">
+            <div class="step-title-wrap">
+                <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 1</div>
+                <h2 class="section-title">あなたをサポートする支援制度</h2>
+            </div>
+            
+            <!-- 🌟 追加：タブ切り替え -->
+            <ul class="tab-list">
+                <li class="tab-item active" data-tab="tab-city">大都市から</li>
+                <li class="tab-item" data-tab="tab-house">住まい・空き家</li>
+                <li class="tab-item" data-tab="tab-family">子育て・結婚</li>
+                <li class="tab-item" data-tab="tab-before">移住前に</li>
+            </ul>
+
+            <!-- タブ1: 大都市から -->
+            <div id="tab-city" class="tab-content active">
+                <div class="card-grid">
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-children"></i></div>
+                        <h4>移住支援金</h4>
+                        <div class="price-highlight">最大 100万円 +α</div>
+                        <p>東京23区から下関市へ移住し、対象の就職やテレワーク、起業などをされる方に交付しています！<br>（※18歳未満のお子様1人につき100万円加算！）</p>
+                        <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/1122.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-laptop-house"></i></div>
+                        <h4>やまぐち創生<br>テレワーク移住支援</h4>
+                        <div class="price-highlight">最大 50万円</div>
+                        <p>大都市圏から本市へ移住される方の負担を軽減するため、山口県と連携して移住支援金を支給します。<br>（※子育て加算あり）</p>
+                        <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/125628.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ2: 住まい・空き家 -->
+            <div id="tab-house" class="tab-content">
+                <div class="card-grid">
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-magnifying-glass-location"></i></div>
+                        <h4>下関市<br>空き家バンクナビ</h4>
+                        <div class="price-highlight">理想の住まいを探す</div>
+                        <p>下関市内の空き家物件（売買・賃貸）を検索できる専門サイト。海が見える家など、希望に合う暮らしの拠点が見つかります。</p>
+                        <a href="https://akiya.shimonoseki-life.jp/" target="_blank" class="btn-detail">空き家を探す</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+                        <h4>住宅取得支援事業</h4>
+                        <div class="price-highlight">1世帯 30万円〜</div>
+                        <p>移住、または市内の指定エリアへの住み替えを検討されている方を対象に、マイホームの建築や購入にかかる費用の一部を補助します。</p>
+                        <a href="https://www.city.shimonoseki.lg.jp/soshiki/70/134729.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-house-user"></i></div>
+                        <h4>暮らしサポート補助金<br>（家賃補助）</h4>
+                        <div class="price-highlight">月額 1万円〜</div>
+                        <p>UIJターンした若者（世帯主が39歳以下）や子育て世帯（中学生以下）に対し、最長2年間の家賃の一部を助成します。</p>
+                        <a href="https://www.shimonosekicitypromotion.jp/123148.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <h4>若者定住応援事業<br>（住宅ローン支援）</h4>
+                        <div class="price-highlight">最大 12万円 / 年</div>
+                        <p>住宅を取得する若者（満29歳以下の世帯）を対象に、住宅ローンの返済利息額の1/2を補助します。</p>
+                        <a href="https://www.shimonosekicitypromotion.jp/133714.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ3: 子育て・結婚 -->
+            <div id="tab-family" class="tab-content">
+                <div class="card-grid">
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-ring"></i></div>
+                        <h4>結婚新生活支援事業</h4>
+                        <div class="price-highlight">新生活のスタート応援</div>
+                        <p>下関市で新婚生活をスタートするご夫婦を対象に、新居の住居費（購入・家賃など）や引越費用の一部を補助します。</p>
+                        <a href="https://www.shimonosekicitypromotion.jp/131804.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-baby-carriage"></i></div>
+                        <h4>子育て支援・各種助成</h4>
+                        <div class="price-highlight">安心の子育て環境</div>
+                        <p>下関市で安心して子育てができるように、お子様の医療費助成や各種手当などの充実したサポート制度をご案内します。</p>
+                        <a href="https://www.city.shimonoseki.lg.jp/soshiki/44/134497.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-gift"></i></div>
+                        <h4>出産祝い金の支給</h4>
+                        <div class="price-highlight">子1人につき 20万円</div>
+                        <p>対象の総合支所管内等に定住する市民が、第3子以降の子を出産し、生計を同じくして6ヶ月以上養育した場合に支給します。</p>
+                        <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/1048.html#baby" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ4: 移住前に -->
+            <div id="tab-before" class="tab-content">
+                <div class="card-grid">
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+                        <h4>お試し暮らし体験</h4>
+                        <div class="price-highlight">宿泊費 無料</div>
+                        <p>下関市への移住をご検討中の方で利用者に1人でも40歳未満がいると、生活環境を体験できる「お試し暮らし」を利用できます。</p>
+                        <a href="https://www.shimonosekicitypromotion.jp/6193.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-train"></i></div>
+                        <h4>YY!ターン交通費補助</h4>
+                        <div class="price-highlight">交通費を一部補助</div>
+                        <p>山口県外にお住まいの方が、下関市へ移住するための住まい探しや就職活動等を行う際の往復交通費の一部を補助します。</p>
+                        <a href="https://ymg-uji.jp/support/transportation/" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                    <div class="card puku-hover">
+                        <div class="card-icon"><i class="fa-solid fa-id-card"></i></div>
+                        <h4>YY!ターンパスポート</h4>
+                        <div class="price-highlight">協賛店で割引・特典</div>
+                        <p>山口県への移住を検討されている方向けの登録制度です。レンタカーや引越し料金の割引など、役立つ特典が受けられます。</p>
+                        <a href="https://ymg-uji.jp/support/passport/" target="_blank" class="btn-detail">詳しく見る</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 🌟 STEP 2 -->
+        <section class="top-faq-section" id="faq">
+            <div class="step-title-wrap">
+                <div class="step-badge"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 2</div>
+                <h2 class="section-title">よくある質問で解決</h2>
+            </div>
+            
+            <details class="faq-item">
+                <summary class="faq-question">東京から移住するとお金がもらえると聞きました。</summary>
+                <div class="faq-answer">
+                    <p>東京23区に在住または通勤していた方が下関市へ移住し、要件を満たす場合、単身60万円、世帯100万円の「移住支援金」が支給される可能性があります。<br>※受給を約束するものではなく、詳細は要綱でご確認ください。</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">移住前に下関の暮らしを体験できますか？</summary>
+                <div class="faq-answer">
+                    <p>2泊3日から4泊5日まで、宿泊料無料で利用できる「お試し暮らし」制度がございます（40歳未満の方が１人でも含まれる世帯が対象）。</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">申請書類はLiveHUBしものせきに持っていけば申請完了ですか？</summary>
+                <div class="faq-answer">
+                    <p>いいえ、LiveHUBしものせきにご提出いただいても申請完了にはなりません。申請書は市役所・県庁へご提出ください。<br>
+                    ただし、YY！ターン支援交通費補助の実施報告書は LiveHUBしものせきにご提出ください。</p>
+                </div>
+            </details>
+
+            <!-- 🌟 追加：FAQの別ページへの移動ボタン -->
+            <div class="btn-more-wrapper">
+                <a href="faq.html" class="btn-more puku-hover">よくある質問をさらに表示 <i class="fa-solid fa-angle-right"></i></a>
+            </div>
+        </section>
+
+        <!-- 🌟 STEP 3 -->
+        <section class="bot-first-section" id="consult">
+            <div class="step-title-wrap">
+                <div class="step-badge orange"><img src="2.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 3</div>
+                <h2 class="section-title">あなたに合う制度を診断</h2>
+            </div>
+            
+            <p style="font-weight: 700; margin-bottom: 30px;">窓口へご相談いただく前に、以下のナビで「どの制度の対象になるか」をご確認ください。</p>
+
+            <div class="primary-bot-wrapper puku-hover">
+                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット"></iframe>
+            </div>
+
+            <!-- 隠し扉 -->
+            <details class="last-resort-contact">
+                <summary>▶︎ 診断ナビを使っても解決しなかった方・具体的な相談に進む方はこちら</summary>
+                <div class="last-resort-content">
+                    <p class="warning-text">【重要】LiveHUBしものせきでのご相談をご希望の方は、<br>必ず「診断ナビの判定結果」を控えたうえでご連絡ください。</p>
+                    <a href="https://shimonoseki.works-go.com/form/f635312/" target="_blank" class="btn-last-resort puku-hover">
+                        診断結果を持ってメールで相談する
+                    </a>
+                </div>
+            </details>
+        </section>
+
+    </main>
+
+    <!-- 🌟 追加：タブ切り替え用JavaScript -->
+    <script>
+        // 🌟 追加：ロード画面をフワッと消す処理
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loading-screen');
+            // 1.5秒（1500ミリ秒）後に .loaded クラスを付けてロード画面を消す
+            setTimeout(() => {
+                loader.classList.add('loaded');
+            }, 1500);
+        });
+        const tabItems = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabItems.forEach(item => {
+            item.addEventListener('click', () => {
+                tabItems.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                item.classList.add('active');
+
+                const targetId = item.getAttribute('data-tab');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>よくある質問 | SHIMONOSEKI LIFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ＝＝＝ トップページと同じベース設定 ＝＝＝ */
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+        
+        :root {
+            --fugu-blue: #00B4D8;     
+            --fugu-light: #CAF0F8;    
+            --fugu-belly: #FFFFFF;    
+            --fugu-fin: #FF9F1C;      
+            --fugu-text: #03045E;     
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            color: var(--fugu-text);
+            line-height: 1.7;
+            letter-spacing: 0.05em;
+            padding-top: 140px; 
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 2; }
+
+        /* ＝＝＝ 🐡 せきまるアイコン共通設定 ＝＝＝ */
+        .seki-icon { height: 1.8em; width: auto; vertical-align: middle; margin-right: 8px; object-fit: contain; }
+        .seki-icon-lg { height: 2.5em; margin-right: 15px; margin-bottom: -8px; }
+
+        /* ＝＝＝ 🐡 背景のアニメーション ＝＝＝ */
+        .ocean-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, #E0FAFF 0%, #90E0EF 100%);
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .bubble { position: absolute; bottom: -50px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: rise infinite ease-in; }
+        .bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
+        .bubble:nth-child(2) { width: 20px; height: 20px; left: 20%; animation-duration: 5s; animation-delay: 1s; }
+        .bubble:nth-child(3) { width: 50px; height: 50px; left: 35%; animation-duration: 10s; animation-delay: 2s; }
+        .bubble:nth-child(4) { width: 30px; height: 30px; left: 50%; animation-duration: 7s; }
+        .bubble:nth-child(5) { width: 60px; height: 60px; left: 70%; animation-duration: 11s; animation-delay: 3s; }
+        .bubble:nth-child(6) { width: 25px; height: 25px; left: 85%; animation-duration: 6s; animation-delay: 2s; }
+        @keyframes rise { 0% { bottom: -50px; transform: translateX(0); } 50% { transform: translateX(20px); } 100% { bottom: 110vh; transform: translateX(-20px); } }
+
+        /* ＝＝＝ 🐡 ぷくっと膨らむ共通アクション ＝＝＝ */
+        .puku-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .puku-hover:hover { transform: scale(1.08); border-radius: 50px !important; box-shadow: 0 15px 30px rgba(0, 180, 216, 0.3); z-index: 10; position: relative; }
+
+        /* ＝＝＝ 追従バナー＆ヘッダー ＝＝＝ */
+        .top-alert-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: var(--fugu-fin); color: var(--fugu-belly); z-index: 1005; display: flex; justify-content: center; align-items: center;
+            padding: 10px 15px; font-size: 0.95rem; font-weight: 900; box-shadow: 0 4px 15px rgba(255, 159, 28, 0.4); gap: 15px;
+        }
+        .top-alert-bar span { display: flex; align-items: center; }
+        .btn-banner { background-color: var(--fugu-belly); color: var(--fugu-fin); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 900; }
+
+        header {
+            position: fixed; top: 56px; left: 5%; width: 90%;
+            background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px);
+            z-index: 1000; padding: 12px 30px; border-radius: 50px;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px rgba(0, 180, 216, 0.1);
+        }
+        .site-title { font-size: 1.6rem; color: var(--fugu-blue); font-weight: 900; margin: 0; }
+        header nav ul { display: flex; gap: 20px; align-items: center; margin: 0; padding: 0; }
+        header nav a { font-size: 1.05rem; font-weight: 700; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; }
+        header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue); }
+
+        /* ＝＝＝ FAQページ固有のデザイン ＝＝＝ */
+        .page-header { text-align: center; margin-bottom: 60px; }
+        .page-title { font-size: 2.5rem; font-weight: 900; color: var(--fugu-blue); margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0, 180, 216, 0.2); }
+        .page-desc { font-size: 1.1rem; font-weight: 700; }
+
+        .faq-category-title {
+            display: inline-flex; align-items: center;
+            background-color: var(--fugu-blue); color: var(--fugu-belly);
+            font-size: 1.3rem; font-weight: 900; padding: 10px 30px; border-radius: 40px;
+            margin-bottom: 25px; margin-top: 50px; box-shadow: 0 8px 20px rgba(0, 180, 216, 0.3);
+        }
+        .faq-category-title.orange { background-color: var(--fugu-fin); box-shadow: 0 8px 20px rgba(255, 159, 28, 0.3); }
+
+        /* ＝＝＝ 角丸アコーディオン ＝＝＝ */
+        .faq-list { margin-bottom: 20px; }
+        .faq-item {
+            background-color: var(--fugu-belly); border-radius: 20px;
+            margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0, 180, 216, 0.05); position: relative;
+        }
+        .faq-question {
+            padding: 25px 70px 25px 25px; font-weight: 900; font-size: 1.1rem; color: var(--fugu-text);
+            cursor: pointer; list-style: none; position: relative; line-height: 1.5;
+        }
+        .faq-question::-webkit-details-marker { display: none; }
+        .faq-question::before {
+            content: 'Q.'; color: var(--fugu-blue); font-size: 1.4rem; margin-right: 10px; font-weight: 900;
+        }
+        
+        /* せきまる(4.png)アイコンのアニメーション */
+        .faq-question::after {
+            content: ''; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px;
+            background-image: url('4.png'); background-size: contain; background-repeat: no-repeat;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: grayscale(100%) opacity(0.5);
+        }
+        .faq-item[open] .faq-question::after { transform: translateY(-50%) scale(1.3); filter: grayscale(0%) opacity(1); }
+        
+        .faq-answer {
+            padding: 0 25px 25px 25px; font-size: 1rem; color: #444; border-top: 2px dashed var(--fugu-light); margin-top: 10px; padding-top: 20px;
+        }
+        .faq-answer::before {
+            content: 'A.'; color: var(--fugu-fin); font-size: 1.4rem; margin-right: 10px; font-weight: 900; display: block; margin-bottom: 10px;
+        }
+
+        /* 戻るボタン */
+        .back-to-home { text-align: center; margin: 80px 0; }
+        .btn-home {
+            display: inline-flex; align-items: center; gap: 8px; font-weight: 900; color: var(--fugu-belly);
+            background-color: var(--fugu-blue); padding: 15px 40px; border-radius: 40px; font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.3);
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            header { top: 80px; padding: 10px 15px; border-radius: 20px; }
+            .top-alert-bar { flex-direction: column; padding: 10px; text-align: center; }
+            body { padding-top: 160px; }
+            .page-title { font-size: 2rem; }
+            .faq-question { padding: 20px 55px 20px 20px; font-size: 1rem; }
+            .faq-question::after { width: 30px; height: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景のぷくぷく泡 -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <!-- 🌟 追従バナー（indexと同じ） -->
+    <div class="top-alert-bar">
+        <span><img src="2.png" alt="せきまる" class="seki-icon"> ご相談の前に「移住相談ナビ」での自己診断にご協力をお願いします</span>
+        <a href="index.html#consult" class="btn-banner puku-hover">診断ナビを開く</a>
+    </div>
+
+    <!-- 🌟 ヘッダー（indexと同じ） -->
+    <header>
+        <h1 class="site-title"><a href="index.html">SHIMONOSEKI LIFE</a></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html#support" class="puku-hover">SUPPORT</a></li>
+                <li><a href="faq.html" class="puku-hover">FAQ</a></li>
+                <li><a href="index.html#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon">診断ナビ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <div class="page-header">
+            <h2 class="page-title"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg">よくある質問 (FAQ)</h2>
+            <p class="page-desc">移住に関する疑問はこちらで解決！</p>
+        </div>
+
+        <!-- 🌟 カテゴリ1：移住支援金について -->
+        <h3 class="faq-category-title">移住支援金・お金のこと</h3>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary class="faq-question">東京から移住するとお金がもらえると聞きました。</summary>
+                <div class="faq-answer">
+                    <p>東京23区に在住または通勤していた方が下関市へ移住し、就業や起業等の要件を満たす場合、単身60万円、世帯100万円の「移住支援金」が支給される可能性があります。<br>※受給を約束するものではなく、詳細は要綱でご確認ください。</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">子どもと一緒に移住する場合、支援金は増えますか？</summary>
+                <div class="faq-answer">
+                    <p>はい。移住支援金の対象となる世帯移住の場合、18歳未満のお子様1人につき「100万円」が加算されます。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 🌟 カテゴリ2：住まいについて -->
+        <h3 class="faq-category-title orange">住まい・暮らしのこと</h3>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary class="faq-question">移住前に下関の暮らしを体験できますか？</summary>
+                <div class="faq-answer">
+                    <p>2泊3日から4泊5日まで、宿泊料無料で利用できる「お試し暮らし」制度がございます。利用者に40歳未満の方が１人でも含まれる世帯が対象となります。</p>
+                </div>
+            </details>
+            
+            <details class="faq-item">
+                <summary class="faq-question">空き家を探すことはできますか？</summary>
+                <div class="faq-answer">
+                    <p>「下関市空き家バンクナビ」という専用サイトをご用意しております。売買・賃貸の物件を検索し、ご自身のライフスタイルに合った家を探すことができます。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 🌟 カテゴリ3：手続きについて -->
+        <h3 class="faq-category-title">手続き・サポートについて</h3>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary class="faq-question">申請書類はLiveHUBしものせきに持っていけば申請完了ですか？</summary>
+                <div class="faq-answer">
+                    <p>いいえ、LiveHUBしものせきにご提出いただいても申請完了にはなりません。申請書は市役所や県庁などの指定窓口へご提出ください。<br>
+                    （※ただし、YY！ターン支援交通費補助の実施報告書のみ、LiveHUBしものせきへの提出が可能です）</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">自分が支援制度の対象になるか、事前に確認できますか？</summary>
+                <div class="faq-answer">
+                    <p>トップページにある「移住相談ナビ（チャットボット）」をご利用ください。いくつかの質問に答えるだけで、あなたがどの制度の対象になる可能性があるかを簡単にシミュレーションできます。</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="back-to-home">
+            <a href="index.html" class="btn-home puku-hover"><i class="fa-solid fa-house"></i> トップページへ戻る</a>
+        </div>
+
+    </main>
+
+</body>
+</html>

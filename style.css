@@ -1,0 +1,330 @@
+/* =========================================
+    1. 全体の基本設定とカラーパレット
+    ========================================= */
+/* :root は、サイト全体で使い回す「色」などの共通ルール（変数）を決める場所です */
+:root {
+    --bg-color: #d1e8e5; /* 背景の薄いエメラルドグリーン */
+    --main-teal: #236575; /* ボタンや枠線に使う濃い青緑（テーマカラー） */
+    --text-main: #333333; /* 真っ黒ではなく、少し柔らかい黒（文字色） */
+    --highlight-yellow: #fff3c4; /* 金額を目立たせるための黄色 */
+    --white: #ffffff; /* 白 */
+}
+
+/* すべての要素の初期の余白をリセットし、レイアウト崩れを防ぐおまじない */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ページ全体の基本設定 */
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-color); /* 背景色を指定 */
+    color: var(--text-main); /* 基本の文字色を指定 */
+    line-height: 1.6; /* 行間を少し広げて読みやすくします */
+}
+
+/* 全体を包む大きな箱（この中に支援制度やAI診断が入ります） */
+.wrapper {
+    max-width: 1200px; /* 画面が大きくても、この幅以上には広がりません */
+    margin: 40px auto; /* 上下に40pxの余白をあけ、左右は「auto」で画面の中央に寄せます */
+    padding: 0 20px; /* スマホなどで見たときに画面端にピタッとくっつかないようにします */
+}
+
+/* =========================================
+    2. 2カラムのレイアウト設定
+    ========================================= */
+/* 左の「支援制度」と右の「AI診断」を横並びにするための設定です */
+.layout-grid {
+    display: flex; /* 中身を横並びにします */
+    gap: 20px; /* 左と右の間に20pxの隙間を作ります */
+}
+
+/* 左側：支援制度エリア（大きめ） */
+.support-section {
+    flex: 2.5; /* 右のAI診断に対して、2.5倍の幅を取ります */
+    background: var(--white);
+    border-radius: 15px; /* 角を丸くします */
+    padding: 30px; /* 箱の内側に余白を作ります */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* うっすらと影をつけて立体感を出します */
+}
+
+/* 右側：AI診断エリア（小さめ） */
+.ai-section {
+    flex: 1; /* 左の支援制度に対して、1の幅を取ります */
+    background: #e3f2f0;
+    border: 3px solid var(--white); /* 白い太めの枠線をつけます */
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center; /* 中の文字や画像を中央揃えにします */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; /* 中身を縦並びにします */
+    align-items: center; /* 横方向の中央に揃えます */
+}
+
+/* =========================================
+    3. 左側：支援制度の中身（タブとカード）
+    ========================================= */
+.support-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* タブの並び（子育て世帯、単身・若者など） */
+.tab-list {
+    display: flex; /* タブを横並びにします */
+    list-style: none; /* リストの「・」マークを消します */
+    gap: 10px; /* タブ同士の隙間 */
+    margin-bottom: 30px;
+}
+
+/* タブ1つ1つのデザイン */
+.tab-item {
+    flex: 1; /* すべてのタブを同じ幅にします */
+    text-align: center;
+    padding: 10px 0;
+    border: 2px solid var(--main-teal); /* テーマカラーの枠線 */
+    border-radius: 5px; /* 少しだけ角を丸くします */
+    font-weight: bold;
+    cursor: pointer; /* マウスを乗せると指のマークになります */
+    color: var(--main-teal);
+}
+
+/* 選ばれている状態（アクティブ）のタブのデザイン */
+.tab-item.active {
+    background-color: var(--main-teal); /* 背景をテーマカラーで塗りつぶします */
+    color: var(--white); /* 文字を白にします */
+    position: relative; /* 下の三角形を配置するための基準にします */
+}
+
+/* アクティブタブの下に出る「逆三角形」の作り方 */
+.tab-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; /* タブの下にはみ出させます */
+    left: 50%; /* 左から50%の位置に移動 */
+    transform: translateX(-50%); /* 自身の幅の半分だけ戻して、真ん中に合わせます */
+    border-width: 10px 10px 0 10px; /* CSSで三角形を作るテクニックです */
+    border-style: solid;
+    border-color: var(--main-teal) transparent transparent transparent;
+}
+
+/* カードを4つ並べる設定 */
+.card-grid {
+    display: grid; /* グリッド（マス目）レイアウトを使います */
+    grid-template-columns: repeat(4, 1fr); /* 4列を均等な幅（1fr）で作成します */
+    gap: 15px; /* カード同士の隙間 */
+}
+
+/* カード1枚ずつのデザイン */
+.card {
+    border: 1px solid #e0e0e0; /* 薄いグレーの枠線 */
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* カード内の要素を縦並びにします */
+}
+
+/* カードの上のアイコン部分 */
+.card-icon {
+    font-size: 3rem; /* アイコンを大きくします */
+    margin-bottom: 15px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* カードのタイトル（移住支援金 など） */
+/* タイトル部分（1行でも2行でも高さを固定して、下のパーツの位置を揃える） */
+.card h4 {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    
+    /* ★ここが重要：高さを60pxに固定してズレをなくす */
+    height: 60px; 
+    
+    /* 文字を上下の真ん中に配置する */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 上下の余白をリセット＆再設定 */
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+/* 追加：文章のエリアを広げて、ボタンを下へ押しやる */
+.card p {
+    flex-grow: 1;
+}
+
+/* 追加：ボタンをカードの一番下の「底」に固定する */
+.card a {
+    margin-top: auto;
+}
+/* 金額を目立たせる黄色のハイライト部分 */
+.price-highlight {
+    /* ★追加・変更：クリーム色丸自体の高さを完全に固定する */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 上下のパディング（隙間）を0にして、高さ(height)を優先させます */
+    padding: 0 15px; 
+    
+    /* 以下は元々設定されている色や角丸の設定（そのまま残すか上書き） */
+    background-color: #fff7e6; /* クリーム色 */
+    border-radius: 25px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* 金額の数字だけ大きく、赤くする */
+.price-highlight span {
+    font-size: 1.2rem;
+    color: #d93838;
+}
+
+/* カード内の説明文 */
+.card p {
+    font-size: 0.75rem;
+    text-align: left; /* 文章は左揃えで読みやすく */
+    margin-bottom: 15px;
+    flex-grow: 1; /* この文章エリアが伸び縮みすることで、「詳しく見る」ボタンが一番下に揃います */
+}
+
+/* 「詳しく見る」ボタン */
+.btn-detail 
+   .btn-detail {
+    display: block;
+    background-color: var(--btn-color);
+    color: var(--white);
+    padding: 12px 0;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    /* ↓ この1行を追加するだけ！ */
+    margin-top: auto; 
+}
+
+/* =========================================
+    4. 右側：AI診断の中身
+    ========================================= */
+.ai-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* 吹き出しのデザイン */
+.speech-bubble {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #d93838;
+    position: relative; /* しっぽの基準位置 */
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 吹き出しのしっぽ（左下に向かって尖る） */
+.speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20%;
+    border-width: 10px 10px 0 0;
+    border-style: solid;
+    border-color: var(--white) transparent transparent transparent;
+}
+
+/* AIキャラクター（せきまる）の画像が入る場所 */
+.ai-mascot {
+    font-size: 5rem;
+    color: var(--main-teal);
+    margin-bottom: 20px;
+}
+
+/* チャットボット起動ボタン */
+.btn-chatbot {
+    background-color: var(--main-teal);
+    color: var(--white);
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+/* =========================================
+    5. 右下のフローティング（追従）チャットアイコン
+    ========================================= */
+/* 画面の右下に固定して、スクロールしても付いてくるようにします */
+.floating-chat {
+    position: fixed; /* 画面に固定する設定 */
+    bottom: 20px; /* 下から20pxの位置 */
+    right: 20px; /* 右から20pxの位置 */
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 1000; /* 他の要素より常に上に表示させます */
+}
+
+/* 横から出る吹き出し */
+.chat-bubble {
+    background: var(--white);
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* 横向きの吹き出しのしっぽ */
+.chat-bubble::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    border-width: 8px 0 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--white);
+}
+
+/* 丸いチャットアイコン */
+.chat-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--main-teal);
+    border-radius: 50%; /* まん丸にします */
+    border: 3px solid var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* =========================================
+    6. レスポンシブ（スマホ・タブレット対応）
+    ========================================= */
+/* 画面幅が900px以下（タブレットくらい）になった時の設定 */
+@media (max-width: 900px) {
+    .layout-grid { flex-direction: column; } /* 左と右を「縦並び」に変更します */
+    .card-grid { grid-template-columns: repeat(2, 1fr); } /* カードを4列から「2列」に変更します */
+    .tab-item { font-size: 0.8rem; padding: 8px 0; }
+}
+
+/* 画面幅が500px以下（スマホくらい）になった時の設定 */
+@media (max-width: 500px) {
+    .card-grid { grid-template-columns: 1fr; } /* カードを「1列（縦1列）」に変更します */
+}
