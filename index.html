@@ -149,12 +149,18 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ＝＝＝ ぷくぷくカード（STEP 1） ＝＝＝ */
+        
         .support-section { margin-bottom: 120px; }
-        .card-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        
+        /* 👇 隙間(gap)を30pxから20pxに少しだけ縮めました */
+        .card-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; } 
+        
         .card {
-            width: calc(33.3% - 20px);
+            /* 👇 33.3%（3列用）から 25%（4列用）に計算式を変更しました！ */
+            width: calc(25% - 15px); 
             background-color: var(--fugu-belly);
-            border-radius: 25px; padding: 35px 25px; text-align: center;
+            /* 👇 窮屈にならないよう内側の余白を微調整 */
+            border-radius: 25px; padding: 30px 15px; text-align: center;
             border: 4px solid var(--fugu-belly);
             box-shadow: 0 10px 25px rgba(0, 180, 216, 0.05);
             display: flex; flex-direction: column;
