@@ -225,24 +225,30 @@
             box-shadow: 0 15px 40px rgba(0, 180, 216, 0.1);
             border: 5px solid rgba(255, 255, 255, 0.5);
         }
-      .primary-bot-wrapper {
-            max-width: 450px; margin: 0 auto 40px auto; height: 600px;
-            /* 👇 原因だった overflow: hidden; を削除し、paddingを追加 */
-            padding: 5px; 
-            background-color: var(--fugu-light); /* 枠の背景色を確保 */
+     .primary-bot-wrapper {
+            position: relative; /* 👇 追加：中身を絶対配置で閉じ込めるための基準 */
+            max-width: 450px; 
+            margin: 0 auto 40px auto; 
+            height: 600px;
             border-radius: 30px; 
+            background-color: var(--fugu-light);
+            border: 6px solid var(--fugu-light);
             box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            /* border の代わりに背景色とpaddingを使って「枠」を表現 */
+            /* 👇 iOSバグ対策のコア設定 */
+            overflow: hidden; 
+            -webkit-overflow-scrolling: touch; 
+            transform: translateZ(0); /* 外枠をGPUでガッチリ固定 */
         }
-       .primary-bot-iframe { 
-            display: block; /* インライン要素特有の隙間バグを防ぐ */
+        
+        .primary-bot-iframe { 
+            position: absolute; /* 👇 追加：外枠にピタッと張り付かせて高さを強制認識させる */
+            top: 0; 
+            left: 0; 
             width: 100%; 
             height: 100%; 
-            min-height: 590px; /* 高さを直接指定してSafariを安心させる */
             border: none; 
             background: #fff; 
-            border-radius: 25px; 
-            -webkit-transform: translateZ(0);
+            /* ※iframe自体の角丸は外し、外枠のoverflow: hiddenに任せます */
         }
         /* 隠し扉（メール） */
         .last-resort-contact { text-align: center; background: var(--fugu-light); border-radius: 20px; }
