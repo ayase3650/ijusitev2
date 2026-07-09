@@ -225,30 +225,26 @@
             box-shadow: 0 15px 40px rgba(0, 180, 216, 0.1);
             border: 5px solid rgba(255, 255, 255, 0.5);
         }
-     .primary-bot-wrapper {
-            position: relative; /* 👇 追加：中身を絶対配置で閉じ込めるための基準 */
+    .primary-bot-wrapper {
             max-width: 450px; 
             margin: 0 auto 40px auto; 
             height: 600px;
             border-radius: 30px; 
-            background-color: var(--fugu-light);
             border: 6px solid var(--fugu-light);
+            background-color: var(--fugu-light);
             box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            /* 👇 iOSバグ対策のコア設定 */
+            /* 👇 暴走を枠内に閉じ込める */
             overflow: hidden; 
-            -webkit-overflow-scrolling: touch; 
-            transform: translateZ(0); /* 外枠をGPUでガッチリ固定 */
+            overscroll-behavior: none; /* 連鎖的なスクロールを遮断 */
         }
         
         .primary-bot-iframe { 
-            position: absolute; /* 👇 追加：外枠にピタッと張り付かせて高さを強制認識させる */
-            top: 0; 
-            left: 0; 
-            width: 100%; 
+            /* 👇 Safariの「勝手に巨大化するバグ」を防ぐ世界標準の裏技 */
+            width: 1px;
+            min-width: 100%;
             height: 100%; 
             border: none; 
             background: #fff; 
-            /* ※iframe自体の角丸は外し、外枠のoverflow: hiddenに任せます */
         }
         /* 隠し扉（メール） */
         .last-resort-contact { text-align: center; background: var(--fugu-light); border-radius: 20px; }
@@ -552,8 +548,8 @@
             <p style="font-weight: 700; margin-bottom: 30px;">窓口へご相談いただく前に、以下のナビで「どの制度の対象になるか」をご確認ください。</p>
 
            <!-- 👇 puku-hoverを削除しました -->
-            <div class="primary-bot-wrapper">
-                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット"></iframe>
+           <div class="primary-bot-wrapper">
+                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット" scrolling="no"></iframe>
             </div>
 
             <!-- 隠し扉 -->
