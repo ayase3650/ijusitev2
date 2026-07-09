@@ -164,16 +164,16 @@
             font-size: 2.5rem;
         }
         .card h4 { font-size: 1.1rem; margin-bottom: 15px; color: var(--fugu-blue); height: 45px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
-       .price-highlight {
+        .price-highlight {
             color: var(--fugu-fin); 
             font-weight: 900; 
-            font-size: 1.15rem; /* 1.3remから少しだけ小さく調整 */
+            font-size: 1.15rem;
             margin-bottom: 20px; 
             background: #FFF3E0; 
-            padding: 8px 5px; /* 左右の余白を少し削って広く使う */
+            padding: 8px 5px;
             border-radius: 20px;
-            letter-spacing: 0; /* 文字の隙間を詰めてギュッと収める */
-            word-break: keep-all; /* 変な位置での改行を防ぐ魔法のコード */
+            letter-spacing: 0;
+            word-break: keep-all;
             line-height: 1.3;
         }
         .card p { font-size: 0.95rem; margin-bottom: 25px; text-align: left; flex-grow: 1; }
@@ -194,8 +194,6 @@
             cursor: pointer; list-style: none; position: relative;
         }
         .faq-question::-webkit-details-marker { display: none; }
-        
-        /* アコーディオンの開閉アイコン「せきまる(4.png)」 */
         .faq-question::after {
             content: ''; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
             width: 35px; height: 35px;
@@ -208,8 +206,6 @@
             filter: grayscale(0%) opacity(1);
         }
         .faq-answer { padding: 0 25px 25px 25px; font-size: 1rem; }
-
-        /* さらに表示ボタン */
         .btn-more-wrapper { text-align: center; margin-top: 40px; }
         .btn-more {
             display: inline-flex; align-items: center; gap: 8px;
@@ -225,66 +221,104 @@
             box-shadow: 0 15px 40px rgba(0, 180, 216, 0.1);
             border: 5px solid rgba(255, 255, 255, 0.5);
         }
-    .primary-bot-wrapper {
-            max-width: 450px; 
-            margin: 0 auto 40px auto; 
-            height: 600px;
-            /* 👇 overflow:hiddenを使わず、paddingで疑似的に枠を作る */
-            padding: 6px; 
-            background-color: var(--fugu-light);
-            border-radius: 30px; 
-            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            /* 👇 外枠をGPUでガッチリ固定 */
-            transform: translate3d(0,0,0);
-            -webkit-transform: translate3d(0,0,0);
-        }
         
-        .primary-bot-iframe { 
-            display: block;
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            background-color: #fff; 
-            border-radius: 24px; /* iframe自身に角丸をつける */
-            /* 👇 Safariを騙す究極の魔法（独立したレイヤーとして強制描画させる） */
-            opacity: 0.99; 
+        /* ＝＝＝ 起動ボタンエリア ＝＝＝ */
+        .primary-bot-launch {
+            background-color: var(--fugu-light); border-radius: 30px;
+            padding: 40px 20px; text-align: center; max-width: 600px;
+            margin: 0 auto 40px auto; border: 4px dashed var(--fugu-blue);
         }
-        /* 隠し扉（メール） */
-        .last-resort-contact { text-align: center; background: var(--fugu-light); border-radius: 20px; }
-        .last-resort-contact summary { padding: 20px; font-weight: 900; cursor: pointer; list-style: none; color: var(--fugu-blue); }
+        .launch-icon { width: 100px; margin-bottom: 15px; }
+        .btn-launch {
+            background-color: var(--fugu-fin); color: var(--fugu-belly);
+            font-size: 1.2rem; font-weight: 900; padding: 15px 40px;
+            border: none; border-radius: 40px; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+        }
+
+        /* ＝＝＝ 隠し扉（最終相談窓口） ＝＝＝ */
+        .last-resort-contact {
+            background-color: var(--fugu-light); border-radius: 20px;
+            margin-top: 30px; padding: 20px; border: 3px dashed var(--fugu-blue);
+        }
+        .last-resort-contact summary {
+            font-weight: 900; color: var(--fugu-blue); cursor: pointer;
+            list-style: none; font-size: 1.05rem;
+        }
         .last-resort-contact summary::-webkit-details-marker { display: none; }
-        .last-resort-content { padding: 20px; border-top: 3px dashed var(--fugu-belly); }
-        .warning-text { color: var(--fugu-fin); font-weight: 900; margin-bottom: 15px; }
+        .last-resort-content { margin-top: 20px; padding-top: 20px; border-top: 2px dashed var(--fugu-blue); }
+        .warning-text { color: #E63946; font-weight: 900; font-size: 0.95rem; margin-bottom: 20px; }
         .btn-last-resort {
-            display: inline-flex; align-items: center; gap: 8px; background-color: var(--fugu-text);
-            color: var(--fugu-belly); padding: 15px 30px; border-radius: 40px; font-weight: 900; margin-top: 10px;
+            display: inline-block; background-color: var(--fugu-blue); color: var(--fugu-belly);
+            padding: 15px 40px; border-radius: 40px; font-weight: 900;
+            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.4);
         }
+
+        /* ＝＝＝ ロード画面のスタイル ＝＝＝ */
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, var(--fugu-blue) 0%, #0077B6 100%);
+            z-index: 9999; 
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #loading-screen.loaded { opacity: 0; visibility: hidden; }
+        .loading-content {
+            text-align: center; color: var(--fugu-belly);
+            animation: float-dive 2s infinite ease-in-out;
+        }
+        .loading-seki {
+            width: 130px; height: auto; margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+        .loading-text {
+            font-size: 1.5rem; font-weight: 900; letter-spacing: 0.1em;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        @keyframes float-dive {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ＝＝＝ 全画面モーダル（ポップアップ） ＝＝＝ */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex; justify-content: center; align-items: center; 
+            opacity: 0; visibility: hidden; 
+            transition: 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            width: 100%; max-width: 600px; height: 100%;
+            display: flex; flex-direction: column; background-color: #fff;
+            overflow: hidden;
+        }
+        .btn-close {
+            background-color: var(--fugu-text); color: var(--fugu-belly);
+            border: none; padding: 15px; font-size: 1.1rem; font-weight: 900;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            flex-shrink: 0; 
+            padding-top: calc(15px + env(safe-area-inset-top)); 
+        }
+        .btn-close:hover { background-color: var(--fugu-fin); }
+        .modal-iframe { flex-grow: 1; width: 100%; border: none; }
 
         /* スマホ対応 */
-       /* スマホ対応 */
         @media (max-width: 768px) {
             .card { width: calc(50% - 15px); }
-            
-            /* 👇 バナーのスマホ崩れ修正 */
-            .top-alert-bar { 
-                flex-direction: column; padding: 12px 10px; text-align: center; gap: 10px; 
-            }
-            .top-alert-bar span {
-                display: block; /* 横並びを解除して綺麗に改行させる */
-                font-size: 0.85rem; line-height: 1.5;
-            }
-
-            /* 👇 ヘッダーのスマホ崩れ修正（縦並びに） */
+            .top-alert-bar { flex-direction: column; padding: 12px 10px; text-align: center; gap: 10px; }
+            .top-alert-bar span { display: block; font-size: 0.85rem; line-height: 1.5; }
             header { 
-                top: 105px; /* バナーの高さに合わせて少し下げる */
-                padding: 12px; border-radius: 20px; 
-                flex-direction: column; gap: 10px; /* タイトルとメニューを縦に並べる */
+                top: 105px; padding: 12px; border-radius: 20px; 
+                flex-direction: column; gap: 10px; 
             }
             .site-title { font-size: 1.4rem; }
             header nav ul { gap: 10px; }
             header nav a { font-size: 0.85rem; padding: 5px 8px; }
-
-            /* 全体の余白調整 */
             body { padding-top: 210px; }
             .hero-copy h2 { font-size: 2.2rem; }
         }
@@ -294,73 +328,37 @@
             .tab-list { flex-wrap: wrap; gap: 10px; }
             .tab-item { flex: 0 0 calc(50% - 5px); padding: 10px 0; font-size: 0.85rem; }
         }
-        /* ＝＝＝ 🌟 ロード画面のスタイル ＝＝＝ */
-        #loading-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, var(--fugu-blue) 0%, #0077B6 100%);
-            z-index: 9999; /* 画面の誰よりも一番手前に表示 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-        
-        /* ロード完了後にこのクラスがついてフワッと消える */
-        #loading-screen.loaded {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: var(--fugu-belly);
-            animation: float-dive 2s infinite ease-in-out;
-        }
-
-        .loading-seki {
-            width: 130px;
-            height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* ぷかぷか浮くアニメーション */
-        @keyframes float-dive {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @media (min-width: 769px) {
+            .modal-content {
+                height: 90vh; 
+                border-radius: 30px;
+            }
+            .btn-close {
+                padding-top: 15px; 
+            }
         }
     </style>
 </head>
 <body>
-<body>
+
     <div id="loading-screen">
         <div class="loading-content">
             <img src="7.png" alt="せきまる" class="loading-seki">
             <p class="loading-text">移住ダイブ準備中<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>
         </div>
     </div>
-    <!-- 背景のぷくぷく泡 -->
+
     <div class="ocean-bg">
         <div class="bubble"></div><div class="bubble"></div>
         <div class="bubble"></div><div class="bubble"></div>
         <div class="bubble"></div><div class="bubble"></div>
     </div>
 
-    <!-- 🌟 追従バナー -->
     <div class="top-alert-bar">
         <span><img src="2.png" alt="せきまる" class="seki-icon"> ご相談の前に「移住相談ナビ」での自己診断にご協力をお願いします</span>
         <a href="#consult" class="btn-banner puku-hover">診断ナビを開く</a>
     </div>
 
-    <!-- 🌟 ヘッダー -->
     <header>
         <h1 class="site-title">SHIMONOSEKI LIFE</h1>
         <nav>
@@ -372,7 +370,6 @@
         </nav>
     </header>
 
-    <!-- 🌟 ヒーローセクション -->
     <div class="hero container">
         <div class="hero-copy">
             <h2>しものせきに<br>移住ダイブ！</h2>
@@ -381,14 +378,12 @@
 
     <main class="container">
 
-        <!-- 🌟 STEP 1 -->
         <section class="support-section" id="support">
             <div class="step-title-wrap">
                 <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 1</div>
                 <h2 class="section-title">あなたをサポートする支援制度</h2>
             </div>
             
-            <!-- 🌟 追加：タブ切り替え -->
             <ul class="tab-list">
                 <li class="tab-item active" data-tab="tab-city">大都市から</li>
                 <li class="tab-item" data-tab="tab-house">住まい・空き家</li>
@@ -396,7 +391,6 @@
                 <li class="tab-item" data-tab="tab-before">移住前に</li>
             </ul>
 
-            <!-- タブ1: 大都市から -->
             <div id="tab-city" class="tab-content active">
                 <div class="card-grid">
                     <div class="card puku-hover">
@@ -416,7 +410,6 @@
                 </div>
             </div>
 
-            <!-- タブ2: 住まい・空き家 -->
             <div id="tab-house" class="tab-content">
                 <div class="card-grid">
                     <div class="card puku-hover">
@@ -450,7 +443,6 @@
                 </div>
             </div>
 
-            <!-- タブ3: 子育て・結婚 -->
             <div id="tab-family" class="tab-content">
                 <div class="card-grid">
                     <div class="card puku-hover">
@@ -477,7 +469,6 @@
                 </div>
             </div>
 
-            <!-- タブ4: 移住前に -->
             <div id="tab-before" class="tab-content">
                 <div class="card-grid">
                     <div class="card puku-hover">
@@ -506,7 +497,6 @@
 
         </section>
 
-        <!-- 🌟 STEP 2 -->
         <section class="top-faq-section" id="faq">
             <div class="step-title-wrap">
                 <div class="step-badge"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 2</div>
@@ -535,13 +525,11 @@
                 </div>
             </details>
 
-            <!-- 🌟 追加：FAQの別ページへの移動ボタン -->
             <div class="btn-more-wrapper">
                 <a href="faq.html" class="btn-more puku-hover">よくある質問をさらに表示 <i class="fa-solid fa-angle-right"></i></a>
             </div>
         </section>
 
-        <!-- 🌟 STEP 3 -->
         <section class="bot-first-section" id="consult">
             <div class="step-title-wrap">
                 <div class="step-badge orange"><img src="2.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 3</div>
@@ -550,12 +538,13 @@
             
             <p style="font-weight: 700; margin-bottom: 30px;">窓口へご相談いただく前に、以下のナビで「どの制度の対象になるか」をご確認ください。</p>
 
-           <!-- 👇 puku-hoverを削除しました -->
-           <div class="primary-bot-wrapper">
-                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット"></iframe>
+            <div class="primary-bot-launch">
+                <img src="2.png" alt="せきまる" class="launch-icon puku-hover">
+                <h3 style="font-size: 1.5rem; color: var(--fugu-blue); font-weight: 900; margin-bottom: 10px;">移住相談チャットボット</h3>
+                <p style="font-weight: 700; margin-bottom: 25px;">いくつかの質問に答えるだけで、あなたにぴったりの補助金を診断します！</p>
+                <button id="open-bot-btn" class="btn-launch puku-hover">診断をスタートする</button>
             </div>
 
-            <!-- 隠し扉 -->
             <details class="last-resort-contact">
                 <summary>▶︎ 診断ナビを使っても解決しなかった方・具体的な相談に進む方はこちら</summary>
                 <div class="last-resort-content">
@@ -569,16 +558,23 @@
 
     </main>
 
-    <!-- 🌟 追加：タブ切り替え用JavaScript -->
+    <div id="bot-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-bot-btn" class="btn-close"><i class="fa-solid fa-xmark"></i> 閉じる</button>
+            <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="modal-iframe" title="移住相談チャットボット"></iframe>
+        </div>
+    </div>
+
     <script>
-        // 🌟 追加：ロード画面をフワッと消す処理
+        // ① ロード画面をフワッと消す処理
         window.addEventListener('load', () => {
             const loader = document.getElementById('loading-screen');
-            // 1.5秒（1500ミリ秒）後に .loaded クラスを付けてロード画面を消す
             setTimeout(() => {
                 loader.classList.add('loaded');
             }, 1500);
         });
+
+        // ② タブ切り替えのコード
         const tabItems = document.querySelectorAll('.tab-item');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -586,12 +582,26 @@
             item.addEventListener('click', () => {
                 tabItems.forEach(t => t.classList.remove('active'));
                 tabContents.forEach(c => c.classList.remove('active'));
-
+                
                 item.classList.add('active');
-
                 const targetId = item.getAttribute('data-tab');
                 document.getElementById(targetId).classList.add('active');
             });
+        });
+
+        // ③ チャットボットの全画面モーダル開閉
+        const openBtn = document.getElementById('open-bot-btn');
+        const closeBtn = document.getElementById('close-bot-btn');
+        const botModal = document.getElementById('bot-modal');
+
+        openBtn.addEventListener('click', () => {
+            botModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        });
+
+        closeBtn.addEventListener('click', () => {
+            botModal.classList.remove('active');
+            document.body.style.overflow = ''; 
         });
     </script>
 </body>
