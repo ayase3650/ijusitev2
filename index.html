@@ -229,22 +229,25 @@
             max-width: 450px; 
             margin: 0 auto 40px auto; 
             height: 600px;
-            border-radius: 30px; 
-            border: 6px solid var(--fugu-light);
+            /* 👇 overflow:hiddenを使わず、paddingで疑似的に枠を作る */
+            padding: 6px; 
             background-color: var(--fugu-light);
+            border-radius: 30px; 
             box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            /* 👇 暴走を枠内に閉じ込める */
-            overflow: hidden; 
-            overscroll-behavior: none; /* 連鎖的なスクロールを遮断 */
+            /* 👇 外枠をGPUでガッチリ固定 */
+            transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0,0,0);
         }
         
         .primary-bot-iframe { 
-            /* 👇 Safariの「勝手に巨大化するバグ」を防ぐ世界標準の裏技 */
-            width: 1px;
-            min-width: 100%;
+            display: block;
+            width: 100%; 
             height: 100%; 
             border: none; 
-            background: #fff; 
+            background-color: #fff; 
+            border-radius: 24px; /* iframe自身に角丸をつける */
+            /* 👇 Safariを騙す究極の魔法（独立したレイヤーとして強制描画させる） */
+            opacity: 0.99; 
         }
         /* 隠し扉（メール） */
         .last-resort-contact { text-align: center; background: var(--fugu-light); border-radius: 20px; }
@@ -549,7 +552,7 @@
 
            <!-- 👇 puku-hoverを削除しました -->
            <div class="primary-bot-wrapper">
-                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット" scrolling="no"></iframe>
+                <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="primary-bot-iframe" title="移住相談チャットボット"></iframe>
             </div>
 
             <!-- 隠し扉 -->
