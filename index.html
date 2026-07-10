@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHIMONOSEKI LIFE | 下関市 移住・定住ポータル</title>
-    <!-- 👇 余計な記号を消しました -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ＝＝＝ まん丸で可愛いフォント（Zen Maru Gothic） ＝＝＝ */
-        /* 👇 余計な記号を消しました */
         @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
         
         :root {
@@ -149,17 +147,12 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ＝＝＝ ぷくぷくカード（STEP 1） ＝＝＝ */
-        
         .support-section { margin-bottom: 120px; }
-        
-        /* 👇 隙間(gap)を30pxから20pxに少しだけ縮めました */
         .card-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; } 
         
         .card {
-            /* 👇 33.3%（3列用）から 25%（4列用）に計算式を変更しました！ */
             width: calc(25% - 15px); 
             background-color: var(--fugu-belly);
-            /* 👇 窮屈にならないよう内側の余白を微調整 */
             border-radius: 25px; padding: 30px 15px; text-align: center;
             border: 4px solid var(--fugu-belly);
             box-shadow: 0 10px 25px rgba(0, 180, 216, 0.05);
@@ -172,16 +165,18 @@
             font-size: 2.5rem;
         }
         .card h4 { font-size: 1.1rem; margin-bottom: 15px; color: var(--fugu-blue); height: 45px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
+        
+        /* 👇 文字溢れを防ぐため、少し文字を小さくして改行を許可 */
         .price-highlight {
             color: var(--fugu-fin); 
             font-weight: 900; 
-            font-size: 1.15rem;
+            font-size: 1.05rem; 
             margin-bottom: 20px; 
             background: #FFF3E0; 
             padding: 8px 5px;
             border-radius: 20px;
             letter-spacing: 0;
-            word-break: keep-all;
+            overflow-wrap: break-word; /* 枠に収まらない時は改行させる */
             line-height: 1.3;
         }
         .card p { font-size: 0.95rem; margin-bottom: 25px; text-align: left; flex-grow: 1; }
@@ -244,22 +239,61 @@
             box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
         }
 
-        /* ＝＝＝ 隠し扉（最終相談窓口） ＝＝＝ */
+        /* ＝＝＝ 隠し扉を常時表示（メール相談） ＝＝＝ */
         .last-resort-contact {
             background-color: var(--fugu-light); border-radius: 20px;
-            margin-top: 30px; padding: 20px; border: 3px dashed var(--fugu-blue);
+            margin-top: 40px; padding: 30px 20px; border: 3px dashed var(--fugu-blue);
+            max-width: 700px; margin-left: auto; margin-right: auto;
         }
-        .last-resort-contact summary {
-            font-weight: 900; color: var(--fugu-blue); cursor: pointer;
-            list-style: none; font-size: 1.05rem;
+        .last-resort-title {
+            font-weight: 900; color: var(--fugu-blue); font-size: 1.1rem; margin-bottom: 10px;
         }
-        .last-resort-contact summary::-webkit-details-marker { display: none; }
-        .last-resort-content { margin-top: 20px; padding-top: 20px; border-top: 2px dashed var(--fugu-blue); }
-        .warning-text { color: #E63946; font-weight: 900; font-size: 0.95rem; margin-bottom: 20px; }
+        .warning-text { color: var(--fugu-text); font-weight: 700; font-size: 0.95rem; margin-bottom: 20px; }
         .btn-last-resort {
-            display: inline-block; background-color: var(--fugu-blue); color: var(--fugu-belly);
+            display: inline-block; background-color: var(--fugu-text); color: var(--fugu-belly);
             padding: 15px 40px; border-radius: 40px; font-weight: 900;
-            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.2);
+        }
+        .btn-last-resort:hover { background-color: var(--fugu-fin); }
+
+        /* ＝＝＝ 全画面モーダル（ポップアップ） Safari白飛び対策版 ＝＝＝ */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex; justify-content: center; align-items: center; 
+            opacity: 0; visibility: hidden; 
+            transition: 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            width: 100%; max-width: 800px; height: 100%;
+            display: flex; flex-direction: column; background-color: #F7FBFC; /* チャットボットと同化させて白飛び防止 */
+            overflow: hidden;
+            /* 👇 Safariの描画バグを抑え込む魔法 */
+            transform: translateZ(0); -webkit-transform: translateZ(0);
+        }
+        
+        /* わかりやすい青いヘッダー */
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--fugu-blue);
+            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px; /* ノッチ対応 */
+            color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .modal-title { font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; }
+        .modal-title img { filter: brightness(0) invert(1); height: 1.5em; margin-right: 8px; } /* アイコンを白くする */
+        
+        .btn-close {
+            background-color: var(--fugu-text); color: var(--fugu-belly);
+            border: none; padding: 8px 18px; font-size: 0.95rem; font-weight: 900;
+            border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+        }
+        
+        .modal-iframe { 
+            flex-grow: 1; width: 100%; border: none; background-color: transparent; 
+            opacity: 0.99; /* Safari白飛び対策 */
         }
 
         /* ＝＝＝ ロード画面のスタイル ＝＝＝ */
@@ -290,34 +324,24 @@
         }
 
         /* ＝＝＝ MOVIEセクション ＝＝＝ */
-        .movie-section {
-            margin-bottom: 120px;
-        }
+        .movie-section { margin-bottom: 120px; }
         .movie-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9のアスペクト比を維持 */
-            height: 0;
-            border-radius: 30px;
-            overflow: hidden;
+            max-width: 800px; margin: 0 auto; position: relative;
+            padding-bottom: 56.25%; height: 0;
+            border-radius: 30px; overflow: hidden;
             border: 6px solid var(--fugu-light);
             box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            background-color: #fff;
-            transform: translateZ(0); 
+            background-color: #fff; transform: translateZ(0); 
         }
-        .movie-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
+        .movie-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 24px; }
+
+        /* 👇 ウィンドウを少し狭くした時に「2列」に早めに切り替えて文字溢れを防ぐ */
+        @media (max-width: 1024px) {
+            .card { width: calc(50% - 15px); }
         }
 
         /* スマホ対応 */
         @media (max-width: 768px) {
-            .card { width: calc(50% - 15px); }
             .top-alert-bar { flex-direction: column; padding: 12px 10px; text-align: center; gap: 10px; }
             .top-alert-bar span { display: block; font-size: 0.85rem; line-height: 1.5; }
             header { 
@@ -330,11 +354,19 @@
             body { padding-top: 210px; }
             .hero-copy h2 { font-size: 2.2rem; }
         }
-        @media (max-width: 500px) {
+        
+        /* スマホ画面で1列にする */
+        @media (max-width: 600px) {
             .card { width: 100%; }
             .seki-icon-lg { height: 1.8em; margin-right: 8px; }
             .tab-list { flex-wrap: wrap; gap: 10px; }
             .tab-item { flex: 0 0 calc(50% - 5px); padding: 10px 0; font-size: 0.85rem; }
+        }
+
+        /* PCでのモーダルデザイン（角丸） */
+        @media (min-width: 769px) {
+            .modal-content { height: 90vh; border-radius: 20px; }
+            .modal-header { padding: 15px 20px; /* PCではノッチ対応の余白を消す */ }
         }
     </style>
 </head>
@@ -354,7 +386,7 @@
     </div>
 
     <div class="top-alert-bar">
-        <span><img src="2.png" alt="せきまる" class="seki-icon"> ご相談の前に「移住相談ナビ」での自己診断にご協力をお願いします</span>
+        <span><img src="2.png" alt="せきまる" class="seki-icon"> まず1分で自己診断してみませんか？</span>
         <a href="#consult" class="btn-banner puku-hover">診断ナビを開く</a>
     </div>
 
@@ -397,7 +429,6 @@
                         <h4>移住支援金</h4>
                         <div class="price-highlight">最大 100万円 +α</div>
                         <p>東京23区から下関市へ移住し、対象の就職やテレワーク、起業などをされる方に交付しています！<br>（※18歳未満のお子様1人につき100万円加算！）</p>
-                        <!-- 👇 全てのリンクを綺麗に直しました！ -->
                         <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/1122.html" target="_blank" class="btn-detail">詳しく見る</a>
                     </div>
                     <div class="card puku-hover">
@@ -536,26 +567,29 @@
                 <h2 class="section-title">あなたに合う制度を診断</h2>
             </div>
             
-            <p style="font-weight: 700; margin-bottom: 30px;">窓口へご相談いただく前に、以下のナビで「どの制度の対象になるか」をご確認ください。</p>
+            <p style="font-weight: 700; margin-bottom: 30px;">まず1分で自己診断してみませんか？以下のナビで「どの制度の対象になるか」をご確認ください。</p>
 
             <div class="primary-bot-launch">
                 <img src="2.png" alt="せきまる" class="launch-icon puku-hover">
                 <h3 style="font-size: 1.5rem; color: var(--fugu-blue); font-weight: 900; margin-bottom: 10px;">移住相談チャットボット</h3>
                 <p style="font-weight: 700; margin-bottom: 25px;">いくつかの質問に答えるだけで、あなたにぴったりの補助金を診断します！</p>
-                <a href="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" target="_blank" rel="noopener noreferrer" class="btn-launch puku-hover" style="display: inline-block;">
-                    診断をスタートする <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i>
-                </a>
+                
+                <!-- 👇 ボタンに変更してモーダルを開くようにしました -->
+                <button id="open-bot-btn" class="btn-launch puku-hover">
+                    診断をスタートする <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size: 0.8em; margin-left: 5px;"></i>
+                </button>
             </div>
 
-            <details class="last-resort-contact">
-                <summary>▶︎ 診断ナビを使っても解決しなかった方・具体的な相談に進む方はこちら</summary>
+            <!-- 👇 常に開いているメール相談ブロックに変更しました -->
+            <div class="last-resort-contact">
+                <h4 class="last-resort-title">▶︎ 診断ナビを使っても解決しなかった方・具体的な相談に進む方はこちら</h4>
                 <div class="last-resort-content">
-                    <p class="warning-text">【重要】LiveHUBしものせきでのご相談をご希望の方は、<br>必ず「診断ナビの判定結果」を控えたうえでご連絡ください。</p>
+                    <p class="warning-text">解決しなかったら遠慮なくどうぞ！</p>
                     <a href="https://shimonoseki.works-go.com/form/f635312/" target="_blank" class="btn-last-resort puku-hover">
-                        診断結果を持ってメールで相談する
+                        メールで相談する
                     </a>
                 </div>
-            </details>
+            </div>
         </section>
 
         <!-- 🌟 MOVIEセクション -->
@@ -575,6 +609,18 @@
         </section>
 
     </main>
+
+    <!-- 🌟 全画面チャットボットモーダル（白飛び対策＆ヘッダー付き） -->
+    <div id="bot-modal" class="modal-overlay">
+        <div class="modal-content">
+            <!-- わかりやすい青いヘッダーと閉じるボタン -->
+            <div class="modal-header">
+                <div class="modal-title"><img src="2.png" alt="せきまる">移住相談ナビ</div>
+                <button id="close-bot-btn" class="btn-close"><i class="fa-solid fa-xmark"></i> 閉じる</button>
+            </div>
+            <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="modal-iframe" title="移住相談チャットボット"></iframe>
+        </div>
+    </div>
 
     <script>
         // ① ロード画面をフワッと消す処理
@@ -598,6 +644,21 @@
                 const targetId = item.getAttribute('data-tab');
                 document.getElementById(targetId).classList.add('active');
             });
+        });
+
+        // ③ チャットボットの全画面モーダル開閉
+        const openBtn = document.getElementById('open-bot-btn');
+        const closeBtn = document.getElementById('close-bot-btn');
+        const botModal = document.getElementById('bot-modal');
+
+        openBtn.addEventListener('click', () => {
+            botModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        });
+
+        closeBtn.addEventListener('click', () => {
+            botModal.classList.remove('active');
+            document.body.style.overflow = ''; 
         });
     </script>
 </body>
