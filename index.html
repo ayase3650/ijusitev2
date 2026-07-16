@@ -131,7 +131,7 @@
         /* ＝＝＝ ヒーローセクション ＝＝＝ */
         .hero {
             max-width: 1200px; margin: 0 auto 100px auto; height: 50vh;
-            background-image: url('fish_fugu_haku.png'); 
+            background-image: url('34218106_l.jpg'); 
             background-size: cover; background-position: center;
             border-radius: 60px;
             display: flex; align-items: center; justify-content: center;
@@ -140,7 +140,7 @@
         }
         .hero::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 180, 216, 0.3);
+            background: transparent;
         }
         .hero-copy { position: relative; z-index: 1; text-align: center; color: var(--fugu-belly); }
         .hero-copy h2 { font-size: 3rem; font-weight: 900; line-height: 1.3; text-shadow: 0 4px 15px rgba(3, 4, 94, 0.5); }
@@ -445,7 +445,8 @@
                 <h3 class="popular-title"><i class="fa-solid fa-crown" style="color: var(--fugu-fin);"></i> まずチェック！利用の多い支援制度</h3>
             </div>
             
-            <div class="card-grid" style="margin-bottom: 60px;">
+         <div class="card-grid" style="margin-bottom: 60px;">
+                <!-- 1. 移住支援金 -->
                 <div class="card puku-hover scroll-fade">
                     <div class="card-icon"><i class="fa-solid fa-children"></i></div>
                     <h4>移住支援金</h4>
@@ -453,20 +454,26 @@
                     <p>東京23区から下関市へ移住し、就職や起業等をされる方に交付。（※お子様加算あり）</p>
                     <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/1122.html" target="_blank" class="btn-detail">詳しく見る</a>
                 </div>
+                
+                <!-- 2. 暮らしサポート補助金 -->
                 <div class="card puku-hover scroll-fade delay-1">
-                    <div class="card-icon"><i class="fa-solid fa-house-circle-check"></i></div>
-                    <h4>住宅取得支援事業</h4>
-                    <div class="price-highlight">1世帯 30万円〜</div>
-                    <p>マイホームの建築や購入にかかる費用の一部を補助します。</p>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/70/134729.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    <div class="card-icon"><i class="fa-solid fa-house-user"></i></div>
+                    <h4>暮らしサポート補助金<br>（家賃補助）</h4>
+                    <div class="price-highlight">月額 1万円〜</div>
+                    <p>UIJターンした若者や子育て世帯に対し、最長2年間の家賃の一部を助成します。</p>
+                    <a href="https://www.shimonosekicitypromotion.jp/123148.html" target="_blank" class="btn-detail">詳しく見る</a>
                 </div>
+                
+                <!-- 3. YY!ターン交通費補助 -->
                 <div class="card puku-hover scroll-fade delay-2">
-                    <div class="card-icon"><i class="fa-solid fa-baby-carriage"></i></div>
-                    <h4>子育て支援・各種助成</h4>
-                    <div class="price-highlight">安心の子育て環境</div>
-                    <p>お子様の医療費助成や各種手当など、充実したサポート制度をご案内します。</p>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/44/134497.html" target="_blank" class="btn-detail">詳しく見る</a>
+                    <div class="card-icon"><i class="fa-solid fa-train"></i></div>
+                    <h4>YY!ターン交通費補助</h4>
+                    <div class="price-highlight">交通費を一部補助</div>
+                    <p>山口県外にお住まいの方が、移住のための住まい探しや就職活動等を行う際の往復交通費を補助します。</p>
+                    <a href="https://ymg-uji.jp/support/transportation/" target="_blank" class="btn-detail">詳しく見る</a>
                 </div>
+                
+                <!-- 4. お試し暮らし体験 -->
                 <div class="card puku-hover scroll-fade delay-3">
                     <div class="card-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
                     <h4>お試し暮らし体験</h4>
