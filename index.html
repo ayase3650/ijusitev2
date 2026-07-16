@@ -43,6 +43,12 @@
         }
         .seki-icon-lg { height: 2.2em; margin-right: 12px; margin-bottom: -5px; }
 
+        @keyframes sway {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
+        }
+        .seki-sway { animation: sway 3s ease-in-out infinite; }
+
         /* ＝＝＝ 🐡 背景のぷくぷく泡アニメーション ＝＝＝ */
         .ocean-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -76,6 +82,24 @@
             box-shadow: 0 15px 30px rgba(0, 180, 216, 0.3);
             z-index: 10; position: relative;
         }
+
+      /* 🌟 NEW: 要素ごとに順番にふわっと出るアニメーション */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(40px);
+            /* 👇 消える時は「スッ」と素早く隠してリセット完了させる */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .scroll-fade.appear {
+            opacity: 1;
+            transform: translateY(0);
+            /* 👇 現れる時は「フワッ」とゆっくり心地よく出す */
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        /* 👇 現れる時『だけ』時間差(ディレイ)をつける（消える時は一斉にリセット！） */
+        .scroll-fade.appear.delay-1 { transition-delay: 0.1s; }
+        .scroll-fade.appear.delay-2 { transition-delay: 0.2s; }
+        .scroll-fade.appear.delay-3 { transition-delay: 0.3s; }
 
         /* ＝＝＝ 追従バナー ＝＝＝ */
         .top-alert-bar {
@@ -132,6 +156,12 @@
         .step-badge.orange { background-color: var(--fugu-fin); box-shadow: 0 8px 20px rgba(255, 159, 28, 0.3); }
         .section-title { font-size: 2rem; font-weight: 900; }
 
+        .popular-title {
+            text-align: center; font-size: 1.3rem; color: var(--fugu-text); 
+            font-weight: 900; margin-bottom: 30px; padding: 10px;
+            background: rgba(255,255,255,0.5); border-radius: 20px; display: inline-block;
+        }
+
         /* ＝＝＝ 支援制度タブ切り替え ＝＝＝ */
         .tab-list { display: flex; gap: 15px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
         .tab-item {
@@ -166,7 +196,6 @@
         }
         .card h4 { font-size: 1.1rem; margin-bottom: 15px; color: var(--fugu-blue); height: 45px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
         
-        /* 👇 文字溢れを防ぐため、少し文字を小さくして改行を許可 */
         .price-highlight {
             color: var(--fugu-fin); 
             font-weight: 900; 
@@ -176,7 +205,7 @@
             padding: 8px 5px;
             border-radius: 20px;
             letter-spacing: 0;
-            overflow-wrap: break-word; /* 枠に収まらない時は改行させる */
+            overflow-wrap: break-word; 
             line-height: 1.3;
         }
         .card p { font-size: 0.95rem; margin-bottom: 25px; text-align: left; flex-grow: 1; }
@@ -225,18 +254,23 @@
             border: 5px solid rgba(255, 255, 255, 0.5);
         }
         
-        /* ＝＝＝ 起動ボタンエリア ＝＝＝ */
         .primary-bot-launch {
             background-color: var(--fugu-light); border-radius: 30px;
             padding: 40px 20px; text-align: center; max-width: 600px;
             margin: 0 auto 40px auto; border: 4px dashed var(--fugu-blue);
         }
         .launch-icon { width: 100px; margin-bottom: 15px; }
-        .btn-launch {
+        
+        @keyframes pulse-anim {
+            0% { box-shadow: 0 0 0 0 rgba(255, 159, 28, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 159, 28, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 159, 28, 0); }
+        }
+        .pulse-btn {
             background-color: var(--fugu-fin); color: var(--fugu-belly);
             font-size: 1.2rem; font-weight: 900; padding: 15px 40px;
             border: none; border-radius: 40px; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+            animation: pulse-anim 2s infinite; 
         }
 
         /* ＝＝＝ 隠し扉を常時表示（メール相談） ＝＝＝ */
@@ -256,7 +290,7 @@
         }
         .btn-last-resort:hover { background-color: var(--fugu-fin); }
 
-        /* ＝＝＝ 全画面モーダル（ポップアップ） Safari白飛び対策版 ＝＝＝ */
+        /* ＝＝＝ 全画面モーダル ＝＝＝ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
@@ -269,21 +303,19 @@
         
         .modal-content {
             width: 100%; max-width: 800px; height: 100%;
-            display: flex; flex-direction: column; background-color: #F7FBFC; /* チャットボットと同化させて白飛び防止 */
+            display: flex; flex-direction: column; background-color: #F7FBFC;
             overflow: hidden;
-            /* 👇 Safariの描画バグを抑え込む魔法 */
             transform: translateZ(0); -webkit-transform: translateZ(0);
         }
         
-        /* わかりやすい青いヘッダー */
         .modal-header {
             display: flex; justify-content: space-between; align-items: center;
             background-color: var(--fugu-blue);
-            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px; /* ノッチ対応 */
+            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px; 
             color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .modal-title { font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; }
-        .modal-title img { filter: brightness(0) invert(1); height: 1.5em; margin-right: 8px; } /* アイコンを白くする */
+        .modal-title img { filter: brightness(0) invert(1); height: 1.5em; margin-right: 8px; }
         
         .btn-close {
             background-color: var(--fugu-text); color: var(--fugu-belly);
@@ -293,35 +325,38 @@
         
         .modal-iframe { 
             flex-grow: 1; width: 100%; border: none; background-color: transparent; 
-            opacity: 0.99; /* Safari白飛び対策 */
+            opacity: 0.99; 
         }
 
-        /* ＝＝＝ ロード画面のスタイル ＝＝＝ */
+        /* ＝＝＝ ロード画面 ＝＝＝ */
+        /* ＝＝＝ ロード画面（控えめ・サクッと版） ＝＝＝ */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, var(--fugu-blue) 0%, #0077B6 100%);
+            background-color: var(--fugu-belly); /* 濃い青から、スッキリした白背景に変更 */
             z-index: 9999; 
             display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease; /* 消えるスピードも0.6秒→0.4秒に速める */
         }
         #loading-screen.loaded { opacity: 0; visibility: hidden; }
+        
         .loading-content {
-            text-align: center; color: var(--fugu-belly);
-            animation: float-dive 2s infinite ease-in-out;
+            text-align: center; color: var(--fugu-blue); /* 文字色を青に変更 */
+            /* 派手な上下アニメーションは削除してシンプルに */
         }
+        
         .loading-seki {
-            width: 130px; height: auto; margin-bottom: 20px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            width: 100px; /* サイズを少し小さく控えめに */
+            height: auto; margin-bottom: 15px;
+            /* 強い影も削除 */
         }
+        
         .loading-text {
-            font-size: 1.5rem; font-weight: 900; letter-spacing: 0.1em;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-size: 1.1rem; /* 文字サイズも控えめに */
+            font-weight: 900; letter-spacing: 0.1em;
         }
-        @keyframes float-dive {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        /* ※派手だった @keyframes float-dive はお役御免で削除しました！ */
+        
 
         /* ＝＝＝ MOVIEセクション ＝＝＝ */
         .movie-section { margin-bottom: 120px; }
@@ -335,19 +370,12 @@
         }
         .movie-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 24px; }
 
-        /* 👇 ウィンドウを少し狭くした時に「2列」に早めに切り替えて文字溢れを防ぐ */
-        @media (max-width: 1024px) {
-            .card { width: calc(50% - 15px); }
-        }
+        @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
-        /* スマホ対応 */
         @media (max-width: 768px) {
             .top-alert-bar { flex-direction: column; padding: 12px 10px; text-align: center; gap: 10px; }
             .top-alert-bar span { display: block; font-size: 0.85rem; line-height: 1.5; }
-            header { 
-                top: 105px; padding: 12px; border-radius: 20px; 
-                flex-direction: column; gap: 10px; 
-            }
+            header { top: 105px; padding: 12px; border-radius: 20px; flex-direction: column; gap: 10px; }
             .site-title { font-size: 1.4rem; }
             header nav ul { gap: 10px; }
             header nav a { font-size: 0.85rem; padding: 5px 8px; }
@@ -355,7 +383,6 @@
             .hero-copy h2 { font-size: 2.2rem; }
         }
         
-        /* スマホ画面で1列にする */
         @media (max-width: 600px) {
             .card { width: 100%; }
             .seki-icon-lg { height: 1.8em; margin-right: 8px; }
@@ -363,10 +390,9 @@
             .tab-item { flex: 0 0 calc(50% - 5px); padding: 10px 0; font-size: 0.85rem; }
         }
 
-        /* PCでのモーダルデザイン（角丸） */
         @media (min-width: 769px) {
             .modal-content { height: 90vh; border-radius: 20px; }
-            .modal-header { padding: 15px 20px; /* PCではノッチ対応の余白を消す */ }
+            .modal-header { padding: 15px 20px; }
         }
     </style>
 </head>
@@ -386,7 +412,7 @@
     </div>
 
     <div class="top-alert-bar">
-        <span><img src="2.png" alt="せきまる" class="seki-icon"> まず1分で自己診断してみませんか？</span>
+        <span><img src="2.png" alt="せきまる" class="seki-icon seki-sway"> まず1分で自己診断してみませんか？</span>
         <a href="#consult" class="btn-banner puku-hover">診断ナビを開く</a>
     </div>
 
@@ -396,26 +422,67 @@
             <ul>
                 <li><a href="#support" class="puku-hover">SUPPORT</a></li>
                 <li><a href="#faq" class="puku-hover">FAQ</a></li>
-                <li><a href="#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon">診断ナビ</a></li>
+                <li><a href="#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon seki-sway">診断ナビ</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="hero container">
         <div class="hero-copy">
-            <h2>しものせきに移住ダイブ！</h2>
+            <h2>しものせきに<br>移住ダイブ！</h2>
         </div>
     </div>
 
     <main class="container">
 
         <section class="support-section" id="support">
-            <div class="step-title-wrap">
-                <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 1</div>
+            <div class="step-title-wrap scroll-fade">
+                <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> STEP 1</div>
                 <h2 class="section-title">あなたをサポートする支援制度</h2>
             </div>
             
-            <ul class="tab-list">
+            <div style="text-align: center;" class="scroll-fade">
+                <h3 class="popular-title"><i class="fa-solid fa-crown" style="color: var(--fugu-fin);"></i> まずチェック！利用の多い支援制度</h3>
+            </div>
+            
+            <div class="card-grid" style="margin-bottom: 60px;">
+                <div class="card puku-hover scroll-fade">
+                    <div class="card-icon"><i class="fa-solid fa-children"></i></div>
+                    <h4>移住支援金</h4>
+                    <div class="price-highlight">最大 100万円 +α</div>
+                    <p>東京23区から下関市へ移住し、就職や起業等をされる方に交付。（※お子様加算あり）</p>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/6/1122.html" target="_blank" class="btn-detail">詳しく見る</a>
+                </div>
+                <div class="card puku-hover scroll-fade delay-1">
+                    <div class="card-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+                    <h4>住宅取得支援事業</h4>
+                    <div class="price-highlight">1世帯 30万円〜</div>
+                    <p>マイホームの建築や購入にかかる費用の一部を補助します。</p>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/70/134729.html" target="_blank" class="btn-detail">詳しく見る</a>
+                </div>
+                <div class="card puku-hover scroll-fade delay-2">
+                    <div class="card-icon"><i class="fa-solid fa-baby-carriage"></i></div>
+                    <h4>子育て支援・各種助成</h4>
+                    <div class="price-highlight">安心の子育て環境</div>
+                    <p>お子様の医療費助成や各種手当など、充実したサポート制度をご案内します。</p>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/44/134497.html" target="_blank" class="btn-detail">詳しく見る</a>
+                </div>
+                <div class="card puku-hover scroll-fade delay-3">
+                    <div class="card-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+                    <h4>お試し暮らし体験</h4>
+                    <div class="price-highlight">宿泊費 無料</div>
+                    <p>移住を検討中の方へ、生活環境を体験できる「お試し暮らし」をご用意しています。</p>
+                    <a href="https://www.shimonosekicitypromotion.jp/6193.html" target="_blank" class="btn-detail">詳しく見る</a>
+                </div>
+            </div>
+
+            <div style="text-align: center;" class="scroll-fade">
+                <h3 class="popular-title" style="background: transparent; color: var(--fugu-blue); font-size: 1.1rem;">
+                    <i class="fa-solid fa-magnifying-glass"></i> 目的別にすべての制度を探す
+                </h3>
+            </div>
+            
+            <ul class="tab-list scroll-fade delay-1">
                 <li class="tab-item active" data-tab="tab-city">大都市から</li>
                 <li class="tab-item" data-tab="tab-house">住まい・空き家</li>
                 <li class="tab-item" data-tab="tab-family">子育て・結婚</li>
@@ -525,30 +592,29 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <section class="top-faq-section" id="faq">
-            <div class="step-title-wrap">
-                <div class="step-badge"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 2</div>
+            <div class="step-title-wrap scroll-fade">
+                <div class="step-badge"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> STEP 2</div>
                 <h2 class="section-title">よくある質問で解決</h2>
             </div>
             
-            <details class="faq-item">
+            <details class="faq-item scroll-fade">
                 <summary class="faq-question">東京から移住するとお金がもらえると聞きました。</summary>
                 <div class="faq-answer">
                     <p>東京23区に在住または通勤していた方が下関市へ移住し、要件を満たす場合、単身60万円、世帯100万円の「移住支援金」が支給される可能性があります。<br>※受給を約束するものではなく、詳細は要綱でご確認ください。</p>
                 </div>
             </details>
 
-            <details class="faq-item">
+            <details class="faq-item scroll-fade delay-1">
                 <summary class="faq-question">移住前に下関の暮らしを体験できますか？</summary>
                 <div class="faq-answer">
                     <p>2泊3日から4泊5日まで、宿泊料無料で利用できる「お試し暮らし」制度がございます（40歳未満の方が１人でも含まれる世帯が対象）。</p>
                 </div>
             </details>
 
-            <details class="faq-item">
+            <details class="faq-item scroll-fade delay-2">
                 <summary class="faq-question">申請書類はLiveHUBしものせきに持っていけば申請完了ですか？</summary>
                 <div class="faq-answer">
                     <p>いいえ、LiveHUBしものせきにご提出いただいても申請完了にはなりません。申請書は市役所・県庁へご提出ください。<br>
@@ -556,32 +622,30 @@
                 </div>
             </details>
 
-            <div class="btn-more-wrapper">
+            <div class="btn-more-wrapper scroll-fade delay-3">
                 <a href="faq.html" class="btn-more puku-hover">よくある質問をさらに表示 <i class="fa-solid fa-angle-right"></i></a>
             </div>
         </section>
 
         <section class="bot-first-section" id="consult">
-            <div class="step-title-wrap">
-                <div class="step-badge orange"><img src="2.png" alt="せきまる" class="seki-icon seki-icon-lg"> STEP 3</div>
+            <div class="step-title-wrap scroll-fade">
+                <div class="step-badge orange"><img src="2.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> STEP 3</div>
                 <h2 class="section-title">あなたに合う制度を診断</h2>
             </div>
             
-            <p style="font-weight: 700; margin-bottom: 30px;">まず1分で自己診断してみませんか？以下のナビで「どの制度の対象になるか」をご確認ください。</p>
+            <p style="font-weight: 700; margin-bottom: 30px;" class="scroll-fade delay-1">まず1分で自己診断してみませんか？以下のナビで「どの制度の対象になるか」をご確認ください。</p>
 
-            <div class="primary-bot-launch">
-                <img src="2.png" alt="せきまる" class="launch-icon puku-hover">
+            <div class="primary-bot-launch scroll-fade delay-2">
+                <img src="2.png" alt="せきまる" class="launch-icon seki-sway">
                 <h3 style="font-size: 1.5rem; color: var(--fugu-blue); font-weight: 900; margin-bottom: 10px;">移住相談チャットボット</h3>
                 <p style="font-weight: 700; margin-bottom: 25px;">いくつかの質問に答えるだけで、あなたにぴったりの補助金を診断します！</p>
                 
-                <!-- 👇 ボタンに変更してモーダルを開くようにしました -->
-                <button id="open-bot-btn" class="btn-launch puku-hover">
+                <button id="open-bot-btn" class="pulse-btn">
                     診断をスタートする <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size: 0.8em; margin-left: 5px;"></i>
                 </button>
             </div>
 
-            <!-- 👇 常に開いているメール相談ブロックに変更しました -->
-            <div class="last-resort-contact">
+            <div class="last-resort-contact scroll-fade delay-3">
                 <h4 class="last-resort-title">▶︎ 診断ナビを使っても解決しなかった方・具体的な相談に進む方はこちら</h4>
                 <div class="last-resort-content">
                     <p class="warning-text">解決しなかったら遠慮なくどうぞ！</p>
@@ -592,28 +656,25 @@
             </div>
         </section>
 
-        <!-- 🌟 MOVIEセクション -->
         <section class="movie-section" id="movie">
-            <div class="step-title-wrap">
-                <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg"> MOVIE</div>
+            <div class="step-title-wrap scroll-fade">
+                <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> MOVIE</div>
                 <h2 class="section-title">動画で知る、しものせき</h2>
             </div>
             
-            <p style="text-align: center; font-weight: 700; margin-bottom: 30px;">
+            <p style="text-align: center; font-weight: 700; margin-bottom: 30px;" class="scroll-fade delay-1">
                 下関のリアルな暮らしや、先輩移住者の声をお届けします！
             </p>
 
-            <div class="movie-wrapper puku-hover">
+            <div class="movie-wrapper puku-hover scroll-fade delay-2">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/fzg0FKdcxyA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="movie-iframe"></iframe>
             </div>
         </section>
 
     </main>
 
-    <!-- 🌟 全画面チャットボットモーダル（白飛び対策＆ヘッダー付き） -->
     <div id="bot-modal" class="modal-overlay">
         <div class="modal-content">
-            <!-- わかりやすい青いヘッダーと閉じるボタン -->
             <div class="modal-header">
                 <div class="modal-title"><img src="2.png" alt="せきまる">移住相談ナビ</div>
                 <button id="close-bot-btn" class="btn-close"><i class="fa-solid fa-xmark"></i> 閉じる</button>
@@ -628,7 +689,28 @@
             const loader = document.getElementById('loading-screen');
             setTimeout(() => {
                 loader.classList.add('loaded');
-            }, 1500);
+            }, 200);
+        });
+
+        // 🌟 個別の塊を順番にフワッと表示させる処理
+       // 🌟 個別の塊を順番にフワッと表示させる処理
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 画面に入ったら表示
+                    entry.target.classList.add('appear');
+                } else {
+                    // 👇 完全に画面外に出た瞬間にリセットする
+                    entry.target.classList.remove('appear');
+                }
+            });
+        }, { 
+            /* 👇 「1ピクセルでも画面外に出たら」に判定を厳しく変更 */
+            threshold: 0 
+        }); 
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
         });
 
         // ② タブ切り替えのコード
