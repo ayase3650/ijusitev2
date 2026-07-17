@@ -374,26 +374,28 @@
 
         @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
-        /* スマホ対応 */
-       
+       /* スマホ対応 */
         @media (max-width: 768px) {
-            .top-alert-bar { flex-direction: column; padding: 6px 10px; text-align: center; gap: 4px; }
-            .top-alert-bar span { display: block; font-size: 0.85rem; line-height: 1.5; }
+            /* 👇 オレンジバナーを「横並び」にして極限までスリムに！ */
+            .top-alert-bar { flex-direction: row; padding: 6px 10px; gap: 8px; }
+            .top-alert-bar span { display: flex; font-size: 0.75rem; line-height: 1.2; }
+            .top-alert-bar .seki-icon { height: 1.4em; margin-right: 4px; }
+            .btn-banner { padding: 4px 10px; font-size: 0.75rem; white-space: nowrap; }
             
-            /* 👇 SHIMONOSEKI LIFE ヘッダーをスリムに！ */
+            /* 👇 SHIMONOSEKI LIFE ヘッダーをさらに上に詰める */
             header { 
-                top: 70px; /* オレンジバナーが細くなった分、位置を上に詰める */
-                padding: 8px 15px; /* 上下の余白をガッツリ削る */
+                top: 40px; /* バナーが細くなった分、さらに上に引き上げ！ */
+                padding: 8px 15px; 
                 border-radius: 20px; 
                 flex-direction: column; 
-                gap: 5px; /* タイトルとメニューボタンの隙間を詰める */
+                gap: 5px; 
             }
-            .site-title { font-size: 1.3rem; } /* タイトル文字を少しだけ小さく */
+            .site-title { font-size: 1.3rem; }
             header nav ul { gap: 8px; }
-            header nav a { font-size: 0.85rem; padding: 4px 8px; } /* ボタンも少しコンパクトに */
+            header nav a { font-size: 0.85rem; padding: 4px 8px; }
             
-            /* 👇 ヘッダーたちが細くなった分、写真のスタート位置も上に引き上げる */
-            body { padding-top: 160px; } 
+            /* 👇 本文（写真）のスタート位置も上に詰める */
+            body { padding-top: 130px; } 
             
             .hero-copy h2 { font-size: 2.2rem; }
         }
