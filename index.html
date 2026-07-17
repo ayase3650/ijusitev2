@@ -101,18 +101,20 @@
         .scroll-fade.appear.delay-2 { transition-delay: 0.2s; }
         .scroll-fade.appear.delay-3 { transition-delay: 0.3s; }
 
-        /* ＝＝＝ 追従バナー ＝＝＝ */
+       /* ＝＝＝ 追従バナー ＝＝＝ */
         .top-alert-bar {
             position: fixed; top: 0; left: 0; width: 100%;
             background-color: var(--fugu-fin); color: var(--fugu-belly);
             z-index: 1005; display: flex; justify-content: center; align-items: center;
-            padding: 10px 15px; font-size: 0.95rem; font-weight: 900;
+            /* 👇 padding（上下の余白）を 10px から 5px に減らしました */
+            padding: 5px 15px; font-size: 0.95rem; font-weight: 900;
             box-shadow: 0 4px 15px rgba(255, 159, 28, 0.4); gap: 15px;
         }
         .top-alert-bar span { display: flex; align-items: center; }
         .btn-banner {
             background-color: var(--fugu-belly); color: var(--fugu-fin);
-            padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 900;
+            /* 👇 ボタンの上下の余白も 8px から 5px に減らしました */
+            padding: 5px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 900;
         }
 
         /* ＝＝＝ 丸っこいヘッダー ＝＝＝ */
@@ -372,8 +374,10 @@
 
         @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
+        /* スマホ対応 */
         @media (max-width: 768px) {
-            .top-alert-bar { flex-direction: column; padding: 12px 10px; text-align: center; gap: 10px; }
+            /* 👇 paddingを減らし、要素の隙間(gap)も詰めてスリムにしました */
+            .top-alert-bar { flex-direction: column; padding: 6px 10px; text-align: center; gap: 4px; }
             .top-alert-bar span { display: block; font-size: 0.85rem; line-height: 1.5; }
             header { top: 105px; padding: 12px; border-radius: 20px; flex-direction: column; gap: 10px; }
             .site-title { font-size: 1.4rem; }
