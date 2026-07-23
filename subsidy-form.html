@@ -46,11 +46,12 @@
         .form-group {
             margin-bottom: 25px;
         }
-        .form-label {
+       .form-label {
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
             color: #1a1a1a;
+            line-height: 1.6; /* スマホで改行された時の行間を綺麗に保つ */
         }
         .required-badge {
             background-color: #e63946;
@@ -60,6 +61,8 @@
             border-radius: 4px;
             margin-left: 10px;
             vertical-align: middle;
+            display: inline-block; /* 追加：バッジをひとかたまりのブロックとして扱う */
+            white-space: nowrap; /* 追加：バッジ内での文字の折り返し（改行）を禁止する */
         }
         .optional-badge {
             background-color: #6c757d;
@@ -69,6 +72,8 @@
             border-radius: 4px;
             margin-left: 10px;
             vertical-align: middle;
+            display: inline-block; /* 追加 */
+            white-space: nowrap; /* 追加 */
         }
         .form-control {
             width: 100%;
