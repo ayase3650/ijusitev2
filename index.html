@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Fonts Icons (Material Symbols Outlined) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHIMONOSEKI LIFE | 下関市 移住・定住ポータル</title>
@@ -428,9 +430,11 @@
         <div class="bubble"></div><div class="bubble"></div>
     </div>
 
+   <!-- 追従バナー -->
     <div class="top-alert-bar">
-        <span><img src="2.png" alt="せきまる" class="seki-icon seki-sway"> まず1分で自己診断してみませんか？</span>
-        <a href="#consult" class="btn-banner puku-hover">診断ナビを開く</a>
+        <span> 移住の準備・手続きはこちら！</span>
+        <a href="#" class="btn-banner">診断ナビ</a>
+        <a href="application.html" class="btn-banner">各種申請</a>
     </div>
 
     <header>
@@ -439,6 +443,7 @@
             <ul>
                 <li><a href="#support" class="puku-hover">SUPPORT</a></li>
                 <li><a href="#faq" class="puku-hover">FAQ</a></li>
+                <li><a href="application.html">各種申請</a></li>
                 <li><a href="#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon seki-sway">診断ナビ</a></li>
             </ul>
         </nav>
@@ -624,8 +629,8 @@
                 <h2 class="section-title">よくある質問で解決</h2>
             </div>
             
-            <details class="faq-item scroll-fade">
-                <summary class="faq-question">東京から移住するとお金がもらえると聞きました。</summary>
+           <details class="faq-item scroll-fade">
+             <summary class="faq-question">移住したらお金がもらえると聞きました。</summary>
                 <div class="faq-answer">
                     <p>東京23区に在住または通勤していた方が下関市へ移住し、要件を満たす場合、単身60万円、世帯100万円の「移住支援金」が支給される可能性があります。<br>※受給を約束するものではなく、詳細は要綱でご確認ください。</p>
                 </div>
@@ -679,8 +684,25 @@
                 </div>
             </div>
         </section>
+        
 
-        <section class="movie-section" id="movie">
+     <!-- ＝＝＝ 各種申請への誘導（修正版） ＝＝＝ -->
+        <div style="max-width: 800px; margin: 20px auto 80px auto; padding: 40px 20px; background: rgba(255, 255, 255, 0.95); border-radius: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0, 180, 216, 0.1);">
+            <h2 style="font-size: 1.8rem; color: #00b4d8; font-weight: 900; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 2.2rem;">description</span>
+                各種申請はこちら
+            </h2>
+            <p style="font-weight: 700; color: #333; margin-bottom: 30px; line-height: 1.6;">移住支援金やお試し暮らしなど、各種手続き・申請はこちらのページから行えます。</p>
+            
+            <a href="application.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #ff9f1c; color: #fff; padding: 15px 40px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 159, 28, 0.4); transition: transform 0.3s;">
+                各種申請ページへ進む
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+        <!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+
+        <!-- MOVIEセクション -->
+        <section class="section-container">
             <div class="step-title-wrap scroll-fade">
                 <div class="step-badge"><img src="7.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> MOVIE</div>
                 <h2 class="section-title">動画で知る、しものせき</h2>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暮らしサポート補助金 申請フォーム | SHIMONOSEKI LIFE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        :root {
+            --fugu-blue: #00b4d8;
+            --fugu-fin: #ff9f1c;
+            --text-main: #333333;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-main);
+            background: linear-gradient(135deg, #e0fbfc 0%, #90e0ef 100%);
+            margin: 0;
+            padding: 60px 20px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.15);
+        }
+        .form-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--fugu-blue);
+            margin-bottom: 30px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+        .form-desc {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .required-badge {
+            background-color: #e63946;
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+            margin-bottom: 10px;
+        }
+        .radio-check-list label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .radio-check-list input[type="radio"],
+        .radio-check-list input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+        .file-note {
+            font-size: 0.85rem;
+            color: #d90429;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--fugu-fin);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 40px;
+        }
+        .submit-btn:hover {
+            transform: scale(1.02);
+            background-color: #e38a15;
+        }
+        .contact-info {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            text-align: right;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2 class="form-title">
+            <span class="material-symbols-outlined" style="font-size: 2rem;">maps_home_work</span>
+            暮らしサポート補助金 申請フォーム
+        </h2>
+
+        <form id="lifeSupportForm">
+            
+            <!-- 1. 対象区分（ラジオボタン） -->
+            <div class="form-group">
+                <label class="form-label">対象区分を選んでください <span class="required-badge">必須</span></label>
+                <p class="form-desc">※移住相談窓口等を通じて令和７年４月１日以降にUJIターンした世帯</p>
+                <div class="radio-check-list">
+                    <label><input type="radio" name="target_type" value="39歳以下" required> 世帯主の年齢が39歳以下の世帯</label>
+                    <label><input type="radio" name="target_type" value="中学生以下" required> 中学生以下の子供がいる世帯</label>
+                </div>
+            </div>
+
+            <!-- 2. 全て該当する項目（チェックボックス） -->
+            <div class="form-group">
+                <label class="form-label">該当する項目にチェックしてください <span class="required-badge">必須</span></label>
+                <p class="form-desc">※項目すべて該当される方が対象になります。（4個まで選択可能）</p>
+                <div class="radio-check-list" id="all-check-group">
+                    <label><input type="checkbox" class="check-all-req" value="転入後6ヶ月以内"> 転入後6ヶ月以内である</label>
+                    <label><input type="checkbox" class="check-all-req" value="1年以上市外"> 直近1年以上継続して市外に居住していた</label>
+                    <label><input type="checkbox" class="check-all-req" value="5年以上居住"> 申請日より5年以上継続して本市に居住する意思がある</label>
+                    <label><input type="checkbox" class="check-all-req" value="民間賃貸"> 民間賃貸住宅に住んでいる</label>
+                </div>
+            </div>
+
+            <!-- 3. どれか該当する項目（チェックボックス） -->
+            <div class="form-group">
+                <label class="form-label">対象区分を選択してください <span class="required-badge">必須</span></label>
+                <p class="form-desc">※転入2年以内に以下の内容のどれかが確認できた方（6個まで選択可）</p>
+                <div class="radio-check-list" id="any-check-group">
+                    <label><input type="checkbox" class="check-any-req" value="YYターン"> YYターン補助金の証明書を発行した</label>
+                    <label><input type="checkbox" class="check-any-req" value="お試し暮らし"> お試し暮らしを利用した</label>
+                    <label><input type="checkbox" class="check-any-req" value="移住フェア"> 移住フェアで個別相談した</label>
+                    <label><input type="checkbox" class="check-any-req" value="体験ツアー"> 移住体験ツアーに参加した</label>
+                    <label><input type="checkbox" class="check-any-req" value="相談者台帳"> 相談者台帳に記載され2回以上のやりとりを経て移住した</label>
+                    <label><input type="checkbox" class="check-any-req" value="やまぐち暮らし"> やまぐち暮らし支援センターと連携して移住した</label>
+                </div>
+                <p style="color: var(--fugu-blue); font-weight: bold; font-size: 0.9rem; margin-top: 15px;">
+                    <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2rem;">info</span>
+                    上記の必須条件を満たした方のみ、続きの入力項目が表示されます。
+                </p>
+            </div>
+
+            <!-- ＝＝＝ ここから隠しブロック（条件を満たすと表示） ＝＝＝ -->
+            <div id="hidden-section" style="display: none;">
+                <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #00b4d8;">
+                
+                <h3 style="color: var(--fugu-blue); text-align: center; margin-bottom: 30px;">個人情報の入力</h3>
+
+                <div class="form-group">
+                    <label class="form-label">氏名 <span class="required-badge">必須</span></label>
+                    <input type="text" class="form-control basic-info" placeholder="例：下関 太郎">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">住所 <span class="required-badge">必須</span></label>
+                    <input type="text" class="form-control basic-info" placeholder="例：下関市南部町1-1">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">電話番号 <span class="required-badge">必須</span></label>
+                    <input type="tel" class="form-control basic-info" placeholder="例：090-1234-5678">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">メールアドレス <span class="required-badge">必須</span></label>
+                    <input type="email" id="email1" class="form-control basic-info" placeholder="例：sample@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">メールアドレス（確認用） <span class="required-badge">必須</span></label>
+                    <input type="email" id="email2" class="form-control basic-info" placeholder="確認のためもう一度入力してください">
+                </div>
+
+                <h3 style="color: var(--fugu-blue); text-align: center; margin-top: 40px; margin-bottom: 30px;">
+                    <span class="material-symbols-outlined" style="vertical-align: middle;">upload_file</span>
+                    暮らしサポート補助金の申請書類はこちらに添付してください
+                </h3>
+
+                <!-- 提出方法の選択 -->
+                <div class="form-group">
+                    <label class="form-label">提出方法を選んでください <span class="required-badge">必須</span></label>
+                    <div class="radio-check-list">
+                        <label><input type="radio" name="submit_method" value="zip" id="method-zip"> 暮らしサポート補助金交付申請書一式すべて圧縮ファイルで提出される方</label>
+                        <label><input type="radio" name="submit_method" value="individual" id="method-ind"> 書類ごとに添付される方</label>
+                    </div>
+                </div>
+
+                <!-- 添付：圧縮ファイル用 -->
+                <div id="upload-zip-section" class="form-group" style="display: none; background-color: #fff3cd; border-color: #ffe69c;">
+                    <label class="form-label">暮らしサポート補助金一式全て圧縮ファイルで提出される方</label>
+                    <p class="file-note">こちらに添付してください（最大アップロードサイズ：10MB）</p>
+                    <input type="file" id="file-zip" class="form-control file-check" accept=".zip,.rar,.7z">
+                    <span class="required-badge" style="display: inline-block; margin-top: 5px;">必須</span>
+                </div>
+
+                <!-- 添付：個別ファイル用 -->
+                <div id="upload-ind-section" style="display: none;">
+                    <div class="form-group" style="background-color: #e0fbfc; border-color: #90e0ef;">
+                        <label class="form-label">以下全てにファイルを選択してください。<br><span style="font-size:0.9rem; color:#555; font-weight:normal;">（最大アップロードサイズ：各10MB）</span></label>
+                        
+                        <label style="font-weight:bold; display:block; margin-top:15px;">暮らしサポート補助金交付申請書 <span class="required-badge">必須</span></label>
+                        <input type="file" class="form-control file-check ind-file">
+                        
+                        <label style="font-weight:bold; display:block; margin-top:15px;">賃貸借契約書の写し <span class="required-badge">必須</span></label>
+                        <input type="file" class="form-control file-check ind-file">
+                        
+                        <label style="font-weight:bold; display:block; margin-top:15px;">移住後の住民票の写し <span class="required-badge">必須</span></label>
+                        <input type="file" class="form-control file-check ind-file">
+                        
+                        <label style="font-weight:bold; display:block; margin-top:15px;">市税滞納なし証明書の写し <span class="required-badge">必須</span></label>
+                        <input type="file" class="form-control file-check ind-file">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">申請内容を送信する</button>
+            </div>
+            <!-- ＝＝＝ 隠しブロック ここまで ＝＝＝ -->
+
+        </form>
+
+        <!-- お問い合わせ先 -->
+        <div class="contact-info">
+            <div style="font-weight: bold; color: var(--fugu-blue); margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-end; gap: 5px;">
+                <span class="material-symbols-outlined">support_agent</span> お問い合わせ先
+            </div>
+            部署名：総合政策部 共創イノベーション課<br>
+            電話番号：083-231-5838<br>
+            メール：<a href="mailto:ssareavi@city.shimonoseki.yamaguchi.jp" style="color: var(--fugu-blue); text-decoration: none;">ssareavi@city.shimonoseki.yamaguchi.jp</a>
+        </div>
+
+    </div>
+
+    <!-- 制御用JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 条件要素の取得
+            const allReqChecks = document.querySelectorAll('.check-all-req');
+            const anyReqChecks = document.querySelectorAll('.check-any-req');
+            const hiddenSection = document.getElementById('hidden-section');
+            const basicInfos = document.querySelectorAll('.basic-info');
+
+            // 添付方法要素の取得
+            const methodZip = document.getElementById('method-zip');
+            const methodInd = document.getElementById('method-ind');
+            const uploadZipSection = document.getElementById('upload-zip-section');
+            const uploadIndSection = document.getElementById('upload-ind-section');
+            const fileZip = document.getElementById('file-zip');
+            const indFiles = document.querySelectorAll('.ind-file');
+
+            // --- 1. 条件による隠しフォームの表示制御 ---
+            function checkConditions() {
+                // 「全て該当」が4つすべてチェックされているか
+                const isAllChecked = Array.from(allReqChecks).every(cb => cb.checked);
+                // 「どれか該当」が1つ以上チェックされているか
+                const isAnyChecked = Array.from(anyReqChecks).some(cb => cb.checked);
+
+                if (isAllChecked && isAnyChecked) {
+                    hiddenSection.style.display = 'block';
+                    // 表示されたら基本情報に必須属性を付与
+                    basicInfos.forEach(input => input.setAttribute('required', 'required'));
+                } else {
+                    hiddenSection.style.display = 'none';
+                    // 隠れている時は必須属性を外す（送信エラー防止のため）
+                    basicInfos.forEach(input => input.removeAttribute('required'));
+                }
+            }
+
+            // チェックボックスに変更があるたびに判定
+            allReqChecks.forEach(cb => cb.addEventListener('change', checkConditions));
+            anyReqChecks.forEach(cb => cb.addEventListener('change', checkConditions));
+
+            // --- 2. 提出方法のラジオボタンによる添付フォームの切り替え ---
+            function toggleUploadMethod() {
+                if (methodZip.checked) {
+                    uploadZipSection.style.display = 'block';
+                    uploadIndSection.style.display = 'none';
+                    fileZip.setAttribute('required', 'required');
+                    indFiles.forEach(f => f.removeAttribute('required'));
+                } else if (methodInd.checked) {
+                    uploadZipSection.style.display = 'none';
+                    uploadIndSection.style.display = 'block';
+                    fileZip.removeAttribute('required');
+                    indFiles.forEach(f => f.setAttribute('required', 'required'));
+                }
+            }
+
+            methodZip.addEventListener('change', toggleUploadMethod);
+            methodInd.addEventListener('change', toggleUploadMethod);
+
+            // --- 3. 送信時のチェック（メール一致＆ファイルサイズ） ---
+            document.getElementById('lifeSupportForm').addEventListener('submit', function(event) {
+                // メール確認
+                const email1 = document.getElementById('email1').value;
+                const email2 = document.getElementById('email2').value;
+                if (email1 !== email2) {
+                    alert('確認用のメールアドレスが一致しません。もう一度ご確認ください。');
+                    event.preventDefault();
+                    return;
+                }
+
+                // ファイルサイズ確認 (10MB)
+                const fileInputs = document.querySelectorAll('.file-check');
+                const maxSize = 10 * 1024 * 1024; 
+                for (let input of fileInputs) {
+                    if (input.files.length > 0) {
+                        if (input.files[0].size > maxSize) {
+                            alert('ファイルサイズが10MBを超えているものがあります。ファイルを軽くして再度お試しください。');
+                            event.preventDefault();
+                            return;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

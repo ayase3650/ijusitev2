@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移住支援金 申請フォーム | SHIMONOSEKI LIFE</title>
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        :root {
+            --fugu-blue: #00b4d8;
+            --fugu-belly: #f8f9fa;
+            --fugu-fin: #ff9f1c;
+            --text-main: #333333;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-main);
+            background: linear-gradient(135deg, #e0fbfc 0%, #90e0ef 100%);
+            margin: 0;
+            padding: 60px 20px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.15);
+        }
+        .form-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--fugu-blue);
+            margin-bottom: 30px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+        .required-badge {
+            background-color: #e63946;
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .optional-badge {
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .file-note {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .file-input-wrapper {
+            background-color: #f1f3f5;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #adb5bd;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--fugu-fin);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 40px;
+        }
+        .submit-btn:hover {
+            transform: scale(1.02);
+            background-color: #e38a15;
+        }
+        .contact-info {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            text-align: right;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+        .contact-title {
+            font-weight: bold;
+            color: var(--fugu-blue);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+       <h2 class="form-title">
+            <span class="material-symbols-outlined" style="font-size: 2rem;">edit_document</span>
+            移住支援金 申請フォーム
+        </h2>
+
+        <form id="subsidyForm">
+            <!-- 支援金の種類 -->
+            <div class="form-group">
+                <label class="form-label">どの移住支援金の申請ですか？ <span class="required-badge">必須</span></label>
+                <select class="form-control" required>
+                    <option value="">選択してください</option>
+                    <option value="1">東京圏からの移住を後押し！移住支援金</option>
+                    <option value="2">大都市からの移住を後押し！下関市やまぐち創生テレワーク移住支援事業補助金</option>
+                </select>
+            </div>
+
+            <!-- お名前 -->
+            <div class="form-group">
+                <label class="form-label">お名前 <span class="required-badge">必須</span></label>
+                <input type="text" class="form-control" maxlength="200" placeholder="例：下関 太郎" required>
+            </div>
+
+            <!-- 電話番号 -->
+            <div class="form-group">
+                <label class="form-label">電話番号 <span class="required-badge">必須</span></label>
+                <input type="tel" class="form-control" maxlength="200" placeholder="例：090-1234-5678" required>
+            </div>
+
+            <!-- メールアドレス -->
+            <div class="form-group">
+                <label class="form-label">メールアドレス <span class="required-badge">必須</span></label>
+                <input type="email" id="email1" class="form-control" placeholder="例：sample@example.com" required>
+            </div>
+
+            <!-- メールアドレス（確認用） -->
+            <div class="form-group">
+                <label class="form-label">メールアドレス（確認用） <span class="required-badge">必須</span></label>
+                <input type="email" id="email2" class="form-control" placeholder="確認のためもう一度入力してください" required>
+            </div>
+
+            <hr style="margin: 40px 0; border: 0; border-top: 1px dashed #ccc;">
+
+            <div class="form-group">
+                <h3 style="font-size: 1.1rem; color: var(--fugu-blue);">申請書類の添付</h3>
+                <p class="file-note">
+                    <span class="material-symbols-outlined" style="font-size: 1em; vertical-align: middle;">info</span>
+                    最大アップロードサイズは各ファイル 10MB です。
+                </p>
+            </div>
+
+            <!-- 一括アップロード（圧縮ファイル） -->
+            <div class="form-group">
+                <label class="form-label">全ての申請書類を圧縮ファイルで提出される方はこちら <span class="required-badge" id="zip-badge">必須</span></label>
+                <p class="file-note" style="color: #d90429; font-weight: bold;">※全ての申請書類を圧縮ファイルで提出される方は、以下の個別項目の入力は不要です。</p>
+                <div class="file-input-wrapper">
+                    <input type="file" id="file-zip" class="file-check" accept=".zip,.rar,.7z">
+                </div>
+            </div>
+
+            <p style="text-align: center; font-weight: bold; margin: 30px 0;">ーー または ーー</p>
+
+            <!-- 個別アップロード（必須） -->
+            <div class="form-group">
+                <label class="form-label">世帯全員の転入後の住民票の写し <span class="required-badge individual-badge">必須</span></label>
+                <input type="file" id="file-1" class="form-control file-check individual-req" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">転入前の住所に係る住民票の除票の写しまたは戸籍の附票 <span class="required-badge individual-badge">必須</span></label>
+                <input type="file" id="file-2" class="form-control file-check individual-req" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">市税の滞納がないことが分かる書類の写し <span class="required-badge individual-badge">必須</span></label>
+                <input type="file" id="file-3" class="form-control file-check individual-req" required>
+            </div>
+
+            <!-- 個別アップロード（対象者のみ） -->
+            <div class="form-group">
+                <label class="form-label">対象地域の大学等の卒業証明書の写し <span class="optional-badge">対象者のみ</span></label>
+                <input type="file" class="form-control file-check">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">就業証明書 <span class="optional-badge">対象者のみ</span></label>
+                <input type="file" class="form-control file-check">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">就業証明書（テレワーク） <span class="optional-badge">対象者のみ</span></label>
+                <input type="file" class="form-control file-check">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">創業補助金の交付決定通知書の写し <span class="optional-badge">対象者のみ</span></label>
+                <input type="file" class="form-control file-check">
+            </div>
+
+            <button type="submit" class="submit-btn">申請内容を送信する</button>
+
+        </form>
+
+        <!-- お問い合わせ先 -->
+        <div class="contact-info">
+            <div class="contact-title">
+                <span class="material-symbols-outlined">support_agent</span>
+                お問い合わせ先
+            </div>
+            部署名：総合政策部 共創イノベーション課<br>
+            電話番号：083-231-5838<br>
+            メール：<a href="mailto:ssareavi@city.shimonoseki.yamaguchi.jp" style="color: var(--fugu-blue);">ssareavi@city.shimonoseki.yamaguchi.jp</a>
+        </div>
+
+    </div>
+
+    <!-- フォーム制御用のJavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const zipInput = document.getElementById('file-zip');
+            const individualReqInputs = document.querySelectorAll('.individual-req');
+            const individualBadges = document.querySelectorAll('.individual-badge');
+            const zipBadge = document.getElementById('zip-badge');
+
+            // 圧縮ファイルが選択されたら、個別ファイルの「必須」を解除する処理
+            zipInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    // 圧縮ファイルあり：個別は必須解除
+                    individualReqInputs.forEach(input => input.removeAttribute('required'));
+                    individualBadges.forEach(badge => {
+                        badge.textContent = '任意';
+                        badge.style.backgroundColor = '#6c757d'; // グレーに変更
+                    });
+                    zipBadge.textContent = '必須';
+                    zipBadge.style.backgroundColor = '#e63946'; // 赤にする
+                } else {
+                    // 圧縮ファイルなし：個別を必須に戻す
+                    individualReqInputs.forEach(input => input.setAttribute('required', 'required'));
+                    individualBadges.forEach(badge => {
+                        badge.textContent = '必須';
+                        badge.style.backgroundColor = '#e63946';
+                    });
+                }
+            });
+
+            // フォーム送信時のチェック処理
+            document.getElementById('subsidyForm').addEventListener('submit', function(event) {
+                
+                // 1. メールアドレスの一致チェック
+                const email1 = document.getElementById('email1').value;
+                const email2 = document.getElementById('email2').value;
+                if (email1 !== email2) {
+                    alert('確認用のメールアドレスが一致しません。もう一度ご確認ください。');
+                    event.preventDefault(); // 送信をストップ
+                    return;
+                }
+
+                // 2. ファイルサイズのチェック（10MB = 10485760バイト）
+                const fileInputs = document.querySelectorAll('.file-check');
+                const maxSize = 10 * 1024 * 1024; 
+                for (let input of fileInputs) {
+                    if (input.files.length > 0) {
+                        if (input.files[0].size > maxSize) {
+                            alert('ファイルサイズが10MBを超えているものがあります。ファイルを軽くして再度お試しください。');
+                            event.preventDefault();
+                            return;
+                        }
+                    }
+                }
+
+                // 全てクリアした場合のみ送信される
+            });
+        });
+    </script>
+</body>
+</html>
