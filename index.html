@@ -305,11 +305,31 @@
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
+       /* ＝＝＝ 全画面モーダル ＝＝＝ */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex; justify-content: center; align-items: center; 
+            opacity: 0; visibility: hidden; 
+            transition: 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
         .modal-content {
             width: 100%; max-width: 800px; height: 100%;
-            display: flex; flex-direction: column; background-color: #F7FBFC;
+            display: flex; flex-direction: column; 
+            background-color: #F7FBFC; /* チャットの背景色 */
             overflow: hidden;
-            transform: translateZ(0); -webkit-transform: translateZ(0);
+            
+            /* スマホのハードウェアアクセラレーション（GPU描画）を強力に効かせてチラつきを防ぐ */
+            transform: translateZ(0); 
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            
+            /* スマホでタップした際にボタンが一瞬グレー/白く光る仕様を無効化 */
+            -webkit-tap-highlight-color: transparent;
         }
         
         .modal-header {
@@ -328,9 +348,11 @@
         }
         
         .modal-iframe { 
-            flex-grow: 1; width: 100%; border: none; background-color: transparent; 
-            opacity: 0.99; 
+            flex-grow: 1; width: 100%; border: none; 
+            /* transparentをやめ、iOS Safariが初期化時に白を差し込むのを防ぐ */
+            background-color: #F7FBFC; 
         }
+        
 
         /* ＝＝＝ ロード画面 ＝＝＝ */
         /* ＝＝＝ ロード画面（控えめ・サクッと版） ＝＝＝ */
