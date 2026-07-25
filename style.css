@@ -433,62 +433,9 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
     box-shadow: 0 10px 25px rgba(255, 159, 28, 0.6);
 }
 
-/* スマホ向けのサイズ調整 */
+/* ＝＝＝ スマホ版の文字改行・サイズ微調整（フォーム1行化の最終形態） ＝＝＝ */
 @media (max-width: 768px) {
-    .page-top-btn {
-        bottom: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.4rem;
-        border-width: 3px;
-    }
-    .page-top-btn.show {
-        right: 20px;
-    }
-}
-/* ＝＝＝ フッター（コピーライト） ＝＝＝ */
-.site-footer {
-    text-align: center;
-    padding: 60px 15px 40px; /* 👈 ここで最下部にたっぷりと心地よい余白を作ります */
-    color: rgba(3, 4, 94, 0.4); /* ベースの文字色（濃紺）を40%の薄さにして控えめに */
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    width: 100%;
-}
-
-/* スマホ向けの微調整 */
-@media (max-width: 768px) {
-    .site-footer {
-        /* スマホの時は、先ほど作った「トップへ戻るボタン」と文字が被らないように下の余白を広げます */
-        padding-bottom: 90px; 
-    }
-}
-/* ＝＝＝ スマホ版の文字改行・サイズ微調整 ＝＝＝ */
-@media (max-width: 768px) {
-    /* ① ヘッダーメニューを1行に収める */
-    header nav a {
-        font-size: 0.75rem !important; /* 文字を少し小さく */
-        padding: 4px 6px !important;
-        white-space: nowrap !important; /* 絶対に途中で改行させない */
-    }
-    
-    header nav ul {
-        gap: 4px !important; /* メニュー同士の隙間を少し詰める */
-    }
-
-    /* ② フォーム画面の長いタイトルを綺麗に収める */
-    .page-header h2, 
-    .form-header h2,
-    h2 {
-        font-size: 1.3rem !important; /* タイトルの文字サイズをスマホ向けに縮小 */
-        word-break: keep-all !important; /* 「フォーム」などの単語の途中で改行させない */
-        line-height: 1.4 !important;
-    }
-}
-/* ＝＝＝ スマホ版の文字改行・サイズ微調整（完全版） ＝＝＝ */
-@media (max-width: 768px) {
-    /* ① ヘッダーメニューを1行に収める */
+    /* ① ヘッダーメニュー */
     header nav a {
         font-size: 0.75rem !important;
         padding: 4px 6px !important;
@@ -505,18 +452,26 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         line-height: 1.4 !important;
     }
 
-    /* ③ フォーム内の質問文・選択肢・注記（★さらに小さく！） */
-    label, p, li, h4, .info-box-title {
-        /* 👇 文字サイズをさらに小さく（約12px相当）しました */
-        font-size: 0.75rem !important; 
-        /* 👇 文字の隙間を少し強めに詰めます */
-        letter-spacing: -0.05em !important; 
-        line-height: 1.5 !important;
-        /* 👇 単語の途中での改行を強制的に禁止します */
-        word-break: keep-all !important; 
+    /* ③ 🌟 申請フォームの中身を【絶対に1行】に収める強力な設定 */
+    .form-container p,
+    .form-container label,
+    .form-container li,
+    .form-container .info-box-title {
+        white-space: nowrap !important; /* 👈 絶対に改行させない */
+        font-size: clamp(0.5rem, 2.9vw, 0.85rem) !important; /* 👈 画面幅に合わせて文字を自動で限界まで縮める */
+        letter-spacing: -0.05em !important;
     }
 
-    /* ④ メールアドレスやURLの枠はみ出し防止 */
+    /* ④ フォーム「以外」の普通の文章（トップページ等）は素直に改行させる */
+    p:not(.form-container p) {
+        font-size: 0.85rem !important;
+        word-break: normal !important; 
+        white-space: normal !important; 
+        letter-spacing: normal !important; 
+        line-height: 1.6 !important;
+    }
+
+    /* ⑤ メールアドレスやURLの枠はみ出し防止 */
     a {
         word-break: break-all !important;
     }
