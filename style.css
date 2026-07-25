@@ -394,3 +394,95 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
     .modal-content { height: 90vh; border-radius: 20px; }
     .modal-header { padding: 15px 20px; }
 }
+/* ＝＝＝ トップへ戻るボタン ＝＝＝ */
+.page-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: -80px; /* 初期状態は右側の画面外に隠しておく */
+    width: 60px;
+    height: 60px;
+    background-color: var(--fugu-fin); /* オレンジ色 */
+    color: var(--fugu-belly);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    box-shadow: 0 5px 15px rgba(255, 159, 28, 0.4);
+    cursor: pointer;
+    /* ぷるんと飛び出すアニメーション */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    border: 4px solid var(--fugu-belly); /* 白いフチでぷくっと感を強調 */
+}
+
+/* スクロールして表示される時のクラス */
+.page-top-btn.show {
+    right: 30px; /* 画面内にスッと入ってくる */
+    opacity: 1;
+    visibility: visible;
+}
+
+/* マウスを乗せた時（パソコン用） */
+.page-top-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    background-color: #e38a15;
+    box-shadow: 0 10px 25px rgba(255, 159, 28, 0.6);
+}
+
+/* スマホ向けのサイズ調整 */
+@media (max-width: 768px) {
+    .page-top-btn {
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+        border-width: 3px;
+    }
+    .page-top-btn.show {
+        right: 20px;
+    }
+}
+/* ＝＝＝ フッター（コピーライト） ＝＝＝ */
+.site-footer {
+    text-align: center;
+    padding: 60px 15px 40px; /* 👈 ここで最下部にたっぷりと心地よい余白を作ります */
+    color: rgba(3, 4, 94, 0.4); /* ベースの文字色（濃紺）を40%の薄さにして控えめに */
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    width: 100%;
+}
+
+/* スマホ向けの微調整 */
+@media (max-width: 768px) {
+    .site-footer {
+        /* スマホの時は、先ほど作った「トップへ戻るボタン」と文字が被らないように下の余白を広げます */
+        padding-bottom: 90px; 
+    }
+}
+/* ＝＝＝ スマホ版の文字改行・サイズ微調整 ＝＝＝ */
+@media (max-width: 768px) {
+    /* ① ヘッダーメニューを1行に収める */
+    header nav a {
+        font-size: 0.75rem !important; /* 文字を少し小さく */
+        padding: 4px 6px !important;
+        white-space: nowrap !important; /* 絶対に途中で改行させない */
+    }
+    
+    header nav ul {
+        gap: 4px !important; /* メニュー同士の隙間を少し詰める */
+    }
+
+    /* ② フォーム画面の長いタイトルを綺麗に収める */
+    .page-header h2, 
+    .form-header h2,
+    h2 {
+        font-size: 1.3rem !important; /* タイトルの文字サイズをスマホ向けに縮小 */
+        word-break: keep-all !important; /* 「フォーム」などの単語の途中で改行させない */
+        line-height: 1.4 !important;
+    }
+}

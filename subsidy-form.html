@@ -310,5 +310,29 @@
             });
         });
     </script>
+    <script>
+        let isFormChanged = false; // 入力状態を記憶するフラグ
+
+        // ページ内のすべての入力欄（input, select, textarea）を監視
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        
+        // ユーザーが文字を打ったり、チェックを入れたりしたら「変更あり」にする
+        formInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                isFormChanged = true;
+            });
+        });
+
+        // ページから別の場所に移動しようとした時の処理
+        window.addEventListener('beforeunload', (e) => {
+            if (isFormChanged) {
+                // ブラウザに標準の「移動しますか？」の警告を出させる
+                e.preventDefault();
+                e.returnValue = ''; 
+            }
+        });
+
+        // ※将来「送信ボタン」を実装した際は、送信時に isFormChanged = false; に戻す処理を追加します
+    </script>
 </body>
 </html>
