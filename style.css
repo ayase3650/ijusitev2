@@ -411,4 +411,38 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
     .sp-br {
         display: inline; /* スマホ画面（768px以下）になった時だけ改行を有効化 */
     }
+    /* ＝＝＝ 追加：サポートカードを1列（1枚ずつ）にする ＝＝＝ */
+    .support-grid,
+    .card-grid,
+    .card-container,
+    .support-list {
+        /* 横並びを解除して、1列のグリッドにする */
+        grid-template-columns: 1fr !important;
+        display: grid !important;
+        gap: 20px !important; /* カード同士の縦の隙間 */
+        width: 100% !important;
+    }
+    /* ＝＝＝ サポートカードを1列にし、幅を外枠いっぱいに広げる ＝＝＝ */
+    .support-grid,
+    .card-grid,
+    .card-container,
+    .support-list {
+        grid-template-columns: 1fr !important; /* 縦1列にする */
+        display: grid !important;
+        gap: 20px !important;
+        width: 100% !important;
+        padding-left: 0 !important;  /* 大枠の左右の余白をリセット */
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* カード自体の設定（はみ出しを防ぎつつ横幅いっぱいにする） */
+    .support-card,
+    .card,
+    .support-item {
+        width: 100% !important;
+        max-width: 100% !important; /* パソコン用の最大幅制限を解除 */
+        box-sizing: border-box !important;
+        margin: 0 !important; /* 余計なマージンを消去 */
+    }
 }
