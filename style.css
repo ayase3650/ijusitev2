@@ -486,26 +486,6 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         line-height: 1.4 !important;
     }
 }
-/* ＝＝＝ スマホ版の改行・文字サイズ追加調整 ＝＝＝ */
-@media (max-width: 768px) {
-    /* ① メールアドレスやURLが枠をはみ出さず、綺麗に折り返されるようにする */
-    a {
-        word-break: break-all !important;
-    }
-
-    /* ② フォームの選択肢や説明文の文字を少しだけ小さくし、収まりを良くする */
-    label, p, li {
-        font-size: 0.85rem !important;
-        line-height: 1.6 !important;
-        /* 👇 単語の分断や、最後の1文字だけがポツンと改行されるのを防ぐ最新コード */
-        text-wrap: pretty !important;
-    }
-
-    /* ③ 見出し（やまぐち暮らし〜 など）の改行バランスを自動で美しくする */
-    h2, h3, h4, .info-box-title {
-        text-wrap: balance !important;
-    }
-}
 /* ＝＝＝ スマホ版の文字改行・サイズ微調整（完全版） ＝＝＝ */
 @media (max-width: 768px) {
     /* ① ヘッダーメニューを1行に収める */
@@ -525,17 +505,15 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         line-height: 1.4 !important;
     }
 
-    /* ③ フォーム内の質問文・選択肢・注記（★ここを強力に修正！） */
+    /* ③ フォーム内の質問文・選択肢・注記（★さらに小さく！） */
     label, p, li, h4, .info-box-title {
-        /* 文字サイズを少し小さくし、文字同士の隙間をキュッと詰めて1行に収める */
-        font-size: 0.85rem !important;
-        letter-spacing: -0.03em !important; 
-        line-height: 1.6 !important;
-        
-        /* 単語の不自然な分断を厳格に防ぐルール */
-        line-break: strict !important;
-        word-break: auto !important;
-        text-wrap: auto !important;
+        /* 👇 文字サイズをさらに小さく（約12px相当）しました */
+        font-size: 0.75rem !important; 
+        /* 👇 文字の隙間を少し強めに詰めます */
+        letter-spacing: -0.05em !important; 
+        line-height: 1.5 !important;
+        /* 👇 単語の途中での改行を強制的に禁止します */
+        word-break: keep-all !important; 
     }
 
     /* ④ メールアドレスやURLの枠はみ出し防止 */
