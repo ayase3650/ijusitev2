@@ -124,6 +124,26 @@
             </div>
         </div>
     </div>
+<!-- スマートヘッダー用のスクリプト -->
+<script>
+    let lastScrollY = 0;
+    
+    window.addEventListener('scroll', () => {
+        // パソコン画面（横幅768px以上）ではこの機能をオフにする
+        if (window.innerWidth > 768) return; 
 
+        const currentScrollY = window.scrollY;
+        
+        // 50px以上スクロールし、かつ「下」に向かってスクロールしている時
+        if (currentScrollY > 50 && currentScrollY > lastScrollY) {
+            document.body.classList.add('is-scrolling-down'); // 隠す合図を出す
+        } else {
+            // 「上」に向かってスクロールした時は合図を消す（現れる）
+            document.body.classList.remove('is-scrolling-down');
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+</script>
 </body>
 </html>
