@@ -445,4 +445,32 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         box-sizing: border-box !important;
         margin: 0 !important; /* 余計なマージンを消去 */
     }
+    /* ＝＝＝ カテゴリー（絞り込み）ボタンのレイアウト修正 ＝＝＝ */
+    /* ※ .category-buttons の部分は、実際のHTMLのクラス名に合わせて変更してください */
+    .category-buttons, 
+    .filter-buttons,
+    .tab-list {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* 4つのボタンを「横2列」に並べ替える */
+        gap: 10px !important; /* ボタン同士の隙間 */
+        width: 100% !important;
+        padding: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ボタン自体の修正 */
+    .category-buttons a,
+    .category-buttons button,
+    .filter-buttons a,
+    .filter-item,
+    .tab-item {
+        width: 100% !important;
+        padding: 12px 5px !important;
+        font-size: 0.9rem !important; /* 文字を少し調整 */
+        white-space: nowrap !important; /* 文字が途中で改行されるのを【絶対に】防ぐ */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+    }
 }
