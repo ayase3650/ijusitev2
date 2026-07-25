@@ -506,3 +506,40 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         text-wrap: balance !important;
     }
 }
+/* ＝＝＝ スマホ版の文字改行・サイズ微調整（完全版） ＝＝＝ */
+@media (max-width: 768px) {
+    /* ① ヘッダーメニューを1行に収める */
+    header nav a {
+        font-size: 0.75rem !important;
+        padding: 4px 6px !important;
+        white-space: nowrap !important;
+    }
+    header nav ul {
+        gap: 4px !important;
+    }
+
+    /* ② ページタイトルなどの大きな見出し */
+    .page-header h2, .form-header h2, h2 {
+        font-size: 1.3rem !important;
+        word-break: keep-all !important;
+        line-height: 1.4 !important;
+    }
+
+    /* ③ フォーム内の質問文・選択肢・注記（★ここを強力に修正！） */
+    label, p, li, h4, .info-box-title {
+        /* 文字サイズを少し小さくし、文字同士の隙間をキュッと詰めて1行に収める */
+        font-size: 0.85rem !important;
+        letter-spacing: -0.03em !important; 
+        line-height: 1.6 !important;
+        
+        /* 単語の不自然な分断を厳格に防ぐルール */
+        line-break: strict !important;
+        word-break: auto !important;
+        text-wrap: auto !important;
+    }
+
+    /* ④ メールアドレスやURLの枠はみ出し防止 */
+    a {
+        word-break: break-all !important;
+    }
+}
