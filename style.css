@@ -506,4 +506,45 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
             transform: translateY(-150%) !important;
         }
     }
+    /* ＝＝＝ ヘッダー＆写真ボックスの縦幅をコンパクトに ＝＝＝ */
+    
+    /* ① 「SHIMONOSEKI LIFE」の白いボックスの縦幅を削る */
+    header {
+        padding: 5px 5px 8px 5px !important; /* 上下の余白（パディング）を限界まで減らす */
+        gap: 5px !important; /* タイトルとメニューの間の隙間を詰める */
+    }
+    .site-title {
+        font-size: 1.2rem !important; /* タイトルの文字も少しだけ小さく */
+        margin: 0 !important;
+        line-height: 1.2 !important;
+    }
+    header nav a {
+        padding: 3px 6px !important; /* メニューボタンの上下の余白も削る */
+    }
+
+    /* ② 移住ダイブ！の写真が入っているボックスの縦幅を小さくする */
+    /* ※ .hero-image の部分は、実際の写真の外枠のクラス名に合わせてください */
+    .hero-image,
+    .main-visual,
+    .top-image {
+        height: 250px !important; /* 💡写真の縦幅を指定（200px〜300pxの間でお好みで調整） */
+        min-height: 250px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+    }
+    .hero-image img,
+    .main-visual img,
+    .top-image img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover !important; /* 縦幅を縮めても写真が歪まないようにする魔法 */
+    }
+
+    /* ③ 【重要】ヘッダーが薄くなった分、被り防止の「バリア（隙間）」も減らす */
+    body {
+        /* 先ほどの 140px だと隙間が空きすぎてしまうため、ヘッダーの薄さに合わせて減らします */
+        padding-top: 90px !important; 
+    }
 }
