@@ -360,53 +360,72 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
 
 @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
-/* スマホ対応 */
-/* ＝＝＝ スマホ版の文字改行・サイズ微調整（はみ出し修正版） ＝＝＝ */
+/* ＝＝＝ スマホ版のレイアウト完全修正版 ＝＝＝ */
 @media (max-width: 768px) {
-    /* ① フォームの余白を減らして、画面幅を最大限使う＆画面の横揺れを防止 */
-    body {
-        padding: 20px 10px !important;
-        overflow-x: hidden; 
-    }
-    .form-container {
-        padding: 30px 15px !important; /* 左右の余白を減らして広く使う */
-        width: 100%;
-        box-sizing: border-box;
+    /* 🌟 画面全体のはみ出し・横揺れを強制的に防ぐ */
+    body, html {
+        overflow-x: hidden !important;
+        width: 100% !important;
     }
 
-    /* ② ヘッダーメニュー（共通パーツ用） */
+    /* -----------------------------------
+       ① トップバナー＆ヘッダーの修正（画像1枚目）
+       ----------------------------------- */
+    .top-alert-bar {
+        padding: 8px 5px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        flex-wrap: nowrap !important; /* バナーを1行に強制 */
+    }
+    .top-alert-bar span, 
+    .top-alert-bar a {
+        font-size: 0.65rem !important; /* スマホ用に文字を小さく */
+        white-space: nowrap !important;
+    }
+    
+    .site-title a {
+        font-size: 1.3rem !important; /* タイトルが2段にならないよう調整 */
+        white-space: nowrap !important;
+    }
+
     header nav a {
-        font-size: 0.75rem !important;
-        padding: 4px 6px !important;
+        font-size: 0.7rem !important;
+        padding: 4px !important;
         white-space: nowrap !important;
-    }
-    header nav ul {
-        gap: 4px !important;
     }
 
-    /* ③ 質問文（ラベル）と選択肢は「絶対に1行」を維持しつつ限界まで縮小 */
+    /* -----------------------------------
+       ② フォーム項目の「1行化」（画像2枚目上部）
+       ----------------------------------- */
     .form-label, 
-    .radio-check-list label,
-    .form-title {
-        white-space: nowrap !important;
-        /* 文字の最小サイズを少し調整し、画面幅に合わせて縮小 */
+    .radio-check-list label {
+        white-space: nowrap !important; /* ここだけは絶対に1行にする */
         font-size: clamp(0.55rem, 2.8vw, 0.95rem) !important;
         letter-spacing: -0.05em !important;
     }
 
-    /* ④ 入力欄が画面を突き破るのを防ぐ */
-    input, select, textarea {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    /* ⑤ 長すぎる注意書きや案内文（ここを1行にすると画面が壊れます）は綺麗に改行させる */
+    /* -----------------------------------
+       ③ 案内文の「はみ出し」を強制改行（画像2枚目下部）
+       ----------------------------------- */
+    /* pタグやinfo-boxの中身の「1行化」を強制解除し、画面端で折り返す */
     .form-container p,
+    .info-box,
+    .info-box p,
     .info-box div,
+    .info-box li,
     .contact-info {
         white-space: normal !important;
-        word-break: keep-all !important;
-        font-size: 0.8rem !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        font-size: 0.85rem !important;
         line-height: 1.5 !important;
+    }
+    
+    /* 入力欄などが画面幅を突き破るのを防ぐおまじない */
+    .form-container * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 }
