@@ -360,3 +360,55 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
 
 @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
+/* ＝＝＝ スマホ版のヘッダー＆バナー専用の修正 ＝＝＝ */
+@media (max-width: 768px) {
+    /* 1. オレンジのバナーを綺麗に収める */
+    .top-alert-bar {
+        padding: 8px 5px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+    }
+    .top-alert-bar span {
+        font-size: 0.7rem !important; /* 文章を小さく */
+        line-height: 1.2 !important;
+    }
+    .top-alert-bar .btn-banner {
+        font-size: 0.7rem !important;
+        padding: 5px 10px !important;
+        white-space: nowrap !important; /* 「診断ナビ」が割れるのを防ぐ */
+    }
+
+    /* 2. 白いヘッダー（タイトルとメニュー）を整える */
+    header {
+        flex-direction: column !important; /* タイトルとメニューを上下の縦並びにして窮屈さを解消 */
+        padding: 10px 5px !important;
+        gap: 10px !important;
+    }
+    .site-title {
+        font-size: 1.4rem !important;
+        margin: 0 !important;
+        white-space: nowrap !important; /* 「SHIMONOSEKI LIFE」が2行になるのを防ぐ */
+    }
+    header nav ul {
+        gap: 8px !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important; /* 画面が狭い場合はメニューごと綺麗に折り返す */
+    }
+    header nav a {
+        font-size: 0.75rem !important;
+        padding: 4px 8px !important;
+        white-space: nowrap !important; /* 「各種申請」が割れるのを防ぐ */
+    }
+}
+/* ＝＝＝ スマホ専用の改行設定 ＝＝＝ */
+.sp-br {
+    display: none; /* パソコン画面では改行を無効化（隠す） */
+}
+
+@media (max-width: 768px) {
+    .sp-br {
+        display: inline; /* スマホ画面（768px以下）になった時だけ改行を有効化 */
+    }
+}
