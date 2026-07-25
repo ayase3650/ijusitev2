@@ -361,81 +361,20 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
 @media (max-width: 1024px) { .card { width: calc(50% - 15px); } }
 
 /* スマホ対応 */
+/* ＝＝＝ スマホ版の文字改行・サイズ微調整（はみ出し修正版） ＝＝＝ */
 @media (max-width: 768px) {
-    .top-alert-bar { flex-direction: row; padding: 6px 10px; gap: 8px; }
-    .top-alert-bar span { display: flex; font-size: 0.75rem; line-height: 1.2; }
-    .top-alert-bar .seki-icon { height: 1.4em; margin-right: 4px; }
-    .btn-banner { padding: 4px 10px; font-size: 0.75rem; white-space: nowrap; }
-    
-    header { 
-        top: 40px; 
-        padding: 8px 15px; 
-        border-radius: 20px; 
-        flex-direction: column; 
-        gap: 5px; 
+    /* ① フォームの余白を減らして、画面幅を最大限使う＆画面の横揺れを防止 */
+    body {
+        padding: 20px 10px !important;
+        overflow-x: hidden; 
     }
-    .site-title { font-size: 1.3rem; }
-    header nav ul { gap: 8px; }
-    header nav a { font-size: 0.85rem; padding: 4px 8px; }
-    
-    body { padding-top: 130px; } 
-    
-    .hero-copy h2 { font-size: 2.2rem; }
-}
+    .form-container {
+        padding: 30px 15px !important; /* 左右の余白を減らして広く使う */
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-@media (max-width: 600px) {
-    .card { width: 100%; }
-    .seki-icon-lg { height: 1.8em; margin-right: 8px; }
-    .tab-list { flex-wrap: wrap; gap: 10px; }
-    .tab-item { flex: 0 0 calc(50% - 5px); padding: 10px 0; font-size: 0.85rem; }
-}
-
-@media (min-width: 769px) {
-    .modal-content { height: 90vh; border-radius: 20px; }
-    .modal-header { padding: 15px 20px; }
-}
-/* ＝＝＝ トップへ戻るボタン ＝＝＝ */
-.page-top-btn {
-    position: fixed;
-    bottom: 30px;
-    right: -80px; /* 初期状態は右側の画面外に隠しておく */
-    width: 60px;
-    height: 60px;
-    background-color: var(--fugu-fin); /* オレンジ色 */
-    color: var(--fugu-belly);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 900;
-    box-shadow: 0 5px 15px rgba(255, 159, 28, 0.4);
-    cursor: pointer;
-    /* ぷるんと飛び出すアニメーション */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    border: 4px solid var(--fugu-belly); /* 白いフチでぷくっと感を強調 */
-}
-
-/* スクロールして表示される時のクラス */
-.page-top-btn.show {
-    right: 30px; /* 画面内にスッと入ってくる */
-    opacity: 1;
-    visibility: visible;
-}
-
-/* マウスを乗せた時（パソコン用） */
-.page-top-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-    background-color: #e38a15;
-    box-shadow: 0 10px 25px rgba(255, 159, 28, 0.6);
-}
-
-/* ＝＝＝ スマホ版の文字改行・サイズ微調整（フォーム1行化の最終形態） ＝＝＝ */
-@media (max-width: 768px) {
-    /* ① ヘッダーメニュー */
+    /* ② ヘッダーメニュー（共通パーツ用） */
     header nav a {
         font-size: 0.75rem !important;
         padding: 4px 6px !important;
@@ -445,34 +384,29 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         gap: 4px !important;
     }
 
-    /* ② ページタイトルなどの大きな見出し */
-    .page-header h2, .form-header h2, h2 {
-        font-size: 1.3rem !important;
-        word-break: keep-all !important;
-        line-height: 1.4 !important;
-    }
-
-    /* ③ 🌟 申請フォームの中身を【絶対に1行】に収める強力な設定 */
-    .form-container p,
-    .form-container label,
-    .form-container li,
-    .form-container .info-box-title {
-        white-space: nowrap !important; /* 👈 絶対に改行させない */
-        font-size: clamp(0.5rem, 2.9vw, 0.85rem) !important; /* 👈 画面幅に合わせて文字を自動で限界まで縮める */
+    /* ③ 質問文（ラベル）と選択肢は「絶対に1行」を維持しつつ限界まで縮小 */
+    .form-label, 
+    .radio-check-list label,
+    .form-title {
+        white-space: nowrap !important;
+        /* 文字の最小サイズを少し調整し、画面幅に合わせて縮小 */
+        font-size: clamp(0.55rem, 2.8vw, 0.95rem) !important;
         letter-spacing: -0.05em !important;
     }
 
-    /* ④ フォーム「以外」の普通の文章（トップページ等）は素直に改行させる */
-    p:not(.form-container p) {
-        font-size: 0.85rem !important;
-        word-break: normal !important; 
-        white-space: normal !important; 
-        letter-spacing: normal !important; 
-        line-height: 1.6 !important;
+    /* ④ 入力欄が画面を突き破るのを防ぐ */
+    input, select, textarea {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
-    /* ⑤ メールアドレスやURLの枠はみ出し防止 */
-    a {
-        word-break: break-all !important;
+    /* ⑤ 長すぎる注意書きや案内文（ここを1行にすると画面が壊れます）は綺麗に改行させる */
+    .form-container p,
+    .info-box div,
+    .contact-info {
+        white-space: normal !important;
+        word-break: keep-all !important;
+        font-size: 0.8rem !important;
+        line-height: 1.5 !important;
     }
 }
