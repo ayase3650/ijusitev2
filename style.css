@@ -491,13 +491,13 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         }
         header {
             /* 💡オレンジバナーの高さ分だけ下にずらします。隙間が空く/重なる場合はこの数字を変えてください */
-            top: 35px !important; 
+            top: 48px !important; 
         }
 
         /* ③ 【重要】ヘッダーの下に「移住ダイブ！」の画像が潜り込まないように、ページ全体の開始位置を下げる */
         body {
             /* 💡まだ画像とヘッダーが被る場合は、この140pxを 150px, 160px... と大きくして調整します */
-            padding-top: 140px !important; 
+            padding-top: 125px !important; 
         }
 
         /* ④ 下スクロールした時に、ヘッダーを画面上部へ隠す */
