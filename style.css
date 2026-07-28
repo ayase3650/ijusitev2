@@ -582,4 +582,11 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
             white-space: normal !important;
             padding: 0 5px !important;
         }
+        /* ＝＝＝ トップ画像の「移住ダイブ！」の文字を元の大きさに戻す ＝＝＝ */
+    .hero-copy h2 {
+        font-size: 2.5rem !important; /* 縮小を解除して元の大きなサイズに戻す */
+        white-space: normal !important; /* 1行制限を解除して <br> の改行を復活させる */
+        line-height: 1.3 !important;
+        letter-spacing: 0.05em !important;
+    }
     }
