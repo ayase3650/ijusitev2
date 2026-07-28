@@ -403,190 +403,76 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
     }
 }
 /* ＝＝＝ スマホ専用の改行設定 ＝＝＝ */
-.sp-br {
-    display: none; /* パソコン画面では改行を無効化（隠す） */
-}
+.sp-br { display: none; }
 
 @media (max-width: 768px) {
-    .sp-br {
-        display: inline; /* スマホ画面（768px以下）になった時だけ改行を有効化 */
-    }
-    /* ＝＝＝ 追加：サポートカードを1列（1枚ずつ）にする ＝＝＝ */
-    .support-grid,
-    .card-grid,
-    .card-container,
-    .support-list {
-        /* 横並びを解除して、1列のグリッドにする */
+    .sp-br { display: inline; }
+
+    /* サポートカードを1列にし、幅を広げる */
+    .support-grid, .card-grid, .card-container, .support-list {
         grid-template-columns: 1fr !important;
-        display: grid !important;
-        gap: 20px !important; /* カード同士の縦の隙間 */
-        width: 100% !important;
+        display: grid !important; gap: 20px !important; width: 100% !important;
+        padding-left: 0 !important; padding-right: 0 !important; box-sizing: border-box !important;
     }
-    /* ＝＝＝ サポートカードを1列にし、幅を外枠いっぱいに広げる ＝＝＝ */
-    .support-grid,
-    .card-grid,
-    .card-container,
-    .support-list {
-        grid-template-columns: 1fr !important; /* 縦1列にする */
-        display: grid !important;
-        gap: 20px !important;
-        width: 100% !important;
-        padding-left: 0 !important;  /* 大枠の左右の余白をリセット */
-        padding-right: 0 !important;
-        box-sizing: border-box !important;
+    .support-card, .card, .support-item {
+        width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; margin: 0 !important;
     }
 
-    /* カード自体の設定（はみ出しを防ぎつつ横幅いっぱいにする） */
-    .support-card,
-    .card,
-    .support-item {
-        width: 100% !important;
-        max-width: 100% !important; /* パソコン用の最大幅制限を解除 */
-        box-sizing: border-box !important;
-        margin: 0 !important; /* 余計なマージンを消去 */
+    /* カテゴリーボタンのレイアウト修正 */
+    .category-buttons, .filter-buttons, .tab-list {
+        display: grid !important; grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important; width: 100% !important; padding: 10px !important; box-sizing: border-box !important;
     }
-    /* ＝＝＝ カテゴリー（絞り込み）ボタンのレイアウト修正 ＝＝＝ */
-    /* ※ .category-buttons の部分は、実際のHTMLのクラス名に合わせて変更してください */
-    .category-buttons, 
-    .filter-buttons,
-    .tab-list {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important; /* 4つのボタンを「横2列」に並べ替える */
-        gap: 10px !important; /* ボタン同士の隙間 */
-        width: 100% !important;
-        padding: 10px !important;
-        box-sizing: border-box !important;
+    .category-buttons a, .category-buttons button, .filter-buttons a, .filter-item, .tab-item {
+        width: 100% !important; padding: 12px 5px !important; font-size: 0.9rem !important;
+        white-space: nowrap !important; display: flex !important; align-items: center !important;
+        justify-content: center !important; box-sizing: border-box !important;
     }
 
-    /* ボタン自体の修正 */
-    .category-buttons a,
-    .category-buttons button,
-    .filter-buttons a,
-    .filter-item,
-    .tab-item {
-        width: 100% !important;
-        padding: 12px 5px !important;
-        font-size: 0.9rem !important; /* 文字を少し調整 */
-        white-space: nowrap !important; /* 文字が途中で改行されるのを【絶対に】防ぐ */
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-sizing: border-box !important;
+    /* スマートヘッダー＆画像被り防止・コンパクト化 */
+    .top-alert-bar, header {
+        position: fixed !important; width: 100% !important; left: 0 !important;
+        z-index: 9999 !important; transition: transform 0.3s ease-in-out !important;
     }
-    /* ＝＝＝ スマホ版：スマートヘッダー＆画像被り防止 ＝＝＝ */
-    @media (max-width: 768px) {
-        /* ① バナーとヘッダーを画面上部に固定し、スッと動くアニメーションを設定 */
-        .top-alert-bar,
-        header {
-            position: fixed !important;
-            width: 100% !important;
-            left: 0 !important;
-            z-index: 9999 !important;
-            transition: transform 0.3s ease-in-out !important;
-        }
-
-        /* ② 縦位置の調整（オレンジのバナーを一番上、白いヘッダーをその下へ） */
-        .top-alert-bar {
-            top: 0 !important;
-        }
-        header {
-            /* 💡オレンジバナーの高さ分だけ下にずらします。隙間が空く/重なる場合はこの数字を変えてください */
-            top: 48px !important; 
-        }
-
-        /* ③ 【重要】ヘッダーの下に「移住ダイブ！」の画像が潜り込まないように、ページ全体の開始位置を下げる */
-        body {
-            /* 💡まだ画像とヘッダーが被る場合は、この140pxを 150px, 160px... と大きくして調整します */
-            padding-top: 125px !important; 
-        }
-
-        /* ④ 下スクロールした時に、ヘッダーを画面上部へ隠す */
-        body.is-scrolling-down .top-alert-bar,
-        body.is-scrolling-down header {
-            transform: translateY(-150%) !important;
-        }
+    .top-alert-bar { top: 0 !important; }
+    header { 
+        top: 48px !important; padding: 5px 5px 8px 5px !important; gap: 5px !important;
+        flex-direction: column !important;
     }
-    /* ＝＝＝ ヘッダー＆写真ボックスの縦幅をコンパクトに ＝＝＝ */
     
-    /* ① 「SHIMONOSEKI LIFE」の白いボックスの縦幅を削る */
-    header {
-        padding: 5px 5px 8px 5px !important; /* 上下の余白（パディング）を限界まで減らす */
-        gap: 5px !important; /* タイトルとメニューの間の隙間を詰める */
-    }
-    .site-title {
-        font-size: 1.2rem !important; /* タイトルの文字も少しだけ小さく */
-        margin: 0 !important;
-        line-height: 1.2 !important;
-    }
-    header nav a {
-        padding: 3px 6px !important; /* メニューボタンの上下の余白も削る */
+    /* 💡【重要】ここで余白を125pxに統一！ */
+    body { padding-top: 125px !important; }
+
+    body.is-scrolling-down .top-alert-bar,
+    body.is-scrolling-down header { transform: translateY(-150%) !important; }
+
+    .site-title { font-size: 1.4rem !important; margin: 0 !important; white-space: nowrap !important; }
+    header nav ul { gap: 8px !important; justify-content: center !important; flex-wrap: wrap !important; }
+    header nav a { font-size: 0.75rem !important; padding: 4px 8px !important; white-space: nowrap !important; }
+
+    /* 申請フォームの内枠 */
+    .form-container { padding: 30px 25px !important; }
+    .form-group { padding: 25px 20px !important; margin-bottom: 25px !important; }
+
+    /* 見出しをスマホで1行に収める */
+    .section-title, .popular-title {
+        white-space: nowrap !important; font-size: clamp(0.6rem, 3.8vw, 1.2rem) !important; 
+        letter-spacing: -0.05em !important; margin-bottom: 15px !important;
     }
 
-    /* ② 移住ダイブ！の写真が入っているボックスの縦幅を小さくする */
-    /* ※ .hero-image の部分は、実際の写真の外枠のクラス名に合わせてください */
-    .hero-image,
-    .main-visual,
-    .top-image {
-        height: 250px !important; /* 💡写真の縦幅を指定（200px〜300pxの間でお好みで調整） */
-        min-height: 250px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        overflow: hidden !important;
-    }
-    .hero-image img,
-    .main-visual img,
-    .top-image img {
-        height: 100% !important;
-        width: 100% !important;
-        object-fit: cover !important; /* 縦幅を縮めても写真が歪まないようにする魔法 */
-    }
-
-    /* ③ 【重要】ヘッダーが薄くなった分、被り防止の「バリア（隙間）」も減らす */
-    body {
-        /* 先ほどの 140px だと隙間が空きすぎてしまうため、ヘッダーの薄さに合わせて減らします */
-        padding-top: 90px !important; 
-    }
-    /* ＝＝＝ 申請フォームの内枠（余白）を広げてゆったりさせる ＝＝＝ */
-    
-    /* ① 白い大枠の内側 */
-    .form-container {
-        /* 上下30px、左右25px（元の15pxから大幅アップ） */
-        padding: 30px 25px !important; 
-    }
-
-    /* ② 質問ごとのグレーの枠の内側 */
-    .form-group {
-        /* 上下25px、左右20px（元より広めにして息苦しさをなくす） */
-        padding: 25px 20px !important; 
-        margin-bottom: 25px !important; /* 項目同士の縦の隙間も少し広げる */
+    /* トップ画像の文字を戻す */
+    .hero-copy h2 {
+        font-size: 2.5rem !important; white-space: normal !important; 
+        line-height: 1.3 !important; letter-spacing: 0.05em !important;
     }
 }
-/* ＝＝＝ トップページ（index.html）の見出し＆テキスト確実な調整 ＝＝＝ */
-    @media (max-width: 768px) {
-        /* ① 確実に見出しを1行に収める */
-        /* 対象：あなたをサポートする支援制度、まずチェック！、あなたに合う制度を診断 */
-        .section-title, 
-        .popular-title {
-            white-space: nowrap !important;
-            /* スマホの横幅に合わせて文字サイズを極限まで自動調整 */
-            font-size: clamp(0.6rem, 3.8vw, 1.2rem) !important; 
-            letter-spacing: -0.05em !important;
-            margin-bottom: 15px !important;
-        }
 
-        /* ② 診断ナビの説明文の文字サイズを調整 */
-        .primary-bot-launch p {
-            font-size: 0.85rem !important;
-            line-height: 1.6 !important;
-            white-space: normal !important;
-            padding: 0 5px !important;
-        }
-        /* ＝＝＝ トップ画像の「移住ダイブ！」の文字を元の大きさに戻す ＝＝＝ */
-    .hero-copy h2 {
-        font-size: 2.5rem !important; /* 縮小を解除して元の大きなサイズに戻す */
-        white-space: normal !important; /* 1行制限を解除して <br> の改行を復活させる */
-        line-height: 1.3 !important;
-        letter-spacing: 0.05em !important;
-    }
-    }
+/* 診断ナビの説明文を【PC・スマホ共通】で絶対に1行にする */
+.primary-bot-launch p {
+    white-space: nowrap !important;
+    font-size: clamp(10px, 1.8vw, 14px) !important;
+    letter-spacing: -0.05em !important; 
+    margin-bottom: 25px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+}
