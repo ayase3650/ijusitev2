@@ -221,13 +221,15 @@
                 </h3>
 
                 <!-- 提出方法の選択 -->
-                <div class="form-group">
-                    <label class="form-label">提出方法を選んでください <span class="required-badge">必須</span></label>
-                    <div class="radio-check-list">
-                        <label><input type="radio" name="submit_method" value="zip" id="method-zip"> 暮らしサポート補助金交付申請書一式<br class="sp-br">　すべて圧縮ファイルで提出される方</label>
-                        <label><input type="radio" name="submit_method" value="individual" id="method-ind"> 書類ごとに添付される方</label>
-                    </div>
-                </div>
+                <!-- 提出方法の選択（プルダウン式に変更） -->
+<div class="form-group">
+    <label class="form-label">提出方法を選んでください <span class="required-badge">必須</span></label>
+    <select id="submit-method-select" class="form-control" required>
+        <option value="">選択してください</option>
+        <option value="zip">暮らしサポート補助金交付申請書一式すべて圧縮ファイルで提出される方</option>
+        <option value="individual">書類ごとに添付される方</option>
+    </select>
+</div>
 
                 <!-- 添付：圧縮ファイル用 -->
                 <div id="upload-zip-section" class="form-group" style="display: none; background-color: #fff3cd; border-color: #ffe69c;">
@@ -284,8 +286,7 @@
             const basicInfos = document.querySelectorAll('.basic-info');
 
             // 添付方法要素の取得
-            const methodZip = document.getElementById('method-zip');
-            const methodInd = document.getElementById('method-ind');
+            const methodSelect = document.getElementById('submit-method-select');
             const uploadZipSection = document.getElementById('upload-zip-section');
             const uploadIndSection = document.getElementById('upload-ind-section');
             const fileZip = document.getElementById('file-zip');
@@ -313,23 +314,28 @@
             allReqChecks.forEach(cb => cb.addEventListener('change', checkConditions));
             anyReqChecks.forEach(cb => cb.addEventListener('change', checkConditions));
 
-            // --- 2. 提出方法のラジオボタンによる添付フォームの切り替え ---
-            function toggleUploadMethod() {
-                if (methodZip.checked) {
-                    uploadZipSection.style.display = 'block';
-                    uploadIndSection.style.display = 'none';
-                    fileZip.setAttribute('required', 'required');
-                    indFiles.forEach(f => f.removeAttribute('required'));
-                } else if (methodInd.checked) {
-                    uploadZipSection.style.display = 'none';
-                    uploadIndSection.style.display = 'block';
-                    fileZip.removeAttribute('required');
-                    indFiles.forEach(f => f.setAttribute('required', 'required'));
-                }
-            }
+           // --- 2. 提出方法のプルダウンによる添付フォームの切り替え ---
+    function toggleUploadMethod() {
+        if (methodSelect.value === 'zip') {
+            uploadZipSection.style.display = 'block';
+            uploadIndSection.style.display = 'none';
+            fileZip.setAttribute('required', 'required');
+            indFiles.forEach(f => f.removeAttribute('required'));
+        } else if (methodSelect.value === 'individual') {
+            uploadZipSection.style.display = 'none';
+            uploadIndSection.style.display = 'block';
+            fileZip.removeAttribute('required');
+            indFiles.forEach(f => f.setAttribute('required', 'required'));
+        } else {
+            // 「選択してください」の時は両方隠す
+            uploadZipSection.style.display = 'none';
+            uploadIndSection.style.display = 'none';
+            fileZip.removeAttribute('required');
+            indFiles.forEach(f => f.removeAttribute('required'));
+        }
+    }
 
-            methodZip.addEventListener('change', toggleUploadMethod);
-            methodInd.addEventListener('change', toggleUploadMethod);
+    methodSelect.addEventListener('change', toggleUploadMethod);
 
             // --- 3. 送信時のチェック（メール一致＆ファイルサイズ） ---
             document.getElementById('lifeSupportForm').addEventListener('submit', function(event) {

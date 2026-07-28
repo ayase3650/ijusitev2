@@ -467,12 +467,27 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
     }
 }
 
-/* 診断ナビの説明文を【PC・スマホ共通】で絶対に1行にする */
-.primary-bot-launch p {
-    white-space: nowrap !important;
-    font-size: clamp(10px, 1.8vw, 14px) !important;
-    letter-spacing: -0.05em !important; 
-    margin-bottom: 25px !important;
-    width: 100% !important;
-    overflow: hidden !important;
+/* ＝＝＝ 診断ナビの説明文の調整 ＝＝＝ */
+
+/* ① パソコン画面（769px以上）では1行に収める */
+@media (min-width: 769px) {
+    .primary-bot-launch p {
+        white-space: nowrap !important;
+        font-size: clamp(10px, 1.8vw, 14px) !important;
+        letter-spacing: -0.05em !important; 
+        margin-bottom: 25px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+}
+
+/* ② スマホ画面（768px以下）では2行に折り返す */
+@media (max-width: 768px) {
+    .primary-bot-launch p {
+        white-space: normal !important; /* 1行制限を解除して改行を許可 */
+        font-size: 0.85rem !important; /* 2行で読みやすいサイズに戻す */
+        line-height: 1.6 !important;
+        margin-bottom: 20px !important;
+        padding: 0 10px !important; /* 左右に少し余白を作る */
+    }
 }
