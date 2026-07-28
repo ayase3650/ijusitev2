@@ -491,3 +491,48 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         padding: 0 10px !important; /* 左右に少し余白を作る */
     }
 }
+
+/* ＝＝＝ トップへ戻るボタン ＝＝＝ */
+.page-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--fugu-blue); /* ふぐブルー */
+    color: var(--fugu-belly); /* 白 */
+    border-radius: 50%; /* まん丸にする */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 9999;
+    opacity: 0; /* 最初は透明 */
+    visibility: hidden;
+    transition: all 0.3s ease; /* フワッと出る魔法 */
+    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+}
+
+/* スクロールして .show がついた時だけ表示 */
+.page-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* マウスを乗せた時の動き */
+.page-top-btn:hover {
+    background-color: var(--fugu-fin); /* ふぐオレンジに変化 */
+    transform: translateY(-5px); /* 少し浮き上がる */
+}
+
+/* スマホ版の微調整（少し小さくする） */
+@media (max-width: 768px) {
+    .page-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}

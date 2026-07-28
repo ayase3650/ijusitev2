@@ -19,9 +19,9 @@ document.write(`
         </nav>
     </header>
 
-    <!-- トップへ戻るボタン -->
+   <!-- トップへ戻るボタン -->
     <div id="pageTopBtn" class="page-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-        
+        <span class="material-symbols-outlined">arrow_upward</span>
     </div>
 `);
 
