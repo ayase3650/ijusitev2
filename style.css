@@ -547,4 +547,48 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         /* 先ほどの 140px だと隙間が空きすぎてしまうため、ヘッダーの薄さに合わせて減らします */
         padding-top: 90px !important; 
     }
+    /* ＝＝＝ 申請フォームの内枠（余白）を広げてゆったりさせる ＝＝＝ */
+    
+    /* ① 白い大枠の内側 */
+    .form-container {
+        /* 上下30px、左右25px（元の15pxから大幅アップ） */
+        padding: 30px 25px !important; 
+    }
+
+    /* ② 質問ごとのグレーの枠の内側 */
+    .form-group {
+        /* 上下25px、左右20px（元より広めにして息苦しさをなくす） */
+        padding: 25px 20px !important; 
+        margin-bottom: 25px !important; /* 項目同士の縦の隙間も少し広げる */
+    }
 }
+/* ＝＝＝ トップページ（index.html）の見栄え調整 ＝＝＝ */
+    
+    /* ① 見出しを絶対に「1行」に収める設定 */
+    /* 対象：「あなたをサポートする支援制度」「まずチェック！利用の多い支援制度」「あなたに合う制度を診断」など */
+    /* ※ h2 や .section-title など、見出しに使われているクラス名を指定しています */
+    h2, 
+    .section-title, 
+    .support-title, 
+    .diagnosis-title {
+        white-space: nowrap !important; /* 絶対に改行させない */
+        /* 画面幅に合わせて、自動的に文字を縮小して1行にねじ込みます */
+        font-size: clamp(0.7rem, 4vw, 1.4rem) !important; 
+        letter-spacing: -0.05em !important; /* 文字の間隔をわずかに詰めて収まりやすくする */
+    }
+
+    /* ② 説明文を綺麗な「2行」に折り返す設定 */
+    /* 対象：「いくつかの質問に答えるだけで〜」の部分 */
+    /* ※ .chatbot-container や .diagnosis-desc など、説明文を囲むクラスを指定しています */
+    .chatbot-container p,
+    .diagnosis-container p,
+    .bot-desc,
+    .diagnosis-desc {
+        white-space: normal !important; /* 1行制限を解除 */
+        word-break: keep-all !important; /* 単語の途中で変に割れないようにする */
+        overflow-wrap: break-word !important;
+        font-size: 0.8rem !important; /* スマホで2行になりやすい文字サイズ */
+        line-height: 1.5 !important;
+        padding: 0 15px !important; /* 左右に見えない余白を作り、文字を中央に押し込んで2行にする */
+        margin-bottom: 15px !important;
+    }
