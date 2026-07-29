@@ -4,137 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>移住相談チャットボット</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
-    <!-- Google Fonts Icons (Material Symbols Outlined) の読み込み -->
+    <!-- Google Fonts Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* ＝＝＝ チャットボット専用のデザイン ＝＝＝ */
+        /* ＝＝＝ メインページ共通設定 ＝＝＝ */
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+
         :root {
-            --bot-bg: #F7FBFC;
-            --bot-main: #00B4D8;
-            --bot-accent: #FF9F1C;
-            --text-color: #333333;
+            --fugu-blue: #00B4D8;     
+            --fugu-light: #CAF0F8;    
+            --fugu-belly: #FFFFFF;    
+            --fugu-fin: #FF9F1C;      
+            --fugu-text: #03045E;     
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: var(--bot-bg);
-            color: var(--text-color);
+            color: var(--fugu-text);
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            background-color: #E0FAFF;
         }
 
-        /* チャットエリア全体 */
+        /* ＝＝＝ 背景のぷくぷく泡 ＝＝＝ */
+        .ocean-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, #E0FAFF 0%, #90E0EF 100%);
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .bubble {
+            position: absolute; bottom: -50px; background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%; animation: rise infinite ease-in;
+        }
+        .bubble:nth-child(4), .bubble:nth-child(8) {
+            background-image: url('2.png'); background-size: contain; 
+            background-repeat: no-repeat; background-color: transparent; border-radius: 0; opacity: 0.6;
+        }
+        .bubble:nth-child(1) { width: 40px; height: 40px; left: 5%; animation-duration: 8s; }
+        .bubble:nth-child(2) { width: 25px; height: 25px; left: 15%; animation-duration: 5s; animation-delay: 1s; }
+        .bubble:nth-child(3) { width: 50px; height: 50px; left: 25%; animation-duration: 10s; animation-delay: 2s; }
+        .bubble:nth-child(4) { width: 60px; height: 60px; left: 35%; animation-duration: 7s; animation-delay: 1.5s; }
+        .bubble:nth-child(5) { width: 35px; height: 35px; left: 45%; animation-duration: 6s; animation-delay: 0.5s; }
+        .bubble:nth-child(6) { width: 20px; height: 20px; left: 55%; animation-duration: 8s; animation-delay: 2.5s; }
+        .bubble:nth-child(7) { width: 45px; height: 45px; left: 65%; animation-duration: 9s; animation-delay: 1s; }
+        .bubble:nth-child(8) { width: 70px; height: 70px; left: 75%; animation-duration: 11s; animation-delay: 3s; }
+        .bubble:nth-child(9) { width: 30px; height: 30px; left: 85%; animation-duration: 7s; animation-delay: 0.2s; }
+        .bubble:nth-child(10) { width: 55px; height: 55px; left: 95%; animation-duration: 12s; animation-delay: 2s; }
+
+        @keyframes rise {
+            0% { bottom: -50px; transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(20px) rotate(15deg); }
+            100% { bottom: 110vh; transform: translateX(-20px) rotate(-15deg); }
+        }
+
+        /* ＝＝＝ チャット枠とヘッダー ＝＝＝ */
+        #chat-container {
+            max-width: 600px; margin: 20px auto; height: calc(100vh - 40px);
+            background-color: var(--fugu-belly); border-radius: 30px;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.2);
+            border: 5px solid rgba(255, 255, 255, 0.7);
+            position: relative; z-index: 2;
+        }
+        
+        #chat-header {
+            background-color: var(--fugu-blue); color: var(--fugu-belly);
+            padding: 15px 20px; display: flex; align-items: center;
+            font-weight: 900; font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 10;
+        }
+        #chat-header img { height: 2em; margin-right: 12px; filter: brightness(0) invert(1); } 
+
         #chat-area {
-            padding: 20px;
-            padding-bottom: 100px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            overflow-y: auto;
-            height: 100vh;
-            box-sizing: border-box;
+            padding: 25px 20px; overflow-y: auto; flex-grow: 1;
+            display: flex; flex-direction: column;
+            background-color: #F7FBFC;
         }
 
-        /* メッセージの行（アイコン＋吹き出し） */
-        .message-row {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+        /* ＝＝＝ 吹き出し・アイコン ＝＝＝ */
+        .bot-msg-wrapper {
+            display: flex; align-items: flex-start; margin-bottom: 20px;
             animation: fadeIn 0.4s ease;
         }
+        .bot-icon { width: 45px; height: 45px; object-fit: contain; margin-right: 10px; }
+        
+        .msg {
+            padding: 15px 20px; border-radius: 20px; max-width: 75%;
+            line-height: 1.6; font-weight: 700; font-size: 0.95rem;
+        }
+        .bot-msg { background-color: var(--fugu-light); color: var(--fugu-text); border-top-left-radius: 0; }
+        .user-msg {
+            background-color: var(--fugu-blue); color: var(--fugu-belly);
+            border-top-right-radius: 0; align-self: flex-end; margin-bottom: 20px;
+            animation: fadeIn 0.4s ease; box-shadow: -2px 4px 10px rgba(0,180,216,0.1);
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ボット側のスタイル（左寄せ） */
-        .message-row.bot {
-            justify-content: flex-start;
-        }
-        .bot-icon {
-            width: 45px;
-            height: 45px;
-            background-color: #fff;
-            border-radius: 50%;
-            border: 2px solid var(--bot-main);
-            padding: 3px;
-            object-fit: contain;
-        }
-        .bot .bubble {
-            background-color: #fff;
-            border: 2px solid var(--bot-main);
-            color: var(--text-color);
-            border-top-left-radius: 4px;
-        }
-
-        /* ユーザー側のスタイル（右寄せ） */
-        .message-row.user {
-            justify-content: flex-end;
-        }
-        .user .bubble {
-            background-color: var(--bot-main);
-            color: #fff;
-            border-top-right-radius: 4px;
-        }
-
-        /* 吹き出しの共通スタイル */
-        .bubble {
-            max-width: 75%;
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        /* 選択肢ボタンのエリア */
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-left: 57px;
-            margin-top: -10px;
-            animation: fadeIn 0.4s ease;
-            animation-fill-mode: both;
-            animation-delay: 0.3s;
-        }
-
-        /* 選択肢ボタン */
+        /* ＝＝＝ 選択肢ボタン ＝＝＝ */
         .option-btn {
-            background-color: #fff;
-            border: 2px solid var(--bot-accent);
-            color: var(--bot-accent);
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            font-family: inherit;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(255, 159, 28, 0.1);
-            max-width: 85%;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; width: 100%;
+            padding: 15px 20px; margin-bottom: 12px;
+            background-color: var(--fugu-belly); border: 3px solid var(--fugu-blue);
+            color: var(--fugu-blue); border-radius: 40px; cursor: pointer;
+            font-weight: 900; font-size: 1rem; text-align: left;
+            transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 180, 216, 0.05);
         }
         .option-btn:hover {
-            background-color: var(--bot-accent);
-            color: #fff;
-            transform: translateX(5px);
+            background-color: var(--fugu-light); transform: scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 180, 216, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <div id="chat-area"></div>
+    <!-- ＝＝＝ メインサイトと同じ背景の泡 ＝＝＝ -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
 
-  <script>
-        // ＝＝＝ 🎁 補助金データ一覧（PDFより完全網羅） ＝＝＝
+    <!-- ＝＝＝ チャット全体の枠組み ＝＝＝ -->
+    <div id="chat-container">
+        <!-- 上部のヘッダー -->
+        <div id="chat-header">
+            <img src="2.png" alt="せきまる">
+            <span>移住相談チャットボット</span>
+        </div>
+        
+        <!-- チャットが表示されるエリア -->
+        <div id="chat-area">
+            <!-- 吹き出しとボタン -->
+        </div>
+    </div>
+
+    <!-- ＝＝＝ JavaScript（動きとシナリオ） ＝＝＝ -->
+    <script>
+        const chatArea = document.getElementById('chat-area');
+
+        // ＝＝＝ データ収集用の設定 ＝＝＝
+        // 【重要】取得済みのウェブアプリURLを下の "" の中に貼り付けてください！
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxrYF9URRIBKZaSOKvpWZI_XBBqg2giqouPR1tAnRmB3gwM6ZHD_VvhHYQY7L2omv0Q/exec";
+        
+        let userOrigin = "未選択";
+        let chatHistory = [];
+
+        function sendDataToGAS(origin, history, result) {
+            if (GAS_URL === "ここにコピーしたURLを貼り付けてください" || GAS_URL === "") return;
+            const payload = { origin: origin, history: history, result: result };
+            fetch(GAS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(payload)
+            }).then(response => console.log("データ送信完了"))
+              .catch(error => console.error("送信エラー:", error));
+        }
+
+        // ＝＝＝ 1. 補助金データベース（全19種） ＝＝＝
         const subsidyDB = {
             "s001": { title: "移住支援金(東京23区)", desc: "単身60万円/世帯100万円+子加算(最大100万円)" },
             "s002": { title: "移住支援金(大都市圏)", desc: "単身30万円/世帯50万円+子加算(最大100万円)" },
@@ -144,12 +176,12 @@
             "s006": { title: "空き家バンク活用促進改修補助金", desc: "最大50万円(改修費の1/2)" },
             "s007": { title: "下関駅周辺地区空き家除却補助金", desc: "最大100万円(除却費の1/2)" },
             "s008": { title: "空き家管理・流通促進支援事業補助金", desc: "月最大5,000円(最大12ヶ月)" },
-            "s009": { title: "空き物件活用ビジネス支援事業費補助金", desc: "最大100〜120万円 (改装費の1/2)" },
+            "s009": { title: "空き物件活用ビジネス支援事業費補助金", desc: "最大100〜120万円(改装費の1/2)" },
             "s010": { title: "下関市結婚新生活支援補助金", desc: "30万〜60万円(抽選制)" },
             "s011": { title: "出産・子育て応援ギフト", desc: "計10万円(妊娠届出時5万円+出産後5万円)" },
-            "s012": { title: "子ども医療費助成 (18歳まで)", desc: "自己負担額を全額助成" },
+            "s012": { title: "子ども医療費助成(18歳まで)", desc: "自己負担額を全額助成" },
             "s013": { title: "奨学金返還支援補助金", desc: "市内就職・起業者の奨学金返還支援" },
-            "s014": { title: "ヤングファーマーズサポート事業", desc: "月17.6万円×最大4ヶ月 (50歳未満)" },
+            "s014": { title: "ヤングファーマーズサポート事業", desc: "月17.6万円×最大4ヶ月(50歳未満)" },
             "s015": { title: "下関暮らしサポート補助金", desc: "月最大2万円・最長2年間(R8年度受付終了)" },
             "s016": { title: "下関市住宅取得支援事業補助金", desc: "最大200万円(契約前申請必須)" },
             "s017": { title: "YY!ターン支援交通費補助金", desc: "5千円〜3万円(下見・体験・面接の交通費)" },
@@ -157,369 +189,284 @@
             "s019": { title: "やまぐち三世代同居・近居パスポート", desc: "協賛97社以上の割引サービス" }
         };
 
-        // ＝＝＝ チャットボットのシナリオデータ（全フロー開通） ＝＝＝
+        // ＝＝＝ 2. 会話シナリオ（全体フロー図に基づく詳細分岐） ＝＝＝
         const scenario = {
-            "start": {
-                text: "こんにちは！<br>あなたのご状況に近いものを選んでください <span class=\"material-symbols-outlined\" style=\"vertical-align: middle; color: var(--bot-main); font-size: 1.2rem;\">support_agent</span>",
+            start: {
+                text: "あなたのご状況に近いものを選んでください",
                 options: [
-                    { label: "移住・転入を考えている", next: "flow_A" },
-                    { label: "住宅を取得・改修したい", next: "flow_B" },
-                    { label: "空き家・空き店舗を活用したい", next: "flow_C" },
-                    { label: "結婚・子育て・妊娠について", next: "flow_D" },
-                    { label: "就職・就農・起業について", next: "flow_E" },
+                    { label: "移住・転入を考えている", next: "flow_A_start" },
+                    { label: "住宅を取得・改修したい", next: "flow_B_start" },
+                    { label: "空き家・空き店舗を活用したい", next: "flow_C_start" },
+                    { label: "結婚・子育て・妊娠について", next: "flow_D_start" },
+                    { label: "就職・就農・起業について", next: "flow_E_start" },
                     { label: "該当なし", next: "result_livehub" }
                 ]
             },
-
-            // ＝＝＝ [A] 移住フロー ＝＝＝
-            "flow_A": {
-                text: "現在のお住まいはどちらですか？",
-                options: [
-                    { label: "東京23区在住・または東京圏から23区へ通勤", next: "flow_A_tokyo" },
-                    { label: "東京圏(23区通勤なし)・近畿圏・中京圏・広島県・福岡県", next: "flow_A_city" },
-                    { label: "上記以外の地域から移住予定", next: "flow_A_other" }
-                ]
-            },
-            /* --- 1. 東京23区ルート --- */
-            "flow_A_tokyo": {
-                text: "移住の状況は？",
-                options: [
-                    { label: "下見・体験したい", next: "flow_shitami" },
-                    { label: "移住が決まっている", next: "flow_A_tokyo_work" }
-                ]
-            },
-            "flow_A_tokyo_work": {
-                text: "移住後の働き方は？",
-                options: [
-                    { label: "テレワーク / やまぐち専門人材 / ジョブナビ就業", next: "flow_A_tokyo_settle" },
-                    { label: "やまぐち創業補助金で創業", next: "result_s001" },
-                    { label: "就業先はまだ決まっていない", next: "flow_sumai" },
-                    { label: "上記以外の方法で就職予定", next: "flow_sumai" }
-                ]
-            },
-            "flow_A_tokyo_settle": {
-                text: "定住先は？",
-                options: [
-                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "result_s001_s003" },
-                    { label: "上記以外", next: "result_s001" }
-                ]
-            },
-            /* --- 2. 大都市圏ルート --- */
-            "flow_A_city": {
-                text: "移住の状況は？",
-                options: [
-                    { label: "下見・体験したい", next: "flow_shitami" },
-                    { label: "移住が決まっている", next: "flow_A_city_work" }
-                ]
-            },
-            "flow_A_city_work": {
-                text: "移住後の働き方は？",
-                options: [
-                    { label: "テレワーク / やまぐち専門人材 / ジョブナビ就業", next: "flow_A_city_settle" },
-                    { label: "やまぐち創業補助金で創業", next: "result_s002" }, 
-                    { label: "就業先はまだ決まっていない", next: "flow_sumai" },
-                    { label: "上記以外の方法で就職予定", next: "flow_sumai" }
-                ]
-            },
-            "flow_A_city_settle": {
-                text: "定住先は？",
-                options: [
-                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "result_s002_s003" },
-                    { label: "上記以外", next: "result_s002" }
-                ]
-            },
-            /* --- 3. 上記以外の地域ルート --- */
-            "flow_A_other": {
-                text: "移住の状況は？",
-                options: [
-                    { label: "下見・体験したい", next: "flow_shitami" },
-                    { label: "移住が決まっている", next: "flow_A_other_type" }
-                ]
-            },
-            "flow_A_other_type": {
-                text: "移住の形態は？",
-                options: [
-                    { label: "住宅を購入・建築して移住", next: "flow_A_other_buy" },
-                    { label: "民間賃貸住宅に住む予定 (UJIターン)", next: "flow_A_other_rent" },
-                    { label: "その他・わからない", next: "result_livehub" }
-                ]
-            },
-            "flow_A_other_buy": {
-                text: "定住先は？",
-                options: [
-                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "flow_A_other_buy_kaso" },
-                    { label: "上記以外の地域", next: "flow_house_buy" }
-                ]
-            },
-            "flow_A_other_buy_kaso": {
-                text: "現在のお住まいは？",
-                options: [
-                    { label: "市外から転入", next: "flow_A_other_buy_kaso_in" },
-                    { label: "市内から転居", next: "flow_A_other_buy_kaso_local" }
-                ]
-            },
-            "flow_A_other_buy_kaso_in": {
-                text: "過疎地域で第3子以降の出産予定はありますか？",
-                options: [
-                    { label: "はい", next: "flow_A_other_buy_kaso_in_yes" },
-                    { label: "いいえ", next: "flow_A_other_buy_kaso_in_no" }
-                ]
-            },
-            "flow_A_other_buy_kaso_in_yes": {
-                text: "29歳以下でローンを組む予定ですか？",
-                options: [
-                    { label: "はい", next: "result_s003_s004_s016_s005" },
-                    { label: "いいえ", next: "result_s003_s004_s016" }
-                ]
-            },
-            "flow_A_other_buy_kaso_in_no": {
-                text: "29歳以下でローンを組む予定ですか？",
-                options: [
-                    { label: "はい", next: "result_s003_s016_s005" },
-                    { label: "いいえ", next: "result_s003_s016" }
-                ]
-            },
-            "flow_A_other_buy_kaso_local": {
-                text: "29歳以下でローンを組む予定ですか？",
-                options: [
-                    { label: "はい", next: "result_s005" },
-                    { label: "いいえ", next: "result_livehub" }
-                ]
-            },
-            "flow_A_other_rent": {
-                text: "定住先は？",
-                options: [
-                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "flow_A_other_rent_kaso" },
-                    { label: "上記以外の地域", next: "flow_A_other_rent_other" }
-                ]
-            },
-            "flow_A_other_rent_kaso": {
-                text: "現在のお住まいは？",
-                options: [
-                    { label: "市外から転入", next: "flow_A_other_rent_kaso_in" },
-                    { label: "市内から転居", next: "result_livehub" }
-                ]
-            },
-            "flow_A_other_rent_kaso_in": {
-                text: "世帯主39歳以下 または 中学生以下の子どもがいますか？",
-                options: [
-                    { label: "はい", next: "result_s003_s015" },
-                    { label: "いいえ", next: "result_s003" }
-                ]
-            },
-            "flow_A_other_rent_other": {
-                text: "世帯主39歳以下 または 中学生以下の子どもがいますか？",
-                options: [
-                    { label: "はい", next: "result_s015" },
-                    { label: "いいえ", next: "result_livehub" }
-                ]
-            },
-
-            // ＝＝＝ [B] 住宅フロー ＝＝＝
-            "flow_B": {
-                text: "住宅に関するご状況は？",
-                options: [
-                    { label: "住所が変わって住宅を取得したい", next: "flow_house_buy" },
-                    { label: "空き家バンクの物件を購入して改修したい", next: "flow_akiya_bank" },
-                    { label: "下関駅周辺の空き家を取り壊したい", next: "result_s007" },
-                    { label: "空き家の管理を業者に依頼したい", next: "result_s008" }
-                ]
-            },
-
-            // ＝＝＝ [C] 空き家活用フロー ＝＝＝
-            "flow_C": {
-                text: "空き物件の活用方法は？",
-                options: [
-                    { label: "店舗開業(小売・飲食・サービス)", next: "result_s009" },
-                    { label: "空き家バンクの物件を住居として改修", next: "flow_akiya_bank" },
-                    { label: "空き家を取り壊したい (下関駅周辺)", next: "result_s007" }
-                ]
-            },
-
-            // ＝＝＝ [D] 家族フロー ＝＝＝
-            "flow_D": {
-                text: "結婚・子育て・妊娠のどれに当てはまる？",
-                options: [
-                    { label: "最近結婚した(新婚)", next: "flow_D_marriage" },
-                    { label: "妊娠中または出産を予定している", next: "result_s011" },
-                    { label: "子どもの医療費が心配", next: "result_s012" },
-                    { label: "過疎地域で第3子以降を出産した", next: "result_s004" }
-                ]
-            },
-            "flow_D_marriage": {
-                text: "妊娠中または出産予定？",
-                options: [
-                    { label: "はい", next: "result_s010_s011" },
-                    { label: "いいえ", next: "result_s010" }
-                ]
-            },
-
-            // ＝＝＝ [E] 就労フロー ＝＝＝
-            "flow_E": {
-                text: "就職・就農・起業の状況は？",
-                options: [
-                    { label: "奨学金返還中・下関市内に就職・起業", next: "result_s013" },
-                    { label: "農業に興味・就農体験したい (50歳未満)", next: "result_s014" },
-                    { label: "空き物件でお店を開業したい", next: "result_s009" }
-                ]
-            },
-
-            // ＝＝＝ 【下見フロー】 ＝＝＝
-            "flow_shitami": {
+            flow_preview: {
                 text: "下見・体験の方法は？",
                 options: [
-                    { label: "YY! ターン支援 (交通費補助)を利用したい", next: "result_s017" },
-                    { label: "お試し暮らし(無料宿泊プログラム)を利用したい", next: "result_s018" }
+                    { label: "YY!ターン支援(交通費補助)を利用したい", next: "result_s017" },
+                    { label: "お試し暮らし(無料宿泊)を利用したい", next: "result_s018" }
                 ]
             },
-
-            // ＝＝＝ 【住まいフロー】 ＝＝＝
-            "flow_sumai": {
+            flow_housing: {
                 text: "移住後の住まいはどのようにお考えですか？",
                 options: [
-                    { label: "民間賃貸住宅に住む予定", next: "flow_sumai_rent" },
-                    { label: "住宅を購入・建築する予定", next: "flow_house_buy" },
+                    { label: "民間賃貸住宅に住む予定", next: "flow_housing_rent" },
+                    { label: "住宅を購入・建築する予定", next: "flow_housing_buy" },
                     { label: "まだ決まっていない", next: "result_livehub" }
                 ]
             },
-            "flow_sumai_rent": {
-                text: "世帯主39歳以下 または 中学生以下の子どもがいますか？",
+            flow_housing_rent: {
+                text: "世帯主が39歳以下、または中学生以下のお子様がいらっしゃいますか？",
                 options: [
                     { label: "はい", next: "result_s015" },
                     { label: "いいえ", next: "result_livehub" }
                 ]
             },
-
-            // ＝＝＝ 【住宅取得フロー】 ＝＝＝
-            "flow_house_buy": {
-                text: "29歳以下でローンを組む予定？",
+            flow_housing_buy: {
+                text: "29歳以下で住宅ローンを組む予定ですか？",
                 options: [
                     { label: "はい", next: "result_s005_s016" },
                     { label: "いいえ", next: "result_s016" }
                 ]
             },
-
-            // ＝＝＝ 【空き家バンク改修フロー】 ＝＝＝
-            "flow_akiya_bank": {
-                text: "29歳以下でローンを組む予定？",
+            flow_akiya_renovate: {
+                text: "29歳以下で住宅ローンを組む予定ですか？",
                 options: [
-                    { label: "はい", next: "flow_akiya_bank_loan_yes" },
-                    { label: "いいえ", next: "flow_akiya_bank_loan_no" }
+                    { label: "はい", next: "flow_akiya_loan_yes" },
+                    { label: "いいえ", next: "flow_akiya_loan_no" }
                 ]
             },
-            "flow_akiya_bank_loan_yes": {
-                text: "住所は変わる？",
+            flow_akiya_loan_yes: {
+                text: "住所は変わりますか？",
                 options: [
                     { label: "はい", next: "result_s006_s005_s016" },
                     { label: "いいえ", next: "result_s006_s005" }
                 ]
             },
-            "flow_akiya_bank_loan_no": {
-                text: "住所は変わる？",
+            flow_akiya_loan_no: {
+                text: "住所は変わりますか？",
                 options: [
                     { label: "はい", next: "result_s006_s016" },
                     { label: "いいえ", next: "result_s006" }
                 ]
             },
-
-            // 🏆 該当なしの場合
-            "result_livehub": {
-                text: "ご回答ありがとうございます！<br><br>現在の条件にピタリと合う補助金は見つかりませんでしたが、LiveHUBしものせきでは専任のコンシェルジュがご相談に乗ります！<br>ぜひお気軽にお問い合わせください <span class=\"material-symbols-outlined\" style=\"vertical-align: middle; color: var(--bot-main); font-size: 1.2rem;\">info</span>",
-                options: [{ label: "最初からやり直す", next: "start" }]
+            flow_A_start: {
+                text: "現在のお住まいはどちらですか？",
+                options: [
+                    { label: "東京23区在住、または東京圏から23区へ通勤", next: "flow_A_23" },
+                    { label: "東京圏・近畿圏・中京圏・広島県・福岡県", next: "flow_A_metro" },
+                    { label: "上記以外の地域から移住予定", next: "flow_A_other" }
+                ]
+            },
+            flow_A_23: {
+                text: "移住の状況をお選びください。",
+                options: [
+                    { label: "下見・体験したい", next: "flow_preview" },
+                    { label: "移住が決まっている", next: "flow_A_23_work" }
+                ]
+            },
+            flow_A_23_work: {
+                text: "移住後の働き方は？",
+                options: [
+                    { label: "テレワーク / やまぐち専門人材 / ジョブナビ就業", next: "flow_A_23_dest" },
+                    { label: "やまぐち創業補助金で創業", next: "result_s001" }, 
+                    { label: "就業先未定 / 上記以外で就職", next: "flow_housing" }
+                ]
+            },
+            flow_A_23_dest: {
+                text: "定住先はどちらですか？",
+                options: [
+                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "result_s001_s003" },
+                    { label: "上記以外", next: "result_s001" }
+                ]
+            },
+            flow_A_metro: {
+                text: "移住の状況をお選びください。",
+                options: [
+                    { label: "下見・体験したい", next: "flow_preview" },
+                    { label: "移住が決まっている", next: "flow_A_metro_work" }
+                ]
+            },
+            flow_A_metro_work: {
+                text: "移住後の働き方は？",
+                options: [
+                    { label: "テレワーク / やまぐち専門人材 / ジョブナビ就業", next: "flow_A_metro_dest" },
+                    { label: "やまぐち創業補助金で創業", next: "result_s002" }, 
+                    { label: "就業先未定 / 上記以外で就職", next: "flow_housing" }
+                ]
+            },
+            flow_A_metro_dest: {
+                text: "定住先はどちらですか？",
+                options: [
+                    { label: "豊田・豊浦・豊北・蓋井島・六連島", next: "result_s002_s003" },
+                    { label: "上記以外", next: "result_s002" }
+                ]
+            },
+            flow_A_other: {
+                text: "移住の状況をお選びください。",
+                options: [
+                    { label: "下見・体験したい", next: "flow_preview" },
+                    { label: "移住が決まっている", next: "flow_housing" }
+                ]
+            },
+            flow_B_start: {
+                text: "住宅に関するご状況は？",
+                options: [
+                    { label: "住所が変わって住宅を取得したい", next: "flow_housing_buy" },
+                    { label: "空き家バンクの物件を購入して改修したい", next: "flow_akiya_renovate" },
+                    { label: "下関駅周辺の空き家を取り壊したい", next: "result_s007" },
+                    { label: "空き家の管理を業者に依頼したい", next: "result_s008" }
+                ]
+            },
+            flow_C_start: {
+                text: "空き物件の活用方法は？",
+                options: [
+                    { label: "店舗開業(小売・飲食・サービス)", next: "result_s009" },
+                    { label: "空き家バンクの物件を住居として改修", next: "flow_akiya_renovate" },
+                    { label: "空き家を取り壊したい(下関駅周辺)", next: "result_s007" }
+                ]
+            },
+            flow_D_start: {
+                text: "結婚・子育て・妊娠のどれに当てはまりますか？",
+                options: [
+                    { label: "最近結婚した(新婚)", next: "flow_D_married" },
+                    { label: "妊娠中または出産を予定している", next: "result_s011" },
+                    { label: "子どもの医療費が心配", next: "result_s012" },
+                    { label: "過疎地域で第3子以降を出産した", next: "result_s004" }
+                ]
+            },
+            flow_D_married: {
+                text: "妊娠中または出産を予定していますか？",
+                options: [
+                    { label: "はい", next: "result_s010_s011" },
+                    { label: "いいえ", next: "result_s010" }
+                ]
+            },
+            flow_E_start: {
+                text: "就職・就農・起業の状況は？",
+                options: [
+                    { label: "奨学金返還中・下関市内に就職・起業", next: "result_s013" },
+                    { label: "農業に興味・就農体験したい(50歳未満)", next: "result_s014" },
+                    { label: "空き物件でお店を開業したい", next: "result_s009" }
+                ]
             }
         };
 
-        const chatArea = document.getElementById('chat-area');
-
-        function showBotMessage(message) {
-            const row = document.createElement('div');
-            row.className = 'message-row bot';
-            row.innerHTML = `<img src="2.png" alt="せきまる" class="bot-icon"><div class="bubble">${message}</div>`;
-            chatArea.appendChild(row);
-            scrollToBottom();
+        function showBotMessage(text) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'bot-msg-wrapper';
+            
+            const icon = document.createElement('img');
+            icon.src = '2.png';
+            icon.className = 'bot-icon';
+            
+            const div = document.createElement('div');
+            div.className = 'msg bot-msg';
+            div.innerHTML = text;
+            
+            wrapper.appendChild(icon);
+            wrapper.appendChild(div);
+            chatArea.appendChild(wrapper);
         }
 
-        function showUserMessage(message) {
-            const row = document.createElement('div');
-            row.className = 'message-row user';
-            row.innerHTML = `<div class="bubble">${message}</div>`;
-            chatArea.appendChild(row);
-            scrollToBottom();
+        function showUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'msg user-msg';
+            div.innerHTML = text;
+            chatArea.appendChild(div);
         }
 
         function showOptions(options) {
             if (!options || options.length === 0) return;
             const container = document.createElement('div');
-            container.className = 'options-container';
-
             options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1.1rem;">chevron_right</span> ${opt.label}`;
-                
+                btn.innerHTML = `<span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.1rem;">chevron_right</span> ${opt.label}`;
                 btn.onclick = () => {
                     container.remove();
                     showUserMessage(opt.label);
-                    setTimeout(() => { playScenario(opt.next); }, 600);
+
+                    if (opt.label !== "最初からやり直す") {
+                        chatHistory.push(opt.label);
+                    }
+                    
+                    if (opt.label.includes("東京23区")) {
+                        userOrigin = "東京23区";
+                    } else if (opt.label.includes("東京圏") || opt.label.includes("近畿圏")) {
+                        userOrigin = "大都市圏";
+                    } else if (opt.label.includes("上記以外の地域")) {
+                        userOrigin = "その他地域";
+                    }
+
+                    setTimeout(() => { playScenario(opt.next); }, 500);
                 };
                 container.appendChild(btn);
             });
             chatArea.appendChild(container);
-            scrollToBottom();
+            chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
         }
 
-       // 🎬 シナリオを再生する関数（結果の生成）
+        // ＝＝＝ 3. シナリオの再生と、結果（複数ID）の自動生成機能 ＝＝＝
         function playScenario(nodeKey) {
+            if (nodeKey === "start") {
+                userOrigin = "未選択";
+                chatHistory = [];
+            }
+
             if (nodeKey.startsWith("result_") && nodeKey !== "result_livehub") {
                 const ids = nodeKey.replace("result_", "").split("_");
-                
-                // 🎉を削除し、Google Fontsのアイコン（celebration）に変更しました
-                let resultHTML = "あなたのご状況で対象となる可能性がある補助金はこちらです！ <span class=\"material-symbols-outlined\" style=\"vertical-align: middle; color: var(--bot-accent); font-size: 1.2rem;\">celebration</span><br><br>";
+                let resultHTML = "あなたのご状況で対象となる可能性がある補助金はこちらです！<br><br>";
+                let resultTitles = []; 
                 
                 ids.forEach(id => {
                     if(subsidyDB[id]) {
                         resultHTML += `
-                            <div style="background:#fff; border:2px solid var(--bot-main); padding:15px; border-radius:10px; margin-bottom:10px; text-align:left; line-height:1.4;">
-                                <strong style="color:var(--bot-main); font-size:1.05rem;">${subsidyDB[id].title}</strong><br>
+                            <div style="background:#fff; border:2px solid #00b4d8; padding:15px; border-radius:10px; margin-bottom:10px; text-align:left;">
+                                <strong style="color:#00b4d8;">${subsidyDB[id].title}</strong><br>
                                 <span style="font-size:0.9rem; color:#555;">${subsidyDB[id].desc}</span>
                             </div>`;
+                        resultTitles.push(subsidyDB[id].title); 
                     }
                 });
 
-                // 【特記事項の追加】住宅取得(s016)や空き家改修(s006)が含まれる場合、s019の案内を自動追加
                 if (ids.includes("s016") || ids.includes("s006")) {
                     resultHTML += `
-                            <div style="background:#FFF3E0; border:2px dashed var(--bot-accent); padding:15px; border-radius:10px; margin-bottom:10px; text-align:left; line-height:1.4;">
-                                <span style="font-size:0.8rem; font-weight:bold; color:var(--bot-accent);">※三世代同居・近居を予定している方はこちらも対象です！</span><br>
-                                <strong style="color:var(--bot-accent); font-size:1rem;">${subsidyDB["s019"].title}</strong><br>
-                                <span style="font-size:0.9rem; color:#555;">${subsidyDB["s019"].desc}</span>
-                            </div>`;
+                        <div style="background:#FFF3E0; border:2px dashed #FF9F1C; padding:15px; border-radius:10px; margin-bottom:10px; text-align:left;">
+                            <span style="font-size:0.8rem; font-weight:bold; color:#FF9F1C;">※三世代同居・近居を予定している方はこちらも対象です！</span><br>
+                            <strong style="color:#FF9F1C;">${subsidyDB["s019"].title}</strong><br>
+                            <span style="font-size:0.9rem; color:#555;">${subsidyDB["s019"].desc}</span>
+                        </div>`;
+                    resultTitles.push(subsidyDB["s019"].title);
                 }
                 
-                resultHTML += `<p style="font-size:0.8rem; color:#d90429; margin-top:15px; font-weight:bold; line-height:1.5;">※補助金には申請期限・予算上限があります。<br>詳細・最終確認は必ず各担当窓口（LiveHUBしものせき TEL:0120-540-201 火~土 10時~17時）にお問い合わせください。</p>`;
+                resultHTML += `<p style="font-size:0.8rem; color:#d90429; font-weight:bold; margin-top:10px;">※申請期限・予算上限があるため、詳細は各担当窓口にお問い合わせください。<br>LiveHUBしものせき TEL:0120-540-201 (火~土 10時~17時)</p>`;
                 
+                sendDataToGAS(userOrigin, chatHistory.join(" ＞ "), resultTitles.join("、 "));
+
                 showBotMessage(resultHTML);
                 showOptions([{ label: "最初からやり直す", next: "start" }]);
                 return;
             }
 
-            const nodeData = scenario[nodeKey];
-            if (!nodeData) return;
+            if (nodeKey === "result_livehub") {
+                sendDataToGAS(userOrigin, chatHistory.join(" ＞ "), "該当なし（LiveHUB案内）");
 
-            showBotMessage(nodeData.text);
-            showOptions(nodeData.options);
+                showBotMessage("恐れ入りますが、該当する補助金が見つかりませんでした。<br>詳細なご相談は「LiveHUBしものせき」まで直接お問い合わせください。<br><br>【お問い合わせ先】<br>TEL: 0120-540-201<br>営業時間: 火〜土 10時〜17時");
+                showOptions([{ label: "最初からやり直す", next: "start" }]);
+                return;
+            }
+
+            const node = scenario[nodeKey];
+            if (!node) return;
+            showBotMessage(node.text);
+            showOptions(node.options);
         }
 
-       // 常に一番下までチャット枠を自動スクロールする処理
-        function scrollToBottom() {
-            const chatArea = document.getElementById('chat-area');
-            chatArea.scrollTo({
-                top: chatArea.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
-
-        setTimeout(() => { playScenario("start"); }, 500);
+        // ▼【重要】プログラムを起動する合図（これが消えると真っ白になります！）
+        playScenario('start');
     </script>
 </body>
 </html>
