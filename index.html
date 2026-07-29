@@ -314,7 +314,7 @@
                 <div class="modal-title"><img src="2.png" alt="せきまる">移住相談ナビ</div>
                 <button id="close-bot-btn" class="btn-close"><i class="fa-solid fa-xmark"></i> 閉じる</button>
             </div>
-            <iframe src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="modal-iframe" title="移住相談チャットボット"></iframe>
+            <iframe data-src="https://shimonosekicity.github.io/subsidy-chatbot/?node=migration" class="modal-iframe" title="移住相談チャットボット"></iframe>
         </div>
     </div>
 
@@ -371,6 +371,12 @@
         openBtn.addEventListener('click', () => {
             botModal.classList.add('active');
             document.body.style.overflow = 'hidden'; 
+
+            // モーダルを表示してから iframe を読み込む（iOSの白飛び対策）
+            const frame = botModal.querySelector('.modal-iframe');
+            if (!frame.getAttribute('src') && frame.dataset.src) {
+                frame.src = frame.dataset.src;
+            }
         });
 
         closeBtn.addEventListener('click', () => {
