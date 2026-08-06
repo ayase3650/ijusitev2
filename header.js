@@ -11,6 +11,7 @@ document.write(`
         <h1 class="site-title"><a href="index.html" style="color:var(--fugu-blue);">SHIMONOSEKI LIFE</a></h1>
         <nav>
             <ul>
+            <li><a href="area.html">AREA</a></li>
                 <li><a href="index.html#support" class="puku-hover">SUPPORT</a></li>
                 <li><a href="index.html#faq" class="puku-hover">FAQ</a></li>
                 <li><a href="application.html">各種申請</a></li>

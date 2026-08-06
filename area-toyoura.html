@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>豊浦町エリア - SHIMONOSEKI LIFE</title>
+    
+    <!-- Google Fonts Icons (Material Symbols Outlined) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- 共通スタイルの読み込み -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ＝＝＝ エリア詳細ページ専用のスタイル ＝＝＝ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--fugu-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .page-desc {
+            font-weight: 700;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* 魅力紹介ブロック */
+        .charm-block {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .charm-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .charm-text { flex: 1; }
+        .charm-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #76c893; /* 豊浦町のテーマカラー（緑） */
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+        .charm-heading {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.4;
+        }
+        .charm-desc {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* 画像エリア（ダミーの背景色を設定しています） */
+        .charm-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            aspect-ratio: 4/3;
+            background-color: #f1f3f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+        }
+        .charm-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 戻るボタン */
+        .btn-back-wrapper {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 80px;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--fugu-text);
+            color: #ffffff;
+            padding: 15px 40px;
+            border-radius: 40px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .btn-back:hover {
+            background-color: var(--fugu-fin);
+            transform: translateY(-2px);
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .charm-block, .charm-block:nth-child(even) {
+                flex-direction: column-reverse;
+                padding: 30px 20px;
+                gap: 25px;
+            }
+            .charm-heading {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景の泡 -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <!-- ヘッダーの読み込み -->
+    <script src="header.js"></script>
+
+    <main class="container">
+        <header class="page-header scroll-fade">
+            <h1 class="page-title">
+                <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #76c893;">sailing</span>
+                豊浦町エリア
+            </h1>
+            <p class="page-desc">響灘の美しい海岸線と、歴史ある温泉や名物グルメを楽しむ町</p>
+        </header>
+
+        <!-- 魅力1：川棚温泉と瓦そば -->
+        <div class="charm-block scroll-fade delay-1">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">hot_tub</span> ONSEN & GOURMET</span>
+                <h2 class="charm-heading">歴史ある「川棚温泉」と絶品ご当地グルメ「瓦そば」</h2>
+                <p class="charm-desc">
+                    豊かな自然に囲まれた川棚温泉は、古くから多くの人々に愛されてきた歴史ある湯の町です。また、熱した瓦の上に茶そばや具材を乗せていただく下関発祥の絶品グルメ「瓦そば」も堪能でき、心も体も満たされる癒やしのエリアです。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="toyoura_onsen.png" alt="川棚温泉と瓦そば"> 写真がある場合はこちらのコメントアウトを外して使用してください -->
+            </div>
+        </div>
+
+        <!-- 魅力2：響灘の海岸線ドライブ -->
+        <div class="charm-block scroll-fade delay-2">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">directions_car</span> SCENIC DRIVE</span>
+                <h2 class="charm-heading">響灘に沈む夕日は絶景。海沿いの爽快なドライブコース</h2>
+                <p class="charm-desc">
+                    響灘（ひびきなだ）に面した海岸線には美しい景色が広がり、海沿いを走る爽快なドライブを楽しむことができます。特に、水平線に沈む夕日は息をのむほどの美しさで、日常の疲れを忘れさせてくれる特別なビュースポットです。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="toyoura_drive.png" alt="海岸線ドライブ"> -->
+            </div>
+        </div>
+
+        <!-- 魅力3：マリンレジャー -->
+        <div class="charm-block scroll-fade delay-3">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">surfing</span> MARINE LEISURE</span>
+                <h2 class="charm-heading">マリンスポーツや釣りなど、海を身近に感じるアクティブな暮らし</h2>
+                <p class="charm-desc">
+                    穏やかで美しい海は、サーフィンなどのマリンレジャーや釣りを楽しむのに絶好のロケーションです。休日は波の音を聞きながら海辺でアクティブに過ごす、海を身近に感じる憧れのライフスタイルが実現します。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="toyoura_marine.png" alt="マリンレジャー"> -->
+            </div>
+        </div>
+
+        <!-- 戻るボタン -->
+        <div class="btn-back-wrapper scroll-fade">
+            <a href="area.html" class="btn-back">
+                <span class="material-symbols-outlined">arrow_back</span> エリアマップへ戻る
+            </a>
+        </div>
+    </main>
+
+    <!-- スクロール検知のスクリプト -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                } else {
+                    entry.target.classList.remove('appear');
+                }
+            });
+        }, { threshold: 0 }); 
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

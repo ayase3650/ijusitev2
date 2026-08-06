@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下関の各エリア紹介 | SHIMONOSEKI LIFE</title>
+    
+    <!-- Google Fonts Icons (Material Symbols Outlined) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- 共通スタイルの読み込み -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ＝＝＝ エリア紹介ページ専用のスタイル ＝＝＝ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .page-header h2 {
+            font-size: 2.2rem;
+            color: var(--fugu-blue);
+            font-weight: 900;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .page-header p {
+            font-weight: 700;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* 全体マップのセクション */
+        .full-map-section {
+            background-color: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.1);
+        }
+        .full-map-section img {
+            max-width: 100%;
+            height: auto;
+            max-height: 500px;
+        }
+
+        /* 各エリアのカードデザイン */
+        .area-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .area-card {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            gap: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .area-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.15);
+        }
+        /* 偶数番目のカードは画像とテキストを左右反転 */
+        .area-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .area-img {
+            flex: 1;
+            text-align: center;
+        }
+        .area-img img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+
+        .area-text {
+            flex: 1.5;
+        }
+        .area-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px dashed #E0FAFF;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .area-text p {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        /* 各町ごとのテーマカラー設定 */
+        .color-old { color: #ff8fa3; }
+        .color-kikugawa { color: #48cae4; }
+        .color-toyoda { color: #f4a261; }
+        .color-toyoura { color: #76c893; }
+        .color-houhoku { color: #f9c74f; }
+
+        /* スマホ向け調整 */
+        @media (max-width: 768px) {
+            .full-map-section { padding: 20px; }
+            .area-card, .area-card:nth-child(even) {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .area-text h3 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景の泡 -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <!-- ヘッダーの読み込み -->
+    <script src="header.js"></script>
+
+    <main class="container">
+        
+        <div class="page-header scroll-fade">
+            <h2>
+                <span class="material-symbols-outlined" style="font-size: 2.5rem;">map</span>
+                下関の各エリア紹介
+            </h2>
+            <p>下関市は大きく5つのエリアに分かれており、<br class="sp-br">それぞれに異なる魅力が詰まっています。</p>
+        </div>
+
+      <!-- ＝＝＝ 新規追加：インタラクティブマップ（吹き出し版） ＝＝＝ -->
+        <style>
+            .interactive-map-wrapper {
+                position: relative;
+                margin-bottom: 80px;
+                padding-top: 60px; /* 吹き出しが上にはみ出る分の余白を確保 */
+            }
+
+            .map-container {
+                position: relative;
+                width: 100%;
+                max-width: 700px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                border-radius: 30px;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0, 180, 216, 0.1);
+            }
+
+            .base-map {
+                width: 100%;
+                height: auto;
+                display: block;
+                opacity: 0.5;
+                filter: grayscale(100%);
+                transition: 0.3s;
+            }
+
+            .overlay-map {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                width: calc(100% - 40px);
+                height: calc(100% - 40px);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform: translateY(0);
+                filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2));
+            }
+
+            .overlay-map.is-active {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+
+            .hit-area {
+                position: absolute;
+                cursor: pointer;
+                z-index: 10;
+                border-radius: 50%;
+                background: transparent; 
+            }
+
+            /* 吹き出しのデザイン */
+            .speech-bubble {
+                position: absolute;
+                background-color: #ffffff;
+                border-radius: 20px;
+                padding: 20px 25px;
+                box-shadow: 0 15px 40px rgba(0, 180, 216, 0.3);
+                width: 90%;
+                max-width: 350px;
+                z-index: 100;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                
+                /* 下部中央を起点にして拡大縮小アニメーション */
+                transform-origin: bottom center;
+                transform: translate(-50%, calc(-100% - 5px)) scale(0.8);
+            }
+
+            .speech-bubble.is-visible {
+                opacity: 1;
+                visibility: visible;
+                transform: translate(-50%, calc(-100% - 15px)) scale(1);
+            }
+
+            /* 吹き出しの尻尾 */
+            .speech-bubble::after {
+                content: '';
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 15px 15px 0 15px;
+                border-style: solid;
+                border-color: #ffffff transparent transparent transparent;
+            }
+
+            /* 吹き出しを閉じるボタン */
+            .close-bubble {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: none;
+                border: none;
+                color: #888;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                transition: color 0.3s;
+            }
+
+            .close-bubble:hover {
+                color: #00B4D8;
+            }
+        </style>
+
+        <section class="interactive-map-wrapper">
+            
+            <div class="map-container scroll-fade delay-1">
+                <!-- 1. ベースとなる全体マップ -->
+                <img src="45738f34a7972aca.png" class="base-map" alt="下関市全体マップ">
+
+                <!-- 2. 重ねる各町のマップ -->
+                <img src="9b6cd2630ad46ac8.png" class="overlay-map" id="map-old" alt="旧下関市">
+                <img src="5a76922919f63c0c.png" class="overlay-map" id="map-kikugawa" alt="菊川町">
+                <img src="4b9e2535c294c9d7.png" class="overlay-map" id="map-toyoda" alt="豊田町">
+                <img src="6df3136ac8375da7.png" class="overlay-map" id="map-toyoura" alt="豊浦町">
+                <img src="515f6989a4388d72.png" class="overlay-map" id="map-houhoku" alt="豊北町">
+
+                <!-- 3. 透明な当たり判定 -->
+                <div class="hit-area" data-area="houhoku" style="top: 8%; left: 18%; width: 30%; height: 25%;"></div>
+                <div class="hit-area" data-area="toyoda" style="top: 15%; right: 15%; width: 30%; height: 30%;"></div>
+                <div class="hit-area" data-area="toyoura" style="top: 35%; left: 18%; width: 28%; height: 25%;"></div>
+                <div class="hit-area" data-area="kikugawa" style="top: 48%; right: 20%; width: 28%; height: 20%;"></div>
+                <div class="hit-area" data-area="old" style="bottom: 5%; left: 30%; width: 40%; height: 35%;"></div>
+
+                <!-- 4. 吹き出し本体（初期状態では非表示） -->
+                <div id="speech-bubble" class="speech-bubble">
+                    <button class="close-bubble" id="close-bubble">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div id="bubble-content"></div>
+                </div>
+            </div>
+
+        </section>
+
+       <script>
+            // 各町のデータ（link に専用ページのURLを追加しています）
+            const areaData = {
+                'old': {
+                    title: '旧下関市',
+                    icon: 'location_city',
+                    color: '#ff8fa3',
+                    desc: '本州の最西端に位置し、関門海峡に面した活気ある中心エリアです。唐戸市場や城下町長府など、歴史と食が交差する見どころが満載。',
+                    pos: { top: '80%', left: '45%' },
+                    link: 'area-old.html'
+                },
+                'kikugawa': {
+                    title: '菊川町',
+                    icon: 'water_drop',
+                    color: '#48cae4',
+                    desc: '盆地ならではの穏やかな気候と豊かな自然に恵まれたエリアです。ホタルの名所としても知られており、美しい光の舞を楽しむことができます。',
+                    pos: { top: '60%', left: '70%' },
+                    link: 'area-kikugawa.html'
+                },
+                'toyoda': {
+                    title: '豊田町',
+                    icon: 'forest',
+                    color: '#f4a261',
+                    desc: '県立自然公園に指定された美しい山々と、澄んだ川のせせらぎが魅力のエリアです。果物狩りが盛んで、四季折々の味覚を堪能できます。',
+                    pos: { top: '35%', left: '70%' },
+                    link: 'area-toyoda.html'
+                },
+                'toyoura': {
+                    title: '豊浦町',
+                    icon: 'sailing',
+                    color: '#76c893',
+                    desc: '響灘に面した美しい海岸線と、歴史ある川棚温泉が人気のエリアです。名物「瓦そば」の発祥の地でもあり、海沿いのドライブコースは絶景です。',
+                    pos: { top: '55%', left: '35%' },
+                    link: 'area-toyoura.html'
+                },
+                'houhoku': {
+                    title: '豊北町',
+                    icon: '', 
+                    color: '#f9c74f',
+                    desc: '映画やCMのロケ地としても有名な「角島大橋」がある絶景エリアです。エメラルドグリーンの海と白い砂浜が広がり、南国のような景観を誇ります。',
+                    pos: { top: '30%', left: '30%' },
+                    link: 'area-houhoku.html'
+                }
+            };
+
+            const hitAreas = document.querySelectorAll('.hit-area');
+            const overlays = document.querySelectorAll('.overlay-map');
+            const speechBubble = document.getElementById('speech-bubble');
+            const bubbleContent = document.getElementById('bubble-content');
+            const closeBubble = document.getElementById('close-bubble');
+            let currentActive = null;
+
+            hitAreas.forEach(area => {
+                const targetId = area.getAttribute('data-area');
+                const targetMap = document.getElementById('map-' + targetId);
+
+                // マウスを乗せた時の処理
+                area.addEventListener('mouseenter', () => {
+                    targetMap.classList.add('is-active');
+                });
+
+                // マウスが離れた時の処理
+                area.addEventListener('mouseleave', () => {
+                    if (currentActive !== targetId) {
+                        targetMap.classList.remove('is-active');
+                    }
+                });
+
+                // クリックした時の処理
+                area.addEventListener('click', () => {
+                    overlays.forEach(img => img.classList.remove('is-active'));
+                    
+                    currentActive = targetId;
+                    targetMap.classList.add('is-active');
+
+                    const data = areaData[targetId];
+                    const iconHtml = data.icon ? `<span class="material-symbols-outlined">${data.icon}</span>` : '';
+                    
+                    // 吹き出しの中身を組み立てる（ボタンを追加）
+                    bubbleContent.innerHTML = `
+                        <h3 style="color: ${data.color}; border-bottom: 2px dashed ${data.color}; font-size: 1.2rem; margin: 0 0 10px 0; padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                            ${iconHtml} ${data.title}
+                        </h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: #444; margin: 0 0 15px 0;">${data.desc}</p>
+                        <div style="text-align: right;">
+                            <a href="${data.link}" style="display: inline-flex; align-items: center; gap: 5px; background-color: ${data.color}; color: #ffffff; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                                詳しく見る <span class="material-symbols-outlined" style="font-size: 1.1rem;">arrow_forward_ios</span>
+                            </a>
+                        </div>
+                    `;
+
+                    // クリックした町の位置に合わせて吹き出しを移動
+                    speechBubble.style.top = data.pos.top;
+                    speechBubble.style.left = data.pos.left;
+                    
+                    // 吹き出しを表示
+                    speechBubble.classList.add('is-visible');
+                });
+            });
+
+            // 閉じるボタンの処理
+            closeBubble.addEventListener('click', () => {
+                speechBubble.classList.remove('is-visible');
+                if (currentActive) {
+                    document.getElementById('map-' + currentActive).classList.remove('is-active');
+                    currentActive = null;
+                }
+            });
+        </script>
+       
+
+    </main>
+
+    <!-- スクロール検知のスクリプト -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                } else {
+                    entry.target.classList.remove('appear');
+                }
+            });
+        }, { threshold: 0 }); 
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

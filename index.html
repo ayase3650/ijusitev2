@@ -36,6 +36,7 @@
     </div>
 
     <main class="container">
+        
 
         <section class="support-section" id="support">
             <div class="step-title-wrap scroll-fade">
@@ -208,10 +209,326 @@
                         <p>山口県への移住を検討されている方向けの登録制度です。レンタカーや引越し料金の割引など、役立つ特典が受けられます。</p>
                         <a href="https://ymg-uji.jp/support/passport/" target="_blank" class="btn-detail">詳しく見る</a>
                     </div>
-                </div>
+              </div>
             </div>
         </section>
+<style>
+            /* ＝＝＝ flow.html 専用のスタイル ＝＝＝ */
+            .support-wrapper {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+            .support-box {
+                background-color: #ffffff;
+                border-radius: 20px;
+                padding: 30px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
+            }
+            .support-title {
+                color: #00B4D8;
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-top: 0;
+                margin-bottom: 15px;
+                border-bottom: 2px solid #CAF0F8;
+                padding-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 8px; /* アイコンとテキストの隙間 */
+            }
+            .support-intro {
+                color: #03045E;
+                line-height: 1.8;
+                margin-bottom: 20px;
+            }
+            .flow-steps {
+                background-color: #F8FDFF;
+                border: 1px solid #E0FAFF;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .flow-steps h4 {
+                color: #0077B6;
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 1.05rem;
+                text-align: center;
+            }
+            ol.step-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                counter-reset: step-counter;
+            }
+            ol.step-list li {
+                position: relative;
+                padding-left: 2.5em;
+                margin-bottom: 15px;
+                color: #03045E;
+                line-height: 1.6;
+            }
+            ol.step-list li:last-child {
+                margin-bottom: 0;
+            }
+            ol.step-list li::before {
+                content: counter(step-counter);
+                counter-increment: step-counter;
+                position: absolute;
+                left: 0;
+                top: 0;
+                background-color: #00B4D8;
+                color: white;
+                width: 1.8em;
+                height: 1.8em;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 1.8em;
+                font-size: 0.9em;
+                font-weight: bold;
+            }
+            .action-btn-container {
+                text-align: center;
+            }
+            .action-btn {
+                display: inline-block;
+                background-color: #FF9F1C;
+                color: #ffffff;
+                padding: 12px 30px;
+                border-radius: 30px;
+                text-decoration: none;
+                font-weight: bold;
+                box-shadow: 0 4px 6px rgba(255, 159, 28, 0.3);
+                transition: 0.3s;
+            }
+            .action-btn:hover {
+                background-color: #F77F00;
+                transform: translateY(-2px);
+            }
+        </style>
 
+        <!-- ＝＝＝ 新規追加：サポート制度のご利用の流れ（アコーディオン版） ＝＝＝ -->
+        <style>
+            /* ＝＝＝ flow.html 専用のスタイル（アコーディオン） ＝＝＝ */
+            .support-wrapper {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+            .support-box {
+                background-color: #ffffff;
+                border-radius: 20px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
+                overflow: hidden; /* 角丸を保つ */
+            }
+            .support-title {
+                color: #00B4D8;
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding: 25px 30px;
+                margin: 0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                list-style: none; /* デフォルトの矢印を消す */
+                position: relative;
+                transition: background-color 0.3s;
+            }
+            .support-title:hover {
+                background-color: #F8FDFF;
+            }
+            /* デフォルトの矢印を消す（Safari/Chrome用） */
+            .support-title::-webkit-details-marker {
+                display: none;
+            }
+            /* 右側にGoogleアイコンの矢印を配置 */
+            .support-title::after {
+                content: '\e313'; /* expand_moreのコード */
+                font-family: 'Material Symbols Outlined';
+                position: absolute;
+                right: 30px;
+                font-size: 1.8rem;
+                transition: transform 0.3s ease;
+            }
+            /* アコーディオンが開いた時の矢印の回転と下線 */
+            .support-box[open] .support-title::after {
+                transform: rotate(180deg);
+            }
+            .support-box[open] .support-title {
+                border-bottom: 2px dashed #CAF0F8;
+            }
+            /* 中身のコンテンツ */
+            .support-content {
+                padding: 25px 30px 30px 30px;
+                animation: fadeIn 0.4s ease-in-out;
+            }
+            .support-intro {
+                color: #03045E;
+                line-height: 1.8;
+                margin-bottom: 20px;
+            }
+            .flow-steps {
+                background-color: #F8FDFF;
+                border: 1px solid #E0FAFF;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .flow-steps h4 {
+                color: #0077B6;
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 1.05rem;
+                text-align: center;
+            }
+            ol.step-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                counter-reset: step-counter;
+            }
+            ol.step-list li {
+                position: relative;
+                padding-left: 2.5em;
+                margin-bottom: 15px;
+                color: #03045E;
+                line-height: 1.6;
+            }
+            ol.step-list li:last-child {
+                margin-bottom: 0;
+            }
+            ol.step-list li::before {
+                content: counter(step-counter);
+                counter-increment: step-counter;
+                position: absolute;
+                left: 0;
+                top: 0;
+                background-color: #00B4D8;
+                color: white;
+                width: 1.8em;
+                height: 1.8em;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 1.8em;
+                font-size: 0.9em;
+                font-weight: bold;
+            }
+            .action-btn-container {
+                text-align: center;
+            }
+            .action-btn {
+                display: inline-block;
+                background-color: #FF9F1C;
+                color: #ffffff;
+                padding: 12px 30px;
+                border-radius: 30px;
+                text-decoration: none;
+                font-weight: bold;
+                box-shadow: 0 4px 6px rgba(255, 159, 28, 0.3);
+                transition: 0.3s;
+            }
+            .action-btn:hover {
+                background-color: #F77F00;
+                transform: translateY(-2px);
+            }
+        </style>
+
+        <section class="flow-section" id="flow" style="margin-bottom: 120px;">
+            <div class="step-title-wrap scroll-fade">
+                <div class="step-badge">
+                    <span class="material-symbols-outlined" style="margin-right: 8px; vertical-align: middle;">format_list_numbered</span>
+                    FLOW
+                </div>
+                <h2 class="section-title">サポート制度のご利用の流れ</h2>
+            </div>
+            
+            <div class="support-wrapper">
+                
+                <!-- 制度1：チャットボット -->
+                <details class="support-box scroll-fade delay-1">
+                    <summary class="support-title">
+                        <span class="material-symbols-outlined" style="font-size: 1.8rem;">smart_toy</span>
+                        移住相談チャットボット
+                    </summary>
+                    <div class="support-content">
+                        <div class="support-intro">
+                            <p>「自分に合う制度がわからない」「日中は忙しくて窓口に電話できない」という方に向けた、24時間対応のチャットボットです。</p>
+                        </div>
+                        <div class="flow-steps">
+                            <h4>ご利用の流れ</h4>
+                            <ol class="step-list">
+                                <li>下記のボタンからチャットボットを起動します。</li>
+                                <li>画面の案内に沿って、ご年齢や希望する働き方などを選択します。</li>
+                                <li>あなたにぴったりの支援制度や補助金の目安がすぐに表示されます。</li>
+                                <li>結果をもとに、LiveHUBしものせきへ具体的なご相談が可能です。</li>
+                            </ol>
+                        </div>
+                        <div class="action-btn-container">
+                            <a href="chatbot.html" class="action-btn">チャットボットで診断する</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 制度2：交通費補助 -->
+                <details class="support-box scroll-fade delay-2">
+                    <summary class="support-title">
+                        <span class="material-symbols-outlined" style="font-size: 1.8rem;">train</span>
+                        YY!ターン支援交通費補助金
+                    </summary>
+                    <div class="support-content">
+                        <div class="support-intro">
+                            <p>移住に向けた下見や、現地での企業面接などの際に発生する交通費を補助する制度です（5千円〜3万円）。遠方からのご来訪でも、費用負担を抑えて現地の空気を感じていただけます。</p>
+                        </div>
+                        <div class="flow-steps">
+                            <h4>ご利用の流れ</h4>
+                            <ol class="step-list">
+                                <li>下関市を訪問する前に、制度の対象要件を満たしているか確認します。</li>
+                                <li>訪問日の前までに、事前の申請手続きを行います。</li>
+                                <li>実際に下関市を訪れ、住まい探しや仕事探しなどの活動を行います。</li>
+                                <li>訪問後、必要な領収書や活動報告書を提出していただき、補助金が交付されます。</li>
+                            </ol>
+                        </div>
+                        <div class="action-btn-container">
+                            <a href="koutsuhi.html" class="action-btn">交通費補助について詳しく見る</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 制度3：お試し暮らし -->
+                <details class="support-box scroll-fade delay-3">
+                    <summary class="support-title">
+                        <span class="material-symbols-outlined" style="font-size: 1.8rem;">holiday_village</span>
+                        お試し暮らし（無料宿泊プログラム）
+                    </summary>
+                    <div class="support-content">
+                        <div class="support-intro">
+                            <p>本格的な移住の前に、実際の生活環境や雰囲気を肌で感じていただける無料の宿泊プログラムです。</p>
+                        </div>
+                        <div class="flow-steps">
+                            <h4>ご利用の流れ</h4>
+                            <ol class="step-list">
+                                <li>利用可能な施設や日程の空き状況をサイト等で確認します。</li>
+                                <li>利用希望日の所定の日数前までに、利用申請書を提出します。</li>
+                                <li>当日現地へお越しいただき、実際の暮らしに近い形で滞在します。周辺のスーパーや環境をご確認ください。</li>
+                                <li>退去時にアンケートや報告書をご提出いただきます。</li>
+                            </ol>
+                        </div>
+                        <div class="action-btn-container">
+                            <a href="otameshi.html" class="action-btn">お試し暮らしについて詳しく見る</a>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+        <!-- ＝＝＝ 新規追加：サポート制度のご利用の流れ ここまで ＝＝＝ -->
+
+            </div>
+        </section>
         <section class="top-faq-section" id="faq">
             <div class="step-title-wrap scroll-fade">
                 <div class="step-badge"><img src="4.png" alt="せきまる" class="seki-icon seki-icon-lg seki-sway"> STEP 2</div>

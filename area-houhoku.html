@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>豊北町エリア - SHIMONOSEKI LIFE</title>
+    
+    <!-- Google Fonts Icons (Material Symbols Outlined) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- 共通スタイルの読み込み -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ＝＝＝ エリア詳細ページ専用のスタイル ＝＝＝ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--fugu-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .page-desc {
+            font-weight: 700;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* 魅力紹介ブロック */
+        .charm-block {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .charm-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .charm-text { flex: 1; }
+        .charm-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #f9c74f; /* 豊北町のテーマカラー（黄色） */
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .charm-heading {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.4;
+        }
+        .charm-desc {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* 画像エリア（ダミーの背景色を設定しています） */
+        .charm-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            aspect-ratio: 4/3;
+            background-color: #f1f3f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+        }
+        .charm-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 戻るボタン */
+        .btn-back-wrapper {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 80px;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--fugu-text);
+            color: #ffffff;
+            padding: 15px 40px;
+            border-radius: 40px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .btn-back:hover {
+            background-color: var(--fugu-fin);
+            transform: translateY(-2px);
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .charm-block, .charm-block:nth-child(even) {
+                flex-direction: column-reverse;
+                padding: 30px 20px;
+                gap: 25px;
+            }
+            .charm-heading {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景の泡 -->
+    <div class="ocean-bg">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <!-- ヘッダーの読み込み -->
+    <script src="header.js"></script>
+
+    <main class="container">
+        <header class="page-header scroll-fade">
+            <h1 class="page-title">
+                <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #f9c74f;">beach_access</span>
+                豊北町エリア
+            </h1>
+            <p class="page-desc">エメラルドグリーンの海と絶景が広がる、自然豊かなリゾートエリア</p>
+        </header>
+
+        <!-- 魅力1：角島大橋 -->
+        <div class="charm-block scroll-fade delay-1">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">panorama</span> SCENIC VIEW</span>
+                <h2 class="charm-heading">映画やCMの舞台にもなる絶景「角島大橋」</h2>
+                <p class="charm-desc">
+                    エメラルドグリーンの海に一直線に伸びる角島大橋は、全国屈指の絶景スポットとして知られています。車や自転車で橋を渡る爽快感は格別で、四季折々の美しい海の色を楽しむことができます。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="houhoku_tsunoshima.png" alt="角島大橋"> 写真がある場合はこちらのコメントアウトを外して使用してください -->
+            </div>
+        </div>
+
+        <!-- 魅力2：海と砂浜 -->
+        <div class="charm-block scroll-fade delay-2">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">beach_access</span> BEAUTIFUL BEACH</span>
+                <h2 class="charm-heading">コバルトブルーの海と、白い砂浜が広がるリゾート</h2>
+                <p class="charm-desc">
+                    角島周辺をはじめとする海岸線には、南国リゾートを思わせるような透き通る海と白い砂浜が広がっています。海水浴やマリンスポーツはもちろん、海辺をのんびり散策するだけでも心が洗われるような特別なロケーションです。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="houhoku_beach.png" alt="豊北町の海と砂浜"> -->
+            </div>
+        </div>
+
+        <!-- 魅力3：道の駅と海の幸 -->
+        <div class="charm-block scroll-fade delay-3">
+            <div class="charm-text">
+                <span class="charm-label"><span class="material-symbols-outlined" style="font-size: 1rem;">restaurant</span> FRESH SEAFOOD</span>
+                <h2 class="charm-heading">活気あふれる道の駅で味わう、新鮮な海の幸</h2>
+                <p class="charm-desc">
+                    絶景を望む「道の駅 北浦街道 豊北」では、水揚げされたばかりの新鮮な魚介類や地元産の新鮮な野菜が豊富に揃います。雄大な海を眺めながら、海の幸をふんだんに使った海鮮丼などを味わう至福のひとときを過ごせます。
+                </p>
+            </div>
+            <div class="charm-image">
+                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
+                <!-- <img src="houhoku_michinoeki.png" alt="道の駅と海の幸"> -->
+            </div>
+        </div>
+
+        <!-- 戻るボタン -->
+        <div class="btn-back-wrapper scroll-fade">
+            <a href="area.html" class="btn-back">
+                <span class="material-symbols-outlined">arrow_back</span> エリアマップへ戻る
+            </a>
+        </div>
+    </main>
+
+    <!-- スクロール検知のスクリプト -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                } else {
+                    entry.target.classList.remove('appear');
+                }
+            });
+        }, { threshold: 0 }); 
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
