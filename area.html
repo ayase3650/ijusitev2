@@ -255,6 +255,41 @@
             .close-bubble:hover {
                 color: #00B4D8;
             }
+            /* ＝＝＝ スマホ向け調整（吹き出しのサイズと位置の最適化） ＝＝＝ */
+            @media (max-width: 768px) {
+                .speech-bubble {
+                    width: 90%;
+                    max-width: 280px; /* 最大幅を小さく設定 */
+                    padding: 15px 20px; /* 吹き出し内の余白を縮小 */
+                    left: 50% !important; /* スマホ画面で見切れないよう、横方向は常に中央に配置 */
+                }
+                
+                /* JSで追加されるインラインスタイルを上書きして文字を小さく調整 */
+                #bubble-content h3 {
+                    font-size: 1.05rem !important;
+                    margin-bottom: 8px !important;
+                    padding-bottom: 8px !important;
+                }
+                #bubble-content p {
+                    font-size: 0.85rem !important;
+                    margin-bottom: 12px !important;
+                    line-height: 1.5 !important;
+                }
+                #bubble-content a {
+                    font-size: 0.85rem !important;
+                    padding: 8px 16px !important;
+                }
+                
+                /* 閉じるボタンの位置とアイコンサイズを調整 */
+                .close-bubble {
+                    top: 10px;
+                    right: 12px;
+                }
+                .close-bubble span {
+                    font-size: 1.2rem;
+                }
+            }
+        </style>
         </style>
 
         <section class="interactive-map-wrapper">
