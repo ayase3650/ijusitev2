@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHIMONOSEKI LIFE | 下関市 移住・定住ポータル</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
@@ -639,7 +639,92 @@
         </section>
 
     </main>
+</main>
 
+    <!-- ＝＝＝ 新規追加：フッター（SNSリンク）修正版 ＝＝＝ -->
+    <style>
+        /* フッター・SNSリンク専用スタイル（背景透明化） */
+        .site-footer {
+            background-color: transparent; /* 白い背景をなくして透明にする */
+            padding: 40px 20px 20px;
+            text-align: center;
+            border: none; /* 点線をなくす */
+            margin-top: 0;
+        }
+        .footer-title {
+            color: #00B4D8;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        .footer-desc {
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+        .sns-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap; 
+        }
+        .sns-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .sns-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            color: #fff;
+        }
+        .sns-btn.facebook { background-color: #1877F2; }
+        .sns-btn.x-twitter { background-color: #000000; }
+        .sns-btn.instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+        .sns-btn.line { background-color: #06C755; }
+    </style>
+
+    <footer class="site-footer">
+        <div class="container">
+            <h3 class="footer-title">下関市公式SNS</h3>
+            <p class="footer-desc">最新情報や魅力あふれる日常を発信中！ぜひフォローしてください。</p>
+            
+            <div class="sns-links scroll-fade">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/shimonoseki.koho/" target="_blank" class="sns-btn facebook" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="https://x.com/CityShimonoseki" target="_blank" class="sns-btn x-twitter" title="X (Twitter)">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/city_shimonoseki_official/" target="_blank" class="sns-btn instagram" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <!-- LINE -->
+                <a href="https://page.line.me/932vzzcc?openQrModal=true" target="_blank" class="sns-btn line" title="LINE">
+                    <i class="fa-brands fa-line"></i>
+                </a>
+            </div>
+            <!-- ※重複していたコピーライトの文字（© 2026 SHIMONOSEKI LIFE...）は削除しました -->
+        </div>
+    </footer>
+    <!-- ＝＝＝ ここまで ＝＝＝ -->
+
+    <div id="bot-modal" class="modal-overlay">
     <div id="bot-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
