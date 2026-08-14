@@ -310,6 +310,7 @@
         </style>
 
         <!-- ＝＝＝ 新規追加：サポート制度のご利用の流れ（アコーディオン版） ＝＝＝ -->
+       <!-- ＝＝＝ サポート制度のご利用の流れ（アコーディオン版） ＝＝＝ -->
         <style>
             /* ＝＝＝ flow.html 専用のスタイル（アコーディオン） ＝＝＝ */
             .support-wrapper {
@@ -322,7 +323,7 @@
                 border-radius: 20px;
                 margin-bottom: 30px;
                 box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
-                overflow: hidden; /* 角丸を保つ */
+                overflow: hidden;
             }
             .support-title {
                 color: #00B4D8;
@@ -334,34 +335,30 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                list-style: none; /* デフォルトの矢印を消す */
+                list-style: none;
                 position: relative;
                 transition: background-color 0.3s;
             }
             .support-title:hover {
                 background-color: #F8FDFF;
             }
-            /* デフォルトの矢印を消す（Safari/Chrome用） */
             .support-title::-webkit-details-marker {
                 display: none;
             }
-            /* 右側にGoogleアイコンの矢印を配置 */
             .support-title::after {
-                content: '\e313'; /* expand_moreのコード */
+                content: '\e313';
                 font-family: 'Material Symbols Outlined';
                 position: absolute;
                 right: 30px;
                 font-size: 1.8rem;
                 transition: transform 0.3s ease;
             }
-            /* アコーディオンが開いた時の矢印の回転と下線 */
             .support-box[open] .support-title::after {
                 transform: rotate(180deg);
             }
             .support-box[open] .support-title {
                 border-bottom: 2px dashed #CAF0F8;
             }
-            /* 中身のコンテンツ */
             .support-content {
                 padding: 25px 30px 30px 30px;
                 animation: fadeIn 0.4s ease-in-out;
@@ -468,7 +465,7 @@
                             </ol>
                         </div>
                         <div class="action-btn-container">
-                            <a href="chatbot.html" class="action-btn">チャットボットで診断する</a>
+                            <a href="#consult" class="action-btn">チャットボットで診断する</a>
                         </div>
                     </div>
                 </details>
@@ -525,7 +522,7 @@
 
             </div>
         </section>
-        <!-- ＝＝＝ 新規追加：サポート制度のご利用の流れ ここまで ＝＝＝ -->
+        <!-- ＝＝＝ サポート制度のご利用の流れ ここまで ＝＝＝ -->
 
             </div>
         </section>
