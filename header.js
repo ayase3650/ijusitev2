@@ -12,6 +12,7 @@ document.write(`
         <nav>
             <ul>
             <li><a href="area.html">AREA</a></li>
+            <li><a href="data.html">DATA</a></li>
                 <li><a href="index.html#support" class="puku-hover">SUPPORT</a></li>
                 <li><a href="index.html#faq" class="puku-hover">FAQ</a></li>
                 <li><a href="application.html">各種申請</a></li>

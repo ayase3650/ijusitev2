@@ -11,10 +11,11 @@
     <!-- 共通スタイルの読み込み -->
     <link rel="stylesheet" href="style.css">
 
-    <style>
+   <style>
         /* ＝＝＝ データページ専用のスタイル ＝＝＝ */
         .page-header {
             text-align: center;
+            margin-top: 150px; /* ← 新規追加：固定ヘッダーの下に隠れないよう上部に余白を取る */
             margin-bottom: 60px;
         }
         .page-title {
@@ -75,6 +76,7 @@
             height: auto;
             display: block;
             transition: transform 0.3s ease;
+            cursor: zoom-in; /* クリックで拡大できることを示すカーソル */
         }
         .data-img-wrapper:hover img {
             transform: scale(1.02);
@@ -119,7 +121,7 @@
         /* ダミーデータのテーブル */
         .table-responsive {
             width: 100%;
-            overflow-x: auto; /* はみ出した場合は横スクロール */
+            overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
         .dummy-table {
@@ -130,7 +132,7 @@
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
             overflow: hidden;
-            white-space: nowrap; /* スマホで文字が変に折り返さないようにする */
+            white-space: nowrap;
         }
         .dummy-table th, .dummy-table td {
             padding: 12px;
@@ -168,9 +170,55 @@
             margin: 0;
         }
 
-        /* スマホ向け調整（全体的に余白と文字サイズを最適化） */
+        /* ＝＝＝ 画像拡大用モーダル ＝＝＝ */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content-img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .image-modal.show .modal-content-img {
+            transform: scale(1);
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #ffffff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10000;
+        }
+        .modal-close-btn:hover {
+            color: #00B4D8;
+        }
+
+        /* スマホ向け調整 */
+       /* スマホ向け調整（全体的に余白と文字サイズを最適化） */
         @media (max-width: 768px) {
-            .page-header { margin-bottom: 40px; }
+            .page-header { margin-top: 120px; margin-bottom: 40px; } /* margin-topを追加 */
             .page-title { font-size: 1.6rem; }
             .page-desc { font-size: 0.9rem; }
             
@@ -185,6 +233,21 @@
             
             .childcare-cards { flex-direction: column; gap: 15px; }
             .childcare-card { width: 100%; box-sizing: border-box; }
+
+            /* モーダルのスマホ向け調整 */
+            .modal-content-img { max-width: 95%; max-height: 80vh; }
+            .modal-close-btn { top: 15px; right: 15px; font-size: 2rem; }
+            /* ＝＝＝ 最初のセクションが上部メニューに隠れないための調整 ＝＝＝ */
+        .data-section:first-of-type {
+            margin-top: 150px;
+        }
+        
+        /* スマホ向けの余白調整 */
+        @media (max-width: 768px) {
+            .data-section:first-of-type {
+                margin-top: 120px;
+            }
+        }
         }
     </style>
 </head>
@@ -201,13 +264,7 @@
     <script src="header.js"></script>
 
     <main class="container">
-        <header class="page-header scroll-fade">
-            <h1 class="page-title">
-                <span class="material-symbols-outlined" style="font-size: 2.5rem;">bar_chart</span>
-                データで見る下関
-            </h1>
-            <p class="page-desc">お仕事や住まい、子育て環境など、移住に役立つ情報をデータでご紹介します</p>
-        </header>
+       
 
         <!-- 1. 仕事・雇用データ -->
         <section class="data-section scroll-fade delay-1">
@@ -248,72 +305,305 @@
         </section>
 
         <!-- 2. 住まい・家賃相場データ（仮データ） -->
+       <!-- 2. 住まい・家賃データ -->
         <section class="data-section scroll-fade delay-2">
             <h2 class="section-heading">
                 <span class="material-symbols-outlined" style="color: #76c893;">home</span>
-                住まう（平均家賃データ）
+                住まう（家賃データ）
             </h2>
             
-            <div class="placeholder-box">
-                <span class="placeholder-badge">準備中 / Coming Soon</span>
-                <h3>下関市の家賃相場データを作成中です</h3>
-                <p>間取り別の平均家賃や、エリアごとの相場比較など、住まい探しに役立つ最新データを近日公開予定です。</p>
-                
-                <!-- 仮のデータテーブル -->
-                <div class="table-responsive">
-                    <table class="dummy-table">
-                        <tr>
-                            <th>間取り</th>
-                            <th>平均家賃（目安）</th>
-                        </tr>
-                        <tr>
-                            <td>1K / 1DK</td>
-                            <td>約 〇〇,〇〇〇 円</td>
-                        </tr>
-                        <tr>
-                            <td>1LDK / 2K</td>
-                            <td>約 〇〇,〇〇〇 円</td>
-                        </tr>
-                        <tr>
-                            <td>2LDK / 3K</td>
-                            <td>約 〇〇,〇〇〇 円</td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="data-text">
+                <p>下関市の借家（専用住宅）における平均家賃データです。一人暮らし向けの1R・1Kから、ファミリー向けの広い間取りまで、ライフスタイルに合わせた住まい探しの参考にしてください。</p>
             </div>
+
+            <!-- 家賃データ専用スタイル -->
+            <style>
+                .rent-summary {
+                    background-color: #fffdf5;
+                    border: 2px solid #f9c74f;
+                    border-radius: 15px;
+                    padding: 20px 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 30px;
+                    flex-wrap: wrap;
+                    gap: 15px;
+                }
+                .rent-summary-left {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+                .rent-summary-left .material-symbols-outlined {
+                    font-size: 3rem;
+                    color: #333;
+                }
+                .rent-summary-title {
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 5px;
+                }
+                .rent-summary-desc {
+                    font-size: 0.85rem;
+                    color: #666;
+                }
+                .rent-summary-price {
+                    font-size: 2.2rem;
+                    font-weight: 900;
+                    color: #333;
+                }
+                
+                .rent-table-wrapper {
+                    width: 100%;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                    border: 1px solid #e1e8ed;
+                }
+                .rent-table {
+                    width: 100%;
+                    min-width: 500px;
+                    border-collapse: collapse;
+                    background-color: #fff;
+                }
+                .rent-table th {
+                    background-color: #00B4D8;
+                    color: #fff;
+                    font-weight: bold;
+                    padding: 15px 20px;
+                    text-align: left;
+                    font-size: 1rem;
+                    white-space: nowrap;
+                }
+                .rent-table td {
+                    padding: 15px 20px;
+                    border-bottom: 1px solid #eee;
+                    color: #333;
+                    font-size: 1rem;
+                    white-space: nowrap;
+                }
+                .rent-table tr:last-child td {
+                    border-bottom: none;
+                }
+                .rent-table tr:nth-child(even) td {
+                    background-color: #f4f8fb;
+                }
+                .rent-price-col {
+                    font-weight: bold;
+                    color: #333;
+                }
+                .rent-source {
+                    text-align: right;
+                    font-size: 0.85rem;
+                    color: #888;
+                    margin-top: 15px;
+                }
+
+                @media (max-width: 768px) {
+                    .rent-summary {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding: 20px;
+                    }
+                    .rent-summary-price {
+                        font-size: 1.8rem;
+                    }
+                    .rent-table th, .rent-table td {
+                        padding: 12px 15px;
+                        font-size: 0.95rem;
+                    }
+                }
+            </style>
+
+            <div class="rent-summary">
+                <div class="rent-summary-left">
+                    <span class="material-symbols-outlined">house</span>
+                    <div>
+                        <div class="rent-summary-title">総数（全体平均）</div>
+                        <div class="rent-summary-desc">下関市の借家（専用住宅）全体の平均家賃</div>
+                    </div>
+                </div>
+                <div class="rent-summary-price">43,313 円/月</div>
+            </div>
+
+            <div class="rent-table-wrapper">
+                <table class="rent-table">
+                    <thead>
+                        <tr>
+                            <th>間取り表記（参考換算）</th>
+                            <th>下関市の平均家賃</th>
+                            <th>区分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1R・1K等</td>
+                            <td class="rent-price-col">35,954 円/月</td>
+                            <td>1室</td>
+                        </tr>
+                        <tr>
+                            <td>1DK・1LDK等</td>
+                            <td class="rent-price-col">41,815 円/月</td>
+                            <td>2室</td>
+                        </tr>
+                        <tr>
+                            <td>2DK・2LDK等</td>
+                            <td class="rent-price-col">49,219 円/月</td>
+                            <td>3室</td>
+                        </tr>
+                        <tr>
+                            <td>3DK・3LDK等</td>
+                            <td class="rent-price-col">42,651 円/月</td>
+                            <td>4室</td>
+                        </tr>
+                        <tr>
+                            <td>4DK・4LDK等</td>
+                            <td class="rent-price-col">47,537 円/月</td>
+                            <td>5室</td>
+                        </tr>
+                        <tr>
+                            <td>5DK・5LDK等</td>
+                            <td class="rent-price-col">71,628 円/月</td>
+                            <td>6室</td>
+                        </tr>
+                        <tr>
+                            <td>6LDK以上等</td>
+                            <td class="rent-price-col">44,027 円/月</td>
+                            <td>7室以上</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="rent-source">出典：総務省統計局「令和5年住宅・土地統計調査」（政府統計の総合窓口（e-Stat）より取得）<br>※家賃0円を含まない平均家賃</div>
         </section>
 
-        <!-- 3. 子育て支援データ（仮データ） -->
+        <!-- 3. 子育て支援データ（最新） -->
         <section class="data-section scroll-fade delay-3">
             <h2 class="section-heading">
                 <span class="material-symbols-outlined" style="color: #ff8fa3;">child_care</span>
-                育てる（子育て支援データ）
+                育てる（最新の子育て支援）
             </h2>
             
-            <div class="placeholder-box">
-                <span class="placeholder-badge">準備中 / Coming Soon</span>
-                <h3>子育てに関する各種データを集計中です</h3>
-                <p>医療費助成の対象年齢や、保育施設の数、待機児童の状況など、子育て世代に直結する安心のデータを準備しております。</p>
-                
-                <div class="childcare-cards">
-                    <div class="childcare-card">
-                        <span class="material-symbols-outlined" style="font-size: 3rem; color: #ced4da;">local_hospital</span>
-                        <h4>こども医療費助成</h4>
-                        <p>中学〇年生まで</p>
-                    </div>
-                    <div class="childcare-card">
-                        <span class="material-symbols-outlined" style="font-size: 3rem; color: #ced4da;">escalator_warning</span>
-                        <h4>保育施設数</h4>
-                        <p>市内 〇〇 ヶ所</p>
-                    </div>
+            <div class="data-text">
+                <p>下関市では、妊娠・出産から学童期まで、切れ目のない手厚い子育て支援策を次々と拡充しています。令和7年〜8年度にかけてスタートする注目の最新支援制度をご紹介します。</p>
+            </div>
+
+            <!-- 子育て支援カード（HTML/CSSによる直接描画） -->
+            <style>
+                .support-cards {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 25px;
+                    margin-top: 30px;
+                }
+                .support-card {
+                    background-color: #f8f9fa;
+                    border: 1px solid #e1e8ed;
+                    border-radius: 20px;
+                    padding: 25px;
+                    position: relative;
+                    transition: transform 0.3s ease;
+                }
+                .support-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                }
+                .support-badge {
+                    display: inline-block;
+                    padding: 5px 12px;
+                    border-radius: 15px;
+                    font-size: 0.85rem;
+                    font-weight: bold;
+                    color: #fff;
+                    margin-bottom: 12px;
+                }
+                .badge-expand { background-color: #FF9F1C; }
+                .badge-new { background-color: #ff8fa3; }
+                .support-card h3 {
+                    font-size: 1.3rem;
+                    color: #333;
+                    margin-bottom: 8px;
+                    font-weight: 900;
+                }
+                .support-card h4 {
+                    font-size: 1.05rem;
+                    color: #00B4D8;
+                    margin-bottom: 15px;
+                    padding-bottom: 10px;
+                    border-bottom: 2px dashed #00B4D8;
+                }
+                .support-card p {
+                    font-size: 0.95rem;
+                    color: #555;
+                    line-height: 1.7;
+                    margin-bottom: 0;
+                }
+                .highlight-red {
+                    color: #e63946;
+                    font-weight: bold;
+                }
+                .support-icon {
+                    position: absolute;
+                    bottom: 15px;
+                    right: 15px;
+                    font-size: 3rem;
+                    opacity: 0.2;
+                }
+            </style>
+
+            <div class="support-cards">
+                <!-- 制度1 -->
+                <div class="support-card">
+                    <span class="support-badge badge-expand">拡充</span>
+                    <h3>子ども医療費助成制度</h3>
+                    <h4>高校生年代まで医療費の完全無償化</h4>
+                    <p>令和7年12月から、<span class="highlight-red">高校生年代まですべてのこどもの医療費</span>について、医療保険適用の自己負担分を<span class="highlight-red">全額助成（完全無償化）</span>いたします。</p>
+                    <span class="material-symbols-outlined support-icon">local_hospital</span>
+                </div>
+
+                <!-- 制度2 -->
+                <div class="support-card">
+                    <span class="support-badge badge-expand">完全無償化</span>
+                    <h3>学校給食費支援事業</h3>
+                    <h4>小中学校の給食費を通年無償化</h4>
+                    <p>物価高騰に対する経済支援として、<span class="highlight-red">令和8年度からは通年で下関市立小中学校の学校給食費を完全無償化</span>します。<br>（参考：1食当たり 小学校390円、中学校455円）</p>
+                    <span class="material-symbols-outlined support-icon">restaurant</span>
+                </div>
+
+                <!-- 制度3 -->
+                <div class="support-card">
+                    <span class="support-badge badge-new">新規</span>
+                    <h3>就学前施設給食費無償化事業</h3>
+                    <h4>3〜5歳児クラスの給食費無償化</h4>
+                    <p>令和8年4月から、対象施設に通う<span class="highlight-red">3〜5歳児クラスのこどもの給食費を無償化</span>します。※市外施設や、お弁当持参でも同等の補助があります。</p>
+                    <span class="material-symbols-outlined support-icon">child_care</span>
+                </div>
+
+                <!-- 制度4 -->
+                <div class="support-card">
+                    <span class="support-badge badge-expand">拡充</span>
+                    <h3>しもまちBABYタクシー</h3>
+                    <h4>妊婦さんや赤ちゃんの安全な送迎</h4>
+                    <p>専門研修を受けた認定ドライバーが自宅から病院まで安全に移送します。令和8年度から<span class="highlight-red">無料利用回数を拡充（4回→10回）</span>し、買い物支援も追加されました。</p>
+                    <span class="material-symbols-outlined support-icon">local_taxi</span>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- スクロール検知のスクリプト -->
+    <!-- 画像拡大用のモーダルウィンドウ本体 -->
+    <div id="imageModal" class="image-modal">
+        <span class="material-symbols-outlined modal-close-btn" id="modalClose">close</span>
+        <img class="modal-content-img" id="modalImg" src="" alt="拡大画像">
+    </div>
+
+    <!-- スクロール検知と画像モーダルのスクリプト -->
     <script>
+        // スクロール検知のアニメーション
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -326,6 +616,42 @@
 
         document.querySelectorAll('.scroll-fade').forEach(el => {
             observer.observe(el);
+        });
+
+        // 画像拡大モーダルの処理
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalClose = document.getElementById('modalClose');
+        const galleryImages = document.querySelectorAll('.data-img-wrapper img');
+
+        // 各画像をクリックした時の動作
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                // 表示をなめらかにするために少し遅延させてクラスを追加
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+                modalImg.src = this.src;
+            });
+        });
+
+        // モーダルを閉じる処理
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300); // CSSのtransition時間と合わせる
+        }
+
+        // ×ボタンをクリックして閉じる
+        modalClose.addEventListener('click', closeModal);
+
+        // 画像以外の背景部分をクリックして閉じる
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
         });
     </script>
 </body>
