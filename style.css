@@ -638,3 +638,40 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         grid-template-columns: 1fr;
     }
 }
+/* ＝＝＝ スマホでのヘッダー肥大化を防ぎ、診断ナビを固定する調整 ＝＝＝ */
+@media (max-width: 768px) {
+    /* 1. メニューを1行にして横スクロールさせる */
+    header ul, .site-header ul, nav ul {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 5px;
+        gap: 5px;
+        position: relative; /* 固定要素の基準にするため追加 */
+    }
+    
+    /* 2. 文字サイズと余白の調整 */
+    header ul li a, .site-header ul li a, nav ul li a {
+        font-size: 0.85rem !important;
+        padding: 8px 10px !important;
+        white-space: nowrap !important;
+    }
+
+    /* 3. 【重要】最後の項目（診断ナビ）を右端にピタッと固定する */
+    header ul li:last-child, .site-header ul li:last-child, nav ul li:last-child {
+        position: sticky !important;
+        right: 0;
+        background-color: #ffffff; /* ヘッダーの白色に合わせる */
+        z-index: 10;
+        /* 左側に白い「ぼかし（影）」を入れて、下を通り抜ける文字を自然に隠す */
+        box-shadow: -12px 0 10px -5px rgba(255, 255, 255, 0.95);
+        border-radius: 20px; /* 角を少し丸める */
+    }
+
+    /* スクロールバーを見えなくする */
+    header ul::-webkit-scrollbar, nav ul::-webkit-scrollbar {
+        height: 0px; 
+        background: transparent;
+    }
+}
