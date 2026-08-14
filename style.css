@@ -593,3 +593,48 @@ header nav a:hover { background-color: var(--fugu-light); color: var(--fugu-blue
         gap: 20px !important;
     }
 }
+/* ＝＝＝ 動画準備中のプレースホルダー ＝＝＝ */
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 動画と同じ比率 */
+    background-color: #f4f8fb;
+    border: 2px dashed #00B4D8;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    color: #555;
+    text-align: center;
+}
+.video-placeholder .fa-person-digging {
+    font-size: 3rem;
+    color: #FF9F1C; /* 工事っぽいオレンジ色 */
+    margin-bottom: 10px;
+}
+.video-placeholder .placeholder-title {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+.video-placeholder .placeholder-sub {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: bold;
+}
+/* ＝＝＝ ピックアップカードを2列に並べる ＝＝＝ */
+.pickup-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 横に2つ並べる */
+    gap: 30px;
+    width: 100%;
+}
+
+/* スマホの時は1列にする */
+@media (max-width: 768px) {
+    .pickup-2col {
+        grid-template-columns: 1fr;
+    }
+}
