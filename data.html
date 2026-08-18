@@ -316,6 +316,11 @@
             
             <div class="data-text">
                 <p>総務省の<strong>最新調査（令和5年 住宅・土地統計調査）</strong>に基づく、下関市の借家（専用住宅）における平均家賃データです。一人暮らし向けの1R・1Kから、ファミリー向けの広い間取りまで、ライフスタイルに合わせた住まい探しの参考にしてください。</p>
+            <!-- ＝＝＝ エリア別の人口と住まいデータ画像 ＝＝＝ -->
+<div class="data-image-wrapper scroll-fade">
+    <img src="人口データ.png" alt="下関市 エリア別の人口と住まい" class="data-infographic">
+</div>
+<!-- ＝＝＝ ここまで ＝＝＝ -->
             </div>
 
             <!-- 家賃データ専用スタイル -->
@@ -418,6 +423,22 @@
                         font-size: 0.95rem;
                     }
                 }
+                /* ＝＝＝ データインフォグラフィック画像用スタイル ＝＝＝ */
+.data-image-wrapper {
+    text-align: center;
+    margin: 40px auto;
+    max-width: 900px; /* パソコン画面で画像が大きくなりすぎるのを防ぐ */
+    width: 100%;
+    padding: 0 15px; /* スマホ画面の時に左右に少し余白を作る */
+}
+
+.data-infographic {
+    width: 100%;
+    height: auto;
+    border-radius: 12px; /* 角を少し丸めて柔らかい印象に */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* サイトに馴染むふわっとした影 */
+    display: block;
+}
             </style>
 
             <div class="rent-summary">
