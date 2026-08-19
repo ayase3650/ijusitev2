@@ -12,11 +12,19 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+        /* ＝＝＝ 追記：ヘッダー用の不要な余白を強制的にゼロにする ＝＝＝ */
+        body {
+            padding-top: 0 !important;
+        }
+        .container {
+            padding-top: 30 !important; /* 上部の隙間。お好みで調整してください */
+        }
         /* ＝＝＝ エリア詳細ページ専用のスタイル ＝＝＝ */
-        .page-header {
+       .page-header {
             text-align: center;
             margin-bottom: 60px;
         }
+        
         .page-title {
             font-size: 2.2rem;
             font-weight: 900;
@@ -142,16 +150,16 @@
     </div>
 
     <!-- ヘッダーの読み込み -->
-    <script src="header.js"></script>
+    
 
     <main class="container">
-        <header class="page-header scroll-fade">
+        <div class="page-header scroll-fade">
             <h1 class="page-title">
                 <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #f9c74f;">beach_access</span>
                 豊北町エリア
             </h1>
             <p class="page-desc">エメラルドグリーンの海と絶景が広がる、自然豊かなリゾートエリア</p>
-        </header>
+        </div>
 
         <!-- 魅力1：角島大橋 -->
         <div class="charm-block scroll-fade delay-1">
@@ -163,8 +171,7 @@
                 </p>
             </div>
             <div class="charm-image">
-                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
-                <!-- <img src="houhoku_tsunoshima.png" alt="角島大橋"> 写真がある場合はこちらのコメントアウトを外して使用してください -->
+                <img src="P1466015.jpg" alt="角島大橋の絶景">
             </div>
         </div>
 
@@ -192,9 +199,8 @@
                     絶景を望む「道の駅 北浦街道 豊北」では、水揚げされたばかりの新鮮な魚介類や地元産の新鮮な野菜が豊富に揃います。雄大な海を眺めながら、海の幸をふんだんに使った海鮮丼などを味わう至福のひとときを過ごせます。
                 </p>
             </div>
-            <div class="charm-image">
-                <span class="material-symbols-outlined" style="font-size: 4rem;">image</span>
-                <!-- <img src="houhoku_michinoeki.png" alt="道の駅と海の幸"> -->
+           <div class="charm-image">
+                <img src="P1465955.jpg" alt="道の駅 北浦街道 豊北">
             </div>
         </div>
 
