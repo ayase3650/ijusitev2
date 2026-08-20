@@ -1,51 +1,47 @@
+// 1. ヘッダーのHTMLを出力する
 document.write(`
-    <!-- 追従バナー -->
-    <div class="top-alert-bar">
-        <span> 移住の準備・手続きはこちら！</span>
-        <a href="index.html#consult" class="btn-banner">診断ナビ</a>
-        <a href="application.html" class="btn-banner">各種申請</a>
-    </div>
+<header class="site-header">
+    <div class="header-inner">
+        <!-- ロゴ -->
+        <a href="index.html" class="logo" style="text-decoration: none; font-weight: bold; font-size: 1.5rem; color: #00b4d8;">
+            SHIMONOSEKI LIFE
+        </a>
 
-    <!-- ヘッダー -->
-    <header>
-        <h1 class="site-title"><a href="index.html" style="color:var(--fugu-blue);">SHIMONOSEKI LIFE</a></h1>
-        <nav>
-            <ul>
-            <li><a href="area.html">AREA</a></li>
-            <li><a href="data.html">DATA</a></li>
-                <li><a href="index.html#support" class="puku-hover">SUPPORT</a></li>
-                <li><a href="index.html#faq" class="puku-hover">FAQ</a></li>
-                <li><a href="application.html">各種申請</a></li>
-                <li><a href="index.html#consult" class="puku-hover" style="color: var(--fugu-fin);"><img src="2.png" alt="せきまる" class="seki-icon seki-sway">診断ナビ</a></li>
-            </ul>
+        <!-- スマホ用ハンバーガーボタン（三本線） -->
+        <div class="hamburger" id="hamburger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- ナビゲーションメニュー -->
+        <nav class="header-nav" id="header-nav">
+            <a href="area.html">AREA</a>
+            <a href="data.html">DATA</a>
+            <a href="support.html">SUPPORT</a>
+            <a href="faq.html">FAQ</a>
+            <a href="shinsei.html">各種申請</a>
+            
+            <!-- 診断ナビボタン -->
+            <a href="chatbot.html" class="btn-shindan" style="display: inline-flex; align-items: center; gap: 5px;">
+                <img src="2.png" alt="フグ" style="height: 20px;"> 診断ナビ
+            </a>
         </nav>
-    </header>
-
-   <!-- トップへ戻るボタン -->
-    <div id="pageTopBtn" class="page-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-        <span class="material-symbols-outlined">arrow_upward</span>
     </div>
+</header>
 `);
 
-// 🌟 スクロールを感知してボタンを出し入れする仕組み
-window.addEventListener('scroll', () => {
-    const btn = document.getElementById('pageTopBtn');
-    if (!btn) return;
-    
-    // 上から300px以上スクロールしたらボタンを表示（.showクラスを追加）
-    if (window.scrollY > 300) {
-        btn.classList.add('show');
-    } else {
-        btn.classList.remove('show');
+// 2. ハンバーガーボタンをクリックしたときの動作（開閉アクション）
+// HTMLが画面に描画された直後に動くように setTimeout を使います
+setTimeout(() => {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const headerNav = document.getElementById('header-nav');
+
+    if (hamburgerBtn && headerNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            // ボタンとメニューに 'active' というクラスを付け外しする
+            hamburgerBtn.classList.toggle('active');
+            headerNav.classList.toggle('active');
+        });
     }
-});
-// 🌟 ページの一番下にコピーライト（フッター）を自動追加する仕組み
-window.addEventListener('DOMContentLoaded', () => {
-    const footerHTML = `
-        <footer class="site-footer">
-            &copy; 下関市 共創イノベーション課
-        </footer>
-    `;
-    // 全てのコンテンツが終わった後（bodyタグの閉じる直前）にフッターを差し込む
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
-});
+}, 100);
