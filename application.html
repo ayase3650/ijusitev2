@@ -37,40 +37,6 @@
             line-height: 1.6;
         }
 
-        .app-card-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .app-card { 
-            background: white; padding: 30px; border-radius: 30px; text-align: center; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; border: 4px solid transparent; 
-            display: flex; flex-direction: column; width: 100%;
-        }
-        .app-card:hover { transform: translateY(-10px); border-color: var(--fugu-blue); box-shadow: 0 15px 30px rgba(0, 180, 216, 0.2); }
-        .app-card-icon { color: var(--fugu-fin); margin-bottom: 15px; display: flex; justify-content: center; }
-        
-        .app-card h4 { 
-            font-size: 1.3rem; 
-            margin-bottom: 15px; 
-            color: var(--fugu-blue); 
-            min-height: 3.6rem; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            line-height: 1.4;
-        }
-        .app-card p { font-size: 0.95rem; line-height: 1.6; color: #555; margin-bottom: 20px; }
-        
-        .app-btn-detail { 
-            display: inline-block; padding: 15px 25px; background-color: var(--fugu-fin); color: white; 
-            border-radius: 30px; font-weight: bold; transition: 0.3s; text-decoration: none;
-            margin-top: auto; 
-        }
-        .app-btn-detail:hover { background-color: #e38a15; transform: scale(1.05); }
-
         /* スマホ向けの微調整 */
         @media (max-width: 768px) {
             .white-board { padding: 40px 20px; border-radius: 30px; }
@@ -91,59 +57,32 @@
         <div class="white-board">
             <div class="page-header">
                 <h2>各種申請・手続き</h2>
-                <p>移住に関する支援制度の申請は<br class="sp-br">こちらから行えます。<br>ご不明な点があれば、お気軽にお問い合わせください。</p>
             </div>
 
-            <div class="app-card-grid">
-                <div class="app-card">
-                    <div class="app-card-icon">
-                        <span class="material-symbols-outlined" style="font-size: 3rem;">edit_document</span>
-                    </div>
-                    <h4>移住支援金の申請</h4>
-                    <p>東京圏から移住し、就業や<br>起業をした方の申請フォーム。</p>
-                    <a href="subsidy-form.html" class="app-btn-detail">申請フォームへ</a>
-                </div>
+            <!-- 工事中用のプレースホルダー -->
+            <div class="video-placeholder" style="aspect-ratio: auto; padding: 80px 20px;">
                 
-                <div class="app-card">
-                    <div class="app-card-icon">
-                        <span class="material-symbols-outlined" style="font-size: 3rem;">directions_transit</span>
-                    </div>
-                    <h4>YY!ターン交通費補助<br>実施報告書提出</h4>
-                    <p>交通費補助を利用された方の<br>実施報告書の提出フォーム。</p>
-                    <a href="yy-turn-form.html" class="app-btn-detail">報告書を提出する</a>
-                </div>
-
-                <div class="app-card">
-                    <div class="app-card-icon">
-                        <span class="material-symbols-outlined" style="font-size: 3rem;">maps_home_work</span>
-                    </div>
-                    <h4>暮らしサポート補助金</h4>
-                    <p>UIJターンした若者・子育て<br>世帯の家賃を一部助成します。</p>
-                    <a href="life-support-form.html" class="app-btn-detail">申請フォームへ</a>
-                </div>
+                <!-- 工事マークのアイコン -->
+                <span class="material-symbols-outlined" style="font-size: 5rem; color: #FF9F1C; margin-bottom: 20px;">
+                    construction
+                </span>
+                
+                <h2 class="placeholder-title" style="font-size: 1.5rem; margin-bottom: 15px;">
+                    現在準備中です
+                </h2>
+                
+                <p class="placeholder-sub" style="font-size: 1rem; line-height: 1.6;">
+                    受付サーバーの準備を行っているため、一時的にフォームを停止しております。<br>
+                    ご不便をおかけいたしますが、公開までもうしばらくお待ちください。
+                </p>
+                
+                <!-- トップへ戻るボタン -->
+                <a href="index.html" class="btn-more" style="margin-top: 30px;">
+                    トップページへ戻る
+                </a>
             </div>
         </div>
     </div>
-<!-- スマートヘッダー用のスクリプト -->
-<script>
-    let lastScrollY = 0;
-    
-    window.addEventListener('scroll', () => {
-        // パソコン画面（横幅768px以上）ではこの機能をオフにする
-        if (window.innerWidth > 768) return; 
 
-        const currentScrollY = window.scrollY;
-        
-        // 50px以上スクロールし、かつ「下」に向かってスクロールしている時
-        if (currentScrollY > 50 && currentScrollY > lastScrollY) {
-            document.body.classList.add('is-scrolling-down'); // 隠す合図を出す
-        } else {
-            // 「上」に向かってスクロールした時は合図を消す（現れる）
-            document.body.classList.remove('is-scrolling-down');
-        }
-        
-        lastScrollY = currentScrollY;
-    });
-</script>
 </body>
 </html>
